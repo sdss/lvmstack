@@ -8,40 +8,34 @@
 Lvm Tan Clu Wrapper
 
 
-Features
---------
+## Features
+
 
 - CLU based wrapper for TwiceAsNice.
 - Uses a container for deployment and testing. 
 
 
-Installation
-------------
+## Installation
+
 This package is used for building the TwiceAsNice container and running tests.
 
-.. code-block:: console
+
 
     git clone https://github.com/briegel42/lvmtan.git
     cd lvmtan
     
 
-Centos
-^^^^^^
-.. code-block:: console
+### Centos
 
+
+    # as user 
+    python3.8  -m pip  install --user --upgrade pip
+    pip3.8 install poetry
+    export PATH=~/.local/bin/:$PATH
    
-   # as user 
-   python3.8  -m pip  install --user --upgrade pip
-   pip3.8 install poetry
-   export PATH=~/.local/bin/:$PATH
-
-
-   
-Quick start
+## Quick start
 -----------
 
-.. code-block:: console
-
-poetry update
-poetry run pytest -p no:logging -s -v 
-poetry run pytest -p no:logging -s -v --runslow
+    poetry update
+    poetry run pytest -p no:logging -s -v 
+    poetry run pytest -p no:logging -s -v --runslow
