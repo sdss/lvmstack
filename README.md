@@ -21,7 +21,7 @@ This package is used for building the TwiceAsNice container and running tests.
 
 
 
-    git clone https://github.com/briegel42/lvmtan.git
+    git clone https://github.com/wasndas/lvmtan.git
     cd lvmtan
     
 
