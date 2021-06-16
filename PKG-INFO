@@ -1,0 +1,74 @@
+Metadata-Version: 2.1
+Name: sdss-lvmtan
+Version: 0.0.4
+Summary: Lvm Tan Clu Wrapper
+Home-page: https://github.com/sdss/lvmtan
+License: BSD-3-Clause
+Keywords: astronomy,software
+Author: Florian Briegel
+Author-email: briegel@mpia.de
+Requires-Python: >=3.7,<4
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Topic :: Documentation :: Sphinx
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Dist: sdss-clu (>1.0)
+Requires-Dist: sdsstools (>=0.4.0)
+Project-URL: Documentation, https://sdss-lvmtan.readthedocs.org
+Project-URL: Repository, https://github.com/sdss/lvmtan
+Description-Content-Type: text/markdown
+
+# lvmtan
+
+![Versions](https://img.shields.io/badge/python->3.7-blue)
+[![Documentation Status](https://readthedocs.org/projects/sdss-lvmtan/badge/?version=latest)](https://sdss-lvmtan.readthedocs.io/en/latest/?badge=latest)
+[![Travis (.org)](https://img.shields.io/travis/sdss/lvmtan)](https://travis-ci.org/sdss/lvmtan)
+[![codecov](https://codecov.io/gh/sdss/lvmtan/branch/main/graph/badge.svg)](https://codecov.io/gh/sdss/lvmtan)
+
+Lvm Tan Clu Wrapper
+
+
+Features
+--------
+
+- CLU based wrapper for TwiceAsNice.
+- Uses a container for deployment and testing. 
+
+
+Installation
+------------
+This package is used for building the TwiceAsNice container and running tests.
+
+.. code-block:: console
+
+    git clone https://github.com/briegel42/lvmtan.git
+    cd lvmtan
+    
+
+Centos
+^^^^^^
+.. code-block:: console
+
+   
+   # as user 
+   python3.8  -m pip  install --user --upgrade pip
+   pip3.8 install poetry
+   export PATH=~/.local/bin/:$PATH
+
+
+   
+Quick start
+-----------
+
+.. code-block:: console
+
+poetry update
+poetry run pytest -p no:logging -s -v 
+poetry run pytest -p no:logging -s -v --runslow
+

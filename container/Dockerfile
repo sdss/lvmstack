@@ -1,0 +1,29 @@
+FROM ubuntu:20.04
+
+## Get some karma ##
+MAINTAINER Florian Briegel, briegel@mpia.de
+
+# podman  build --tag ubuntu_lvmt_tan --rm lvmt_tan
+
+# podman run -ti --rm --name lvmt_tan -e DISPLAY --network=host --ipc=host --device /dev/dri -v ~/.Xauthority:/root/.Xauthority:Z -v .:/root/lvmt:Z -P localhost/ubuntu_lvmt_tan
+
+RUN apt update -y && \
+    apt install -y wget && \
+    echo "8\n7\n" | apt install -y software-properties-common && \
+    echo "30\n1\n" | apt install -y keyboard-configuration && \
+    wget -qO - https://zeroc.com/download/GPG-KEY-zeroc-release-B6391CB2CFBA643D | apt-key add - && \
+    apt-add-repository "deb http://zeroc.com/download/ice/3.7/ubuntu20.04 stable main" && \
+    wget -qO - https://svn.mpia.de/repo/linux/ubuntu/archive.key | apt-key add - && \
+    echo "deb https://svn.mpia.de/repo/linux/ubuntu focal main" > /etc/apt/sources.list.d/mpia.list
+
+RUN apt update -y
+RUN apt install -y python3-opencv packagekit-gtk3-module
+RUN apt install -y sudo subversion git lsof
+RUN apt install -y python3-sdss-clu tan-basda-mocca
+
+WORKDIR /root/lvmt
+
+COPY run-basdard.sh /root
+
+CMD ["/root/run-basdard.sh"]
+

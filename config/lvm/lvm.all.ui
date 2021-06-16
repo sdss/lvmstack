@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>985</width>
+    <height>1054</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <widget class="BasdaMoccaXServiceWidget" name="basdaMoccaXServiceWidget">
+     <property name="PropertyNode">
+      <string>.SCI.FOC.STAGE.SVC</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="BasdaMoccaXServiceWidget" name="basdaMoccaXServiceWidget_2">
+     <property name="PropertyNode">
+      <string>.SKYE.FOC.STAGE.SVC</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="BasdaMoccaTrajServiceWidgetClassic" name="basdaMoccaTrajServiceWidgetClassic">
+     <property name="PropertyNode">
+      <string>.SKYE.KM.TRAJ.SVC</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="BasdaMoccaXServiceWidget" name="basdaMoccaXServiceWidget_3">
+     <property name="PropertyNode">
+      <string>.SKYW.FOC.STAGE.SVC</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="BasdaMoccaXServiceWidget" name="basdaMoccaXServiceWidget_4">
+     <property name="PropertyNode">
+      <string>.SPEC.FOC.STAGE.SVC</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="BasdaMoccaTrajServiceWidgetClassic" name="basdaMoccaTrajServiceWidgetClassic_2">
+     <property name="PropertyNode">
+      <string>.SKYW.KM.TRAJ.SVC</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="BasdaMoccaWheelServiceWidget" name="basdaMoccaWheelServiceWidget">
+     <property name="PropertyNode">
+      <string>.SPEC.FIBSEL.WHEEL.SVC</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="BasdaMoccaTrajServiceWidgetClassic" name="basdaMoccaTrajServiceWidgetClassic_3">
+     <property name="PropertyNode">
+      <string>.SCI.KM.TRAJ.SVC</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>BasdaMoccaTrajServiceWidgetClassic</class>
+   <extends>QWidget</extends>
+   <header>BasdaMoccaTrajServiceWidgetClassic.h</header>
+  </customwidget>
+  <customwidget>
+   <class>BasdaMoccaXServiceWidget</class>
+   <extends>QWidget</extends>
+   <header>BasdaMoccaXServiceWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>BasdaMoccaWheelServiceWidget</class>
+   <extends>QWidget</extends>
+   <header>BasdaMoccaWheelServiceWidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
