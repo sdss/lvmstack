@@ -84,3 +84,7 @@ Some linux distributions do not have python >= 3.7 as the standard python3 versi
 ### Publish
     # publish to pypi
     poetry publish --username=USER --password=PASS
+    # build rpm package
+    poetry run python setup.py bdist_rpm
+    # build deb package - needs python3-stdeb
+    poetry run python setup.py --command-packages=stdeb.command bdist_deb
