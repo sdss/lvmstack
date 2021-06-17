@@ -17,20 +17,19 @@ from clu.tools import CommandStatus
 from clu.model import Model
 import logging
 
-from container import *
-
+import container
 
 test_first_focus_stage = 'test.first.focus_stage'
 test_first_focus_stage_started_by_me = False
 
-@pytest.mark.slow
+
 @pytest.fixture
 async def client():
     global test_first_focus_stage_started_by_me
-    if not cntr_isRunning(test_first_focus_stage):
+    if not container.isRunning(test_first_focus_stage):
         print(f"Start own container {test_first_focus_stage}")
         runner = CliRunner()
-        result = runner.invoke(cntr_run, ['--with_ui'])
+        result = runner.invoke(container.start, ['--with_ui'])
         assert result.exit_code == 0
         test_first_focus_stage_started_by_me = True
 
@@ -43,8 +42,8 @@ async def client():
 async def client_send_command(client, cmd, *args):
     future =  await client.send_command(test_first_focus_stage, cmd, *args)
     return await future
-    
-@pytest.mark.slow
+
+
 @pytest.mark.asyncio
 async def test_getSchema(client):
     cmd = await client_send_command(client, 'get_schema')
@@ -57,33 +56,33 @@ async def test_getSchema(client):
     assert(schema["properties"]['DeviceEncoderPosition']["type"] == 'number')
     assert(schema["properties"]['Position']["type"] == 'number')
 
-@pytest.mark.slow
+
 @pytest.mark.asyncio
 async def test_isAtLimit(client):
     for limit in [-1, 1]:
         cmd = await client_send_command(client, 'movetolimit', limit)
         assert(cmd.status == CommandStatus.DONE)    
         assert(cmd.replies[-1].body['AtLimit'] == True)
+
         cmd = await client_send_command(client, 'isatlimit')
         assert(cmd.status == CommandStatus.DONE)
         assert(cmd.replies[-1].body['AtLimit'] == True)
         assert(client.models[test_first_focus_stage]['AtLimit'].value == True)
+        
 
-@pytest.mark.slow
 @pytest.mark.asyncio
 async def test_isAtHome(client):
     cmd = await client_send_command(client, 'isathome')
     assert(cmd.status == CommandStatus.DONE)
     if not cmd.replies[-1].body['AtHome']:
-        print(f"moving ...")
         cmd = await client_send_command(client, 'movetohome')
         assert(cmd.status == CommandStatus.DONE)    
         assert(cmd.replies[-1].body['AtHome'] == True)
 
-@pytest.mark.slow
+   
 def test_shutdown():
-    if test_first_focus_stage_started_by_me and cntr_isRunning(test_first_focus_stage):
+    if test_first_focus_stage_started_by_me and container.isRunning(test_first_focus_stage):
         runner = CliRunner()
-        result = runner.invoke(cntr_kill)
+        result = runner.invoke(container.stop)
         assert result.exit_code == 0
   

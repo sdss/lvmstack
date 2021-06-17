@@ -11,21 +11,21 @@ from click.testing import CliRunner
 from container import *
 
 @pytest.mark.slow
-def test_cntr_build():
+def test_container_build():
     runner = CliRunner()
-    result = runner.invoke(cntr_build)
+    result = runner.invoke(container_build)
     assert result.exit_code == 0
 
 
 @pytest.mark.slow
-def test_cntr_run():
+def test_container_start():
     runner = CliRunner()
-    result = runner.invoke(cntr_run, ['--without_ui'])
+    result = runner.invoke(container_run, ['--without_ui'])
     assert result.exit_code == 0
 
 
 @pytest.mark.slow
-def test_cntr_kill():
+def test_container_stop():
     runner = CliRunner()
-    result = runner.invoke(cntr_kill)
+    result = runner.invoke(container_kill)
     assert result.exit_code == 0

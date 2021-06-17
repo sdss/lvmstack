@@ -15,7 +15,7 @@ import click
 from pathlib import PosixPath
 
 #from podman import PodmanClient
-#cntr_uri = "unix:///run/user/1000/podman/podman.sock"
+#uri = "unix:///run/user/1000/podman/podman.sock"
 #podman container exists ubuntu_lvmt_tan # 0=True, 1=False
 
 
@@ -26,17 +26,17 @@ lvmt_image_name = 'ubuntu_lvmt_tan'
 default_basdard_test = 'test.first.focus_stage'
 
 
-def cntr_config(name, pstfx="-sim.conf"):
+def config(name, pstfx="-sim.conf"):
     return f"{'/'.join(str.split(name,'.')[:-1])}/{name}{pstfx}"
 
-def cntr_isRunning(name: str = default_basdard_test):
+def isRunning(name: str = default_basdard_test):
     command = subprocess.run(shlex.split(f"{container_bin} container exists {name}"))
     return not command.returncode # True if running
   
 @click.command()   
 @click.option("--lvmt_root", default=lvmt_root, type=str)
 @click.option("--use-cache/--no-cache", default=True)
-def cntr_build(lvmt_root:str, use_cache: bool):
+def build(lvmt_root:str, use_cache: bool):
     tan_dockerfile = f"{lvmt_root}/container"
     lvmt_image_fullbuild = "" if use_cache else " --no-cache"
     print(f"{container_bin} build --tag {lvmt_image_name}{lvmt_image_fullbuild} --rm {tan_dockerfile}")
@@ -48,7 +48,7 @@ def cntr_build(lvmt_root:str, use_cache: bool):
 @click.option("--lvmt_root", default=lvmt_root, type=str)
 @click.option("--with_ui/--without_ui", default=True)
 @click.option("--name", "-n", default=default_basdard_test, type=str)
-def cntr_run(name: str, with_ui: bool, lvmt_root:str):
+def start(name: str, with_ui: bool, lvmt_root:str):
     lvmt_image = f"localhost/{lvmt_image_name}"
 
     run_base = f"--rm -t --name {name} --network=host"
@@ -57,19 +57,19 @@ def cntr_run(name: str, with_ui: bool, lvmt_root:str):
         run_base +=  f" -e DISPLAY -v {system_xauthority}:/root/.Xauthority:Z --ipc=host"
         if os.path.exists('/dev/dri'):
             run_base +=  ' --device /dev/dri'
-        name_ui = cntr_config(name, pstfx=".ui")
+        name_ui = config(name, pstfx=".ui")
         if os.path.exists(f"{lvmt_root}/config/{name_ui}"):
             run_base +=  f" -e BASDARD_UI={name_ui}"
-    run_tan = f"-v {lvmt_root}:/root/lvmt:Z -e BASDARD_CONFIG={cntr_config(name)}"
+    run_tan = f"-v {lvmt_root}:/root/lvmt:Z -e BASDARD_CONFIG={config(name)}"
     run = f"{container_bin} run {run_base} {run_tan} {lvmt_image}"
     child = pexpect.spawn(run)
     child.expect('Connected to')
-    assert cntr_isRunning(name) == True
+    assert isRunning(name) == True
     
 
 @click.command()   
 @click.option("--name", "-n", default=default_basdard_test, type=str)
-def cntr_kill(name: str):
+def stop(name: str):
     command = subprocess.run(shlex.split(f"{container_bin} kill {name}"))
 
 
