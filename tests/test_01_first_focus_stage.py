@@ -29,7 +29,7 @@ async def client():
     if not container.isRunning(test_first_focus_stage):
         print(f"Start own container {test_first_focus_stage}")
         runner = CliRunner()
-        result = runner.invoke(container.start, ['--with_ui'])
+        result = runner.invoke(container.start, ['--with-ui'])
         assert result.exit_code == 0
         test_first_focus_stage_started_by_me = True
 

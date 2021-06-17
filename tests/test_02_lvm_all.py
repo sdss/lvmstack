@@ -40,7 +40,7 @@ async def clients():
     if not container.isRunning(lvm_all):
         print(f"Start own container {lvm_all}")
         runner = CliRunner()
-        result = runner.invoke(container.start, ['--with_ui', '--name',  'lvm.all'])
+        result = runner.invoke(container.start, ['--with-ui', '--name',  lvm_all])
         assert result.exit_code == 0
         lvm_all_started_by_me = True
 

@@ -8,24 +8,11 @@
 import pytest
 
 from click.testing import CliRunner
-from container import *
+import container
 
 @pytest.mark.slow
 def test_container_build():
     runner = CliRunner()
-    result = runner.invoke(container_build)
+    result = runner.invoke(container.build)
     assert result.exit_code == 0
 
-
-@pytest.mark.slow
-def test_container_start():
-    runner = CliRunner()
-    result = runner.invoke(container_run, ['--without_ui'])
-    assert result.exit_code == 0
-
-
-@pytest.mark.slow
-def test_container_stop():
-    runner = CliRunner()
-    result = runner.invoke(container_kill)
-    assert result.exit_code == 0

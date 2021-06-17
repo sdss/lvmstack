@@ -47,7 +47,7 @@ def container_build(lvmt_root:str, use_cache: bool, use_container: str):
 
 @click.command()   
 @click.option("--lvmt_root", default=lvmt_root, type=str)
-@click.option("--with_ui/--without_ui", default=True)
+@click.option("--with-ui/--without-ui", default=True)
 @click.option("--name", "-n", default=default_basdard_test, type=str)
 @click.option("--use-container", default=podman_bin, type=str)
 def container_run(name: str, with_ui: bool, lvmt_root: str, use_container: str):
