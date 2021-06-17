@@ -7,8 +7,6 @@
 
 Lvm Tan Clu Wrapper
 
-This package is used for building the TwiceAsNice container and running tests.
-
 ## Features
 
 - CLU based wrapper for TwiceAsNice.
