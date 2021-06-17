@@ -15,7 +15,7 @@ Lvm Tan Clu Wrapper
 
 ¹ Setting an alias to use docker might work.
 
-   alias podman="sudo docker"
+    alias podman="sudo docker"
    
 ## Prerequisites
 
