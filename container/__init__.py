@@ -1,5 +1,3 @@
-import subprocess
-import sys
 # -*- coding: utf-8 -*-
 #
 # @Author: Florian Briegel (briegel@mpia.de
@@ -7,6 +5,8 @@ import sys
 # @Filename: __init__.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
+import subprocess
+import sys
 import os
 import time
 import pexpect
