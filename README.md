@@ -52,6 +52,8 @@ Some linux distributions do not have python >= 3.7 as the standard python3 versi
     
     # build tan container
     poetry run container_build
+    # build tan container from scratch
+    poetry run container_build --no-cache
         
 ### Run container (optional)
 
