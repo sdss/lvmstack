@@ -11,7 +11,12 @@ Lvm Tan Clu Wrapper
 
 - CLU based wrapper for TwiceAsNice.
 - Uses a container for deployment and testing. 
+- Uses podman¹ for building the container.
 
+¹ Setting an alias to use docker might work.
+
+   alias podman="sudo docker"
+   
 ## Prerequisites
 
 Some linux distributions do not have python >= 3.7 as the standard python3 version.
