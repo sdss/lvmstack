@@ -47,11 +47,11 @@ Some linux distributions do not have python >= 3.7 as the standard python3 versi
     cd lvmtan      
 
 ### Build
-    # build sdist & wheel
-    poetry build
-    
     # update local py env
     poetry update
+    
+    # build sdist & wheel
+    poetry build
     
     # build tan container
     poetry run container_build
