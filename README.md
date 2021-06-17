@@ -67,11 +67,11 @@ Some linux distributions do not have python >= 3.7 as the standard python3 versi
 ### Run tests 
 
     # run tests
-    poetry run pytest -p no:logging -s -v 
-    # ... with slow tests
-    poetry run pytest --runslow
+    poetry run pytest
+    # ... with slow tests with enabled log to stdout
+    poetry run pytest -p no:logging -s -v --runslow
     # ... only test 02
-    poetry run pytest -p no:logging -s -v -k test_02_lvm_all.py
+    poetry run pytest -k test_02_lvm_all.py
     # ... without UI
     DISPLAY= poetry run pytest -p no:logging -s -v -k test_02_lvm_all.py
     
