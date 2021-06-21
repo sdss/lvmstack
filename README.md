@@ -9,7 +9,7 @@ Lvm Tan Clu Wrapper
 
 ## Features
 
-- CLU based wrapper for ![TwiceAsNice](https://svn.mpia.de/trac/gulli/TwiceAsNice/].
+- CLU based wrapper for [TwiceAsNice](https://svn.mpia.de/trac/gulli/TwiceAsNice/)
 - Uses a container for deployment and testing. 
 - Uses podman¹ for building the container.
 
