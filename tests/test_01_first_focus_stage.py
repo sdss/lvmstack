@@ -26,7 +26,6 @@ test_first_focus_stage_started_by_me = False
 async def client():
     global test_first_focus_stage_started_by_me
     if not container.isRunning(test_first_focus_stage):
-        print(f"Start own container {test_first_focus_stage}")
         runner = CliRunner()
         result = runner.invoke(container.start, ['--with-ui'])
         assert result.exit_code == 0

@@ -10,20 +10,13 @@ module_name = module_tool_poetry['name']
 module_package_from = module_tool_poetry['packages'][0]['from']
 module_package_include = module_tool_poetry['include']
 
-print(module_package_include)
-
-
 module_install_requires = [k+v.replace("^","!=").replace("*","") 
                            if type(v) == str else k+v['version'].replace("^","!=").replace("*","")
                                  for (k,v) in module_tool_poetry['dependencies'].items()]
-#print(module_install_requires)
-
 
 module_devel_requires = [k+v.replace("^","!=").replace("*","") 
                            if type(v) == str else k+v['version'].replace("^","!=").replace("*","")
                                  for (k,v) in module_tool_poetry['dev-dependencies'].items()]
-#print(module_devel_requires)
-
 setup(
     name = module_name,
     version = module_tool_poetry['version'],
