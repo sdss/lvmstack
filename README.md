@@ -68,7 +68,7 @@ Some linux distributions do not have python >= 3.7 as the standard python3 versi
     poetry run container_start --name lvm.all
     poetry run container_stop --name lvm.all
 
-    # default config test.first.focus_stage-svr.conf with real hardware
+    # config test.first.focus_stage-svr.conf with real hardware
     poetry run container_start --with-hw
     poetry run container_stop
     
