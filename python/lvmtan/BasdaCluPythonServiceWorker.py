@@ -144,16 +144,9 @@ class BasdaCluPythonServiceWorker(Worker):
    def idleOnline(self):
       while not self.worker.timedWaitForNewState(Time.seconds(0.01)):
         tasks = asyncio.Task.all_tasks(self.loop)
-        if len(tasks):
-           self.loop.run_until_complete(asyncio.wait(tasks, timeout=0.1))
-      #if not self.worker.timedWaitForNewState(self.online_wait):
-        #self.worker.setState(ServiceState.WORKING)
+        self.loop.run_until_complete(asyncio.gather(*tasks))
 
    async def runWhileStateIsWORKING(self):
        return
 
-   #def work(self):
-      #U9_LOG("Work %s" % self.worker.state())
-#          self.loop.run_forever()
-       
 
