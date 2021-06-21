@@ -67,6 +67,9 @@ Some linux distributions do not have python >= 3.7 as the standard python3 versi
     # all stages config lvm.all-sim.conf
     poetry run container_start --name lvm.all
     poetry run container_stop --name lvm.all
+    
+    # log of the running container, -f output appended data as the file grows.
+    podman logs -f lvm.all
 
     # config test.first.focus_stage-svr.conf with real hardware
     poetry run container_start --with-hw
