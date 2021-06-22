@@ -41,6 +41,7 @@ Some linux distributions do not have python >= 3.7 as the standard python3 versi
     export PATH=~/.local/bin/:$PATH
 
 ## Quick start
+For running tests or containers a running RabbitMQ on localhost is expected with guest/guest
 
 ### Download
     git clone https://github.com/wasndas/lvmtan.git
