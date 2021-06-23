@@ -36,7 +36,7 @@ Some linux distributions do not have python >= 3.7 as the standard python3 versi
     zypper ar https://download.opensuse.org/repositories/devel:/languages:/python:/Factory/openSUSE_Leap_15.2/ devel_python
     zypper install python39
     # as user 
-    python3.9  -m pip  install --user --upgrade pip
+    python3.9 -m venv ~/.local/
     pip3.9 install poetry
     export PATH=~/.local/bin/:$PATH
 
