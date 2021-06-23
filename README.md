@@ -37,6 +37,7 @@ Some linux distributions do not have python >= 3.7 as the standard python3 versi
     zypper install python39
     # as user 
     python3.9 -m venv ~/.local/
+    pip3.9 install --upgrade pip
     pip3.9 install poetry
     export PATH=~/.local/bin/:$PATH
 
