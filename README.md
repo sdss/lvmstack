@@ -45,7 +45,7 @@ Some linux distributions do not have python >= 3.7 as the standard python3 versi
 For running tests or containers a running RabbitMQ on localhost is expected with guest/guest
 
 ### Download
-    git clone https://github.com/wasndas/lvmtan.git
+    git clone https://github.com/sdss/lvmtan.git
     cd lvmtan      
 
 ### Build
