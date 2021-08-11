@@ -34,7 +34,7 @@ Some linux distributions do not have python >= 3.7 as the standard python3 versi
 
     # as root
     zypper ar https://download.opensuse.org/repositories/devel:/languages:/python:/Factory/openSUSE_Leap_15.2/ devel_python
-    zypper install python39
+    zypper install python39-devel
     # as user 
     python3.9 -m ensurepip --default-pip # Alternatve: python3.9 -m venv ~/.local 
     pip3.9 install --upgrade pip
