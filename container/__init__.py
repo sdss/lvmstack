@@ -52,7 +52,10 @@ def build(lvmt_root:str, use_cache: bool):
 def start(name: str, with_ui: bool, with_hw: bool, lvmt_root:str):
     lvmt_image = f"localhost/{lvmt_image_name}"
 
+
     run_base = f"--rm -t --name {name} --network=host"
+    if os.path.exists('/usr/bin/crun'):
+       run_base += f" --runtime /usr/bin/crun"
     if with_ui and os.environ.get("DISPLAY"):
         system_xauthority=PosixPath('~/.Xauthority').expanduser()
         run_base +=  f" -e DISPLAY -v {system_xauthority}:/root/.Xauthority:Z --ipc=host"
@@ -64,6 +67,7 @@ def start(name: str, with_ui: bool, with_hw: bool, lvmt_root:str):
     run_with_hw = "-svr.conf" if with_hw else "-sim.conf"
     run_tan = f"-v {lvmt_root}:/root/lvmt:Z -e BASDARD_CONFIG={config(name, pstfx = run_with_hw)}"
     run = f"{container_bin} run {run_base} {run_tan} {lvmt_image}"
+    print (run)
     child = pexpect.spawn(run)
     child.expect('Connected to')
     assert isRunning(name) == True

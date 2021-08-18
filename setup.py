@@ -7,12 +7,14 @@ module = toml.load("pyproject.toml")
 module_tool_poetry = module['tool']['poetry']
 module_name = module_tool_poetry['name']
 
-module_package_from = module_tool_poetry['packages'][0]['from']
+module_package_from = module_tool_poetry['packages'][0]['from'] 
+
 module_package_include = module_tool_poetry['include']
 
 module_install_requires = [k+v.replace("^","!=").replace("*","") 
                            if type(v) == str else k+v['version'].replace("^","!=").replace("*","")
-                                 for (k,v) in module_tool_poetry['dependencies'].items()]
+                                 for (k,v) in module_tool_poetry['dependencies'].items() 
+                                     if k != "python"]
 
 module_devel_requires = [k+v.replace("^","!=").replace("*","") 
                            if type(v) == str else k+v['version'].replace("^","!=").replace("*","")
@@ -31,7 +33,7 @@ setup(
     packages = find_packages(module_package_from),
     package_data={'': module_package_include},
     keywords = ', '.join(module_tool_poetry['keywords']),
-    python_requires = ">=3.6, <4",
+    python_requires = ">=3.7, <4",
     install_requires = module_install_requires,
     test_suite="tests",
     extras_require = {
