@@ -28,6 +28,7 @@ class BasdaMoccaCluPythonServiceWorker(BasdaCluPythonServiceWorker):
       self.schema["properties"]["Moving"] = {"type": "boolean"}
       self.schema["properties"]["PositionSwitchStatus"] = {"type": "number"}
       self.schema["properties"]["NamedPosition"] = {"type": "number"}
+      self.schema["properties"]["Reachable"] = {"type": "boolean"}
       
    @command_parser.command()
    @BasdaCluPythonServiceWorker.wrapper
