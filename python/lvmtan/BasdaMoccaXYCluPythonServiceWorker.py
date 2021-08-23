@@ -50,8 +50,8 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         return command.finish(Position_X=p.x(), Position_Y=p.y(), Units=units)
       
    @command_parser.command()
-   @click.argument("POSITIONX", type=int)
-   @click.argument("POSITIONY", type=int)
+   @click.argument("POSITION_X", type=int)
+   @click.argument("POSITION_Y", type=int)
    @BasdaCluPythonServiceWorker.wrapper
    async def setPositionXY(self, command: Command, position_x: int, position_y: int):
         self.service.setPosition(Nice.NPoint(position_x, position_y))
@@ -71,13 +71,18 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
    @command_parser.command()
    @BasdaCluPythonServiceWorker.wrapper
    async def getVelocityXY(self, command: Command):
-        return command.finish(Velocity=self.service.getVelocity())
+        vp = self.service.getVelocity()
+        return command.finish(
+            Velocity_X = vp.x(),
+            Velocity_Y = vp.y()
+            )
       
    @command_parser.command()
-   @click.argument("VELOCITYX", type=int)
-   @click.argument("VELOCITYY", type=int)
+   @click.argument("VELOCITY_X", type=int)
+   @click.argument("VELOCITY_Y", type=int)
    @BasdaCluPythonServiceWorker.wrapper
    async def setVelocityXY(self, command: Command, velocity_x: int, velocity_y: int):
+        vp = self.getVelocity(units)
         self.service.setVelocity(velocity)
         return command.finish()
       
@@ -96,12 +101,12 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         E_LOG(traceback.format_exception(*sys.exc_info()))
       
    @command_parser.command()
-   @click.argument("POSITIONX", type=int)
-   @click.argument("POSITIONY", type=int)
+   @click.argument("POSITION_X", type=int)
+   @click.argument("POSITION_Y", type=int)
    @click.argument('UNITS', type=str, default='STEPS')
    @BasdaCluPythonServiceWorker.wrapper
    async def moveRelativeXY(self, command: Command, position_x: int, position_y: int, units: str):
-        self.service.moveRelativeStart(Nice.NPoint(position_x, position_y), units)
+        self.service.moveRelativeStart(Nice.Point(position_x, position_y), units)
         while not self.service.moveRelativeCompletion().isDone():
             await asyncio.sleep(0.1)
             p = self.service.getDeviceEncoderPosition(units)
@@ -123,12 +128,12 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         )
       
    @command_parser.command()
-   @click.argument("POSITIONX", type=int)
-   @click.argument("POSITIONY", type=int)
+   @click.argument("POSITION_X", type=int)
+   @click.argument("POSITION_Y", type=int)
    @click.argument('UNITS', type=str, default='STEPS')
    @BasdaCluPythonServiceWorker.wrapper
    async def moveAbsoluteXY(self, command: Command, position_x: int, position_y: int, units: str):
-        self.service.moveAbsoluteStart(position, units)
+        self.service.moveAbsoluteStart(Nice.Point(position_x, position_y), units)
         while not self.service.moveAbsoluteCompletion().isDone():
             await asyncio.sleep(0.1)
             p = self.service.getDeviceEncoderPosition(units)
@@ -137,8 +142,8 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
                 DeviceEncoderPosition_X = p.x(), 
                 DeviceEncoderPosition_Y = p.y(), 
                 Units=units,
-                Velocity_X = vp[0],
-                Velocity_Y = vp[1]
+                Velocity_X = vp.x(),
+                Velocity_Y = vp.y()
             )
         self.service.moveAbsoluteWait()
 
@@ -183,8 +188,8 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         return command.finish(AtLimit_X=p.x(), AtLimit_Y=p.y())
 
    @command_parser.command()
-   @click.argument("LIMITX", type=int)
-   @click.argument("LIMITY", type=int)
+   @click.argument("LIMIT_X", type=int)
+   @click.argument("LIMIT_Y", type=int)
    @click.argument('UNITS', type=str, default='STEPS')
    @BasdaCluPythonServiceWorker.wrapper
    async def moveToLimitXY(self, command: Command, limit_x: int, limit_y: int, units: str):
