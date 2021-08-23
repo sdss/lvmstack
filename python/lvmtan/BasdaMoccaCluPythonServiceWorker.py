@@ -85,10 +85,10 @@ class BasdaMoccaCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
       
       
    @command_parser.command()
-   @click.argument("POSITION", type=int)
+   @click.argument("POSITION", type=float)
    @click.argument('UNITS', type=str, default='STEPS')
    @BasdaCluPythonServiceWorker.wrapper
-   async def moveRelative(self, command: Command, position: int, units: str):
+   async def moveRelative(self, command: Command, position: float, units: str):
         self.service.moveRelativeStart(position, units)
         while not self.service.moveRelativeCompletion().isDone():
             await asyncio.sleep(0.1)
@@ -102,10 +102,10 @@ class BasdaMoccaCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         return command.finish(DeviceEncoderPosition = self.service.getDeviceEncoderPosition(units), Units=units)
       
    @command_parser.command()
-   @click.argument("POSITION", type=int)
+   @click.argument("POSITION", type=float)
    @click.argument('UNITS', type=str, default='STEPS')
    @BasdaCluPythonServiceWorker.wrapper
-   async def moveAbsolute(self, command: Command, position: int, units: str):
+   async def moveAbsolute(self, command: Command, position: float, units: str):
         self.service.moveAbsoluteStart(position, units)
         while not self.service.moveAbsoluteCompletion().isDone():
             await asyncio.sleep(0.1)
@@ -139,7 +139,7 @@ class BasdaMoccaCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         )
       
    @command_parser.command()
-   @click.argument("NAMEDPOSITION", type=int)
+   @click.argument("NAMEDPOSITION", type=float)
    @BasdaCluPythonServiceWorker.wrapper
    async def moveToNamedPosition(self, command: Command, namedposition: int):
         self.service.moveToNamedPositionStart(namedposition)

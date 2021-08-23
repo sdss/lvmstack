@@ -50,10 +50,10 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         return command.finish(Position_X=p.x(), Position_Y=p.y(), Units=units)
       
    @command_parser.command()
-   @click.argument("POSITION_X", type=int)
-   @click.argument("POSITION_Y", type=int)
+   @click.argument("POSITION_X", type=float)
+   @click.argument("POSITION_Y", type=float)
    @BasdaCluPythonServiceWorker.wrapper
-   async def setPositionXY(self, command: Command, position_x: int, position_y: int):
+   async def setPositionXY(self, command: Command, position_x: float, position_y: float):
         self.service.setPosition(Nice.NPoint(position_x, position_y))
         return command.finish()
       
@@ -61,7 +61,6 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
    @click.argument('UNITS', type=str, default='STEPS')
    @BasdaCluPythonServiceWorker.wrapper
    async def getDeviceEncoderPositionXY(self, command: Command, units: str):
-        Nice.N_LOG("Hello world")
         p = self.service.getDeviceEncoderPosition(units)
         return command.finish(
             DeviceEncoderPosition_X=p.x(), 
@@ -78,10 +77,10 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             )
       
    @command_parser.command()
-   @click.argument("VELOCITY_X", type=int)
-   @click.argument("VELOCITY_Y", type=int)
+   @click.argument("VELOCITY_X", type=float)
+   @click.argument("VELOCITY_Y", type=float)
    @BasdaCluPythonServiceWorker.wrapper
-   async def setVelocityXY(self, command: Command, velocity_x: int, velocity_y: int):
+   async def setVelocityXY(self, command: Command, velocity_x: float, velocity_y: float):
         vp = self.service.getVelocity()
         self.service.setVelocity(velocity)
         return command.finish()
@@ -101,16 +100,16 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         E_LOG(traceback.format_exception(*sys.exc_info()))
       
    @command_parser.command()
-   @click.argument("POSITION_X", type=int)
-   @click.argument("POSITION_Y", type=int)
+   @click.argument("POSITION_X", type=float)
+   @click.argument("POSITION_Y", type=float)
    @click.argument('UNITS', type=str, default='STEPS')
    @BasdaCluPythonServiceWorker.wrapper
-   async def moveRelativeXY(self, command: Command, position_x: int, position_y: int, units: str):
+   async def moveRelativeXY(self, command: Command, position_x: float, position_y: float, units: str):
         self.service.moveRelativeStart(Nice.Point(position_x, position_y), units)
         while not self.service.moveRelativeCompletion().isDone():
             await asyncio.sleep(0.1)
             p = self.service.getDeviceEncoderPosition(units)
-            vp = self.service.getVelocity(units)
+            vp = self.service.getVelocity()
             command.info(
                 DeviceEncoderPosition_X = p.x(), 
                 DeviceEncoderPosition_Y = p.y(), 
@@ -118,6 +117,7 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
                 Velocity_X = vp.x(),
                 Velocity_Y = vp.y()
             )
+            
         self.service.moveRelativeWait()
 
         p = self.service.getDeviceEncoderPosition(units)
@@ -128,11 +128,11 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         )
       
    @command_parser.command()
-   @click.argument("POSITION_X", type=int)
-   @click.argument("POSITION_Y", type=int)
+   @click.argument("POSITION_X", type=float)
+   @click.argument("POSITION_Y", type=float)
    @click.argument('UNITS', type=str, default='STEPS')
    @BasdaCluPythonServiceWorker.wrapper
-   async def moveAbsoluteXY(self, command: Command, position_x: int, position_y: int, units: str):
+   async def moveAbsoluteXY(self, command: Command, position_x: float, position_y: float, units: str):
         self.service.moveAbsoluteStart(Nice.Point(position_x, position_y), units)
         while not self.service.moveAbsoluteCompletion().isDone():
             await asyncio.sleep(0.1)
@@ -145,7 +145,9 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
                 Velocity_X = vp.x(),
                 Velocity_Y = vp.y()
             )
+            
         self.service.moveAbsoluteWait()
+        
         p = self.service.getDeviceEncoderPosition(units)
         return command.finish(
             DeviceEncoderPosition_X = p.x(), 
@@ -214,11 +216,13 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             await asyncio.sleep(0.1)
             
             p = self.service.getDeviceEncoderPosition(units)
+            v = self.service.getVelocity()
             command.info(
                 DeviceEncoderPosition_X = p.x(), 
                 DeviceEncoderPosition_Y = p.y(), 
                 Units=units,
-                Velocity = self.service.getVelocity(),
+                Velocity_X = v.x(),
+                Velocity_Y = v.y()
             )
         self.service.moveToLimitWait()
 
@@ -239,11 +243,13 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         while not self.service.moveToHomeCompletion().isDone():
             await asyncio.sleep(0.1)
             p = self.service.getDeviceEncoderPosition(units)
+            v = self.service.getVelocity()
             command.info(
                 DeviceEncoderPosition_X = p.x(), 
                 DeviceEncoderPosition_Y = p.y(), 
                 Units=units,
-                Velocity = self.service.getVelocity()
+                Velocity_X = v.x(),
+                Velocity_Y = v.y()
             )
         self.service.moveToHomeWait()
 
@@ -263,11 +269,13 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         while not self.service.moveToNamedPositionCompletion().isDone():
             await asyncio.sleep(0.1)
             p = self.service.getDeviceEncoderPosition(units)
+            v = self.service.getVelocity()
             command.info(
                 DeviceEncoderPosition_X = p.x(), 
                 DeviceEncoderPosition_Y = p.y(), 
                 Units=units,
-                Velocity = self.service.getVelocity()
+                Velocity_X = v.x(),
+                Velocity_Y = v.y()
             )
 
         self.service.moveToNamedPositionWait()
