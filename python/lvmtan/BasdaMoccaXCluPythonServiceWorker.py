@@ -22,20 +22,6 @@ class BasdaMoccaXCluPythonServiceWorker(BasdaMoccaCluPythonServiceWorker):
       BasdaMoccaCluPythonServiceWorker.__init__(self, _svcName)
 
 
-   @command_parser.command()
-   @BasdaCluPythonServiceWorker.wrapper
-   async def getAbsoluteEncoderPosition(self, command: Command):
-        return command.finish(AbsoluteEncoderPosition=self.service.getAbsoluteEncoderPosition())
-      
-   @command_parser.command()
-   @BasdaCluPythonServiceWorker.wrapper
-   async def getIncrementalEncoderPosition(self, command: Command):
-        return command.finish(IncrementalEncoderPosition=self.service.getIncrementalEncoderPosition())
-      
-   @command_parser.command()
-   @BasdaCluPythonServiceWorker.wrapper
-   async def getCurrentTime(self, command: Command):
-        return command.finish(CurrentTime=self.service.getCurrentTime())
       
    @command_parser.command()
    @BasdaCluPythonServiceWorker.wrapper

@@ -12,34 +12,28 @@ import BasdaService
 import BasdaMoccaException
 import BasdaMoccaX
 
-from .BasdaCluPythonServiceWorker import asyncio, click, command_parser, Command, BasdaCluPythonServiceWorker
+from .BasdaMoccaBaseCluPythonServiceWorker import *
 
 
-class BasdaMoccaCluPythonServiceWorker(BasdaCluPythonServiceWorker):
+class BasdaMoccaCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
    'python clu worker'
-
+   
    def __init__(self, _svcName):
-      BasdaCluPythonServiceWorker.__init__(self, _svcName)
+      BasdaMoccaBaseCluPythonServiceWorker.__init__(self, _svcName)
       self.schema["properties"]["Position"] = {"type": "number"}
       self.schema["properties"]["DeviceEncoderPosition"] = {"type": "number"}
-      self.schema["properties"]["AtLimit"] = {"type": "boolean"}
+      self.schema["properties"]["IncrementalEncoderPosition"] = {"type": "number"}
+      self.schema["properties"]["AbsoluteEncoderPosition"] = {"type": "number"}
       self.schema["properties"]["Velocity"] = {"type": "number"}
-      self.schema["properties"]["AtHome"] = {"type": "boolean"}
-      self.schema["properties"]["Moving"] = {"type": "boolean"}
       self.schema["properties"]["PositionSwitchStatus"] = {"type": "number"}
       self.schema["properties"]["NamedPosition"] = {"type": "number"}
-      self.schema["properties"]["Reachable"] = {"type": "boolean"}
+
       
    @command_parser.command()
    @BasdaCluPythonServiceWorker.wrapper
    async def getAbsoluteEncoderPosition(self, command: Command):
         return command.finish(AbsoluteEncoderPosition=self.service.getAbsoluteEncoderPosition())
 
-   @command_parser.command()
-   @BasdaCluPythonServiceWorker.wrapper
-   async def isReachable(self, command: Command):
-        return command.finish(Reachable=self.service.isReachable())
-      
    @command_parser.command()
    @click.argument('UNITS', type=str, default='STEPS')
    @BasdaCluPythonServiceWorker.wrapper
@@ -58,33 +52,16 @@ class BasdaMoccaCluPythonServiceWorker(BasdaCluPythonServiceWorker):
    @BasdaCluPythonServiceWorker.wrapper
    async def getDeviceEncoderPosition(self, command: Command, units: str):
         return command.finish(DeviceEncoderPosition=self.service.getDeviceEncoderPosition(units), Units=units)
+
+   @command_parser.command()
+   @BasdaCluPythonServiceWorker.wrapper
+   async def getIncrementalEncoderPosition(self, command: Command):
+        return command.finish(IncrementalEncoderPosition=self.service.getIncrementalEncoderPosition())
       
    @command_parser.command()
    @BasdaCluPythonServiceWorker.wrapper
    async def getVelocity(self, command: Command):
         return command.finish(Velocity=self.service.getVelocity())
-      
-   @command_parser.command()
-   @click.argument("VELOCITY", type=int)
-   @BasdaCluPythonServiceWorker.wrapper
-   async def setVelocity(self, command: Command, velocity: int):
-        self.service.setVelocity(velocity)
-        return command.finish()
-      
-   @command_parser.command()
-   @BasdaCluPythonServiceWorker.wrapper
-   async def getPositionSwitchStatus(self, command: Command):
-        return command.finish(PositionSwitchStatus=self.service.getPositionSwitchStatus()[0].getValue())
-      
-   @command_parser.command()
-   @BasdaCluPythonServiceWorker.wrapper
-   async def isAtHome(self, command: Command):
-        return command.finish(AtHome=self.service.isAtHome())
-      
-   @command_parser.command()
-   @BasdaCluPythonServiceWorker.wrapper
-   async def isMoving(self, command: Command):
-        return command.finish(Moving=self.service.isMoving())
       
    @command_parser.command()
    @click.argument("NAMEDPOSITION", type=int)
@@ -98,6 +75,14 @@ class BasdaMoccaCluPythonServiceWorker(BasdaCluPythonServiceWorker):
         E_LOG(e)         
      except Exception as e:
         E_LOG(traceback.format_exception(*sys.exc_info()))
+
+   @command_parser.command()
+   @click.argument("VELOCITY", type=int)
+   @BasdaCluPythonServiceWorker.wrapper
+   async def setVelocity(self, command: Command, velocity: int):
+        self.service.setVelocity(velocity)
+        return command.finish()
+      
       
    @command_parser.command()
    @click.argument("POSITION", type=int)
@@ -168,5 +153,9 @@ class BasdaMoccaCluPythonServiceWorker(BasdaCluPythonServiceWorker):
 
         self.service.moveToNamedPositionWait()
 
-        return command.finish(NamedPosition=self.service.getNamedPosition(namedposition))
+        return command.finish(
+            DeviceEncoderPosition = self.service.getDeviceEncoderPosition(units), 
+            NamedPosition=self.service.getNamedPosition(namedposition)
+        )
+
 

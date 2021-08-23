@@ -12,14 +12,14 @@ import BasdaService
 import BasdaMoccaException
 import BasdaMoccaXY
 
-from .BasdaCluPythonServiceWorker import *
+from .BasdaMoccaBaseCluPythonServiceWorker import *
 
 
-class BasdaMoccaXYCluPythonServiceWorker(BasdaCluPythonServiceWorker):
-   'python clu x worker'
+class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
+   'python clu xy worker'
 
    def __init__(self, _svcName):
-      BasdaCluPythonServiceWorker.__init__(self, _svcName)
+      BasdaMoccaBaseCluPythonServiceWorker.__init__(self, _svcName)
       self.schema["properties"]["Position_X"] = {"type": "number"}
       self.schema["properties"]["Position_Y"] = {"type": "number"}
       self.schema["properties"]["DeviceEncoderPosition_X"] = {"type": "number"}
@@ -28,81 +28,66 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaCluPythonServiceWorker):
       self.schema["properties"]["AtLimit_Y"] = {"type": "boolean"}
       self.schema["properties"]["Velocity_X"] = {"type": "number"}
       self.schema["properties"]["Velocity_Y"] = {"type": "number"}
-      self.schema["properties"]["AtHome"] = {"type": "boolean"}
-      self.schema["properties"]["Moving"] = {"type": "boolean"}
       self.schema["properties"]["PositionSwitchStatus_X"] = {"type": "number"}
       self.schema["properties"]["PositionSwitchStatus_Y"] = {"type": "number"}
-      self.schema["properties"]["NamedPosition"] = {"type": "number"}
-      self.schema["properties"]["Reachable"] = {"type": "boolean"}
+      self.schema["properties"]["NamedPosition_X"] = {"type": "number"}
+      self.schema["properties"]["NamedPosition_Y"] = {"type": "number"}
+      self.schema["properties"]["AbsoluteEncoderPosition_X"] = {"type": "number"}
+      self.schema["properties"]["AbsoluteEncoderPosition_Y"] = {"type": "number"}
       
    @command_parser.command()
    @BasdaCluPythonServiceWorker.wrapper
-   async def getAbsoluteEncoderPosition(self, command: Command):
-        np = self.service.getAbsoluteEncoderPosition()
-        return command.finish(AbsoluteEncoderPosition_X=np[0], AbsoluteEncoderPosition_Y=np[1])
+   async def getAbsoluteEncoderPositionXY(self, command: Command):
+        p = self.service.getAbsoluteEncoderPosition()
+        return command.finish(AbsoluteEncoderPosition_X=p.x(), AbsoluteEncoderPosition_Y=p.y())
 
-   @command_parser.command()
-   @BasdaCluPythonServiceWorker.wrapper
-   async def isReachable(self, command: Command):
-        return command.finish(Reachable=self.service.isReachable())
-      
    @command_parser.command()
    @click.argument('UNITS', type=str, default='STEPS')
    @BasdaCluPythonServiceWorker.wrapper
-   async def getPosition(self, command: Command, units: str):
-        np = self.service.getPosition(units)
-        return command.finish(PositionX=np[0], PositionY=np[1], Units=units)
+   async def getPositionXY(self, command: Command, units: str):
+        Nice.N_LOG("Hello world")
+        p = self.service.getPosition(units)
+        return command.finish(Position_X=p.x(), Position_Y=p.y(), Units=units)
       
    @command_parser.command()
-   @click.argument("POSITION_X", type=int)
-   @click.argument("POSITION_Y", type=int)
+   @click.argument("POSITIONX", type=int)
+   @click.argument("POSITIONY", type=int)
    @BasdaCluPythonServiceWorker.wrapper
-   async def setPosition(self, command: Command, position_x: int, position_y: int):
+   async def setPositionXY(self, command: Command, position_x: int, position_y: int):
         self.service.setPosition(Nice.NPoint(position_x, position_y))
         return command.finish()
       
    @command_parser.command()
    @click.argument('UNITS', type=str, default='STEPS')
    @BasdaCluPythonServiceWorker.wrapper
-   async def getDeviceEncoderPosition(self, command: Command, units: str):
-        np = self.service.getDeviceEncoderPosition(units)
-        return command.finish(DeviceEncoderPosition_X=np[0], DeviceEncoderPosition_Y=np[1], Units=units)
+   async def getDeviceEncoderPositionXY(self, command: Command, units: str):
+        Nice.N_LOG("Hello world")
+        p = self.service.getDeviceEncoderPosition(units)
+        return command.finish(
+            DeviceEncoderPosition_X=p.x(), 
+            DeviceEncoderPosition_Y=p.y(), 
+            Units=units)
       
    @command_parser.command()
    @BasdaCluPythonServiceWorker.wrapper
-   async def getVelocity(self, command: Command):
+   async def getVelocityXY(self, command: Command):
         return command.finish(Velocity=self.service.getVelocity())
       
    @command_parser.command()
-   @click.argument("VELOCITY_X", type=int)
-   @click.argument("VELOCITY_Y", type=int)
+   @click.argument("VELOCITYX", type=int)
+   @click.argument("VELOCITYY", type=int)
    @BasdaCluPythonServiceWorker.wrapper
-   async def setVelocity(self, command: Command, velocity_x: int, velocity_y: int):
+   async def setVelocityXY(self, command: Command, velocity_x: int, velocity_y: int):
         self.service.setVelocity(velocity)
         return command.finish()
       
    @command_parser.command()
-   @BasdaCluPythonServiceWorker.wrapper
-   async def getPositionSwitchStatus(self, command: Command):
-        return command.finish(PositionSwitchStatus=self.service.getPositionSwitchStatus()[0].getValue())
-      
-   @command_parser.command()
-   @BasdaCluPythonServiceWorker.wrapper
-   async def isAtHome(self, command: Command):
-        return command.finish(AtHome=self.service.isAtHome())
-      
-   @command_parser.command()
-   @BasdaCluPythonServiceWorker.wrapper
-   async def isMoving(self, command: Command):
-        return command.finish(Moving=self.service.isMoving())
-      
-   @command_parser.command()
    @click.argument("NAMEDPOSITION", type=int)
    @BasdaCluPythonServiceWorker.wrapper
-   async def getNamedPosition(self, command: Command, namedposition: int):
+   async def getNamedPositionXY(self, command: Command, namedposition: int):
      try:
-        np = self.service.getNamedPosition(namedposition)
-        return command.finish(NamedPosition_X=np[0], NamedPosition_Y=np[1])
+        p = self.service.getNamedPosition(namedposition)
+        return command.finish(NamedPosition_X=p.x(), NamedPosition_Y=p.y())
      except Basda.Exception as e:
         E_LOG(e)         
      except Nice.Exception as e:
@@ -111,99 +96,74 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaCluPythonServiceWorker):
         E_LOG(traceback.format_exception(*sys.exc_info()))
       
    @command_parser.command()
-   @click.argument("POSITION_X", type=int)
-   @click.argument("POSITION_Y", type=int)
+   @click.argument("POSITIONX", type=int)
+   @click.argument("POSITIONY", type=int)
    @click.argument('UNITS', type=str, default='STEPS')
    @BasdaCluPythonServiceWorker.wrapper
-   async def moveRelative(self, command: Command, position_x: int, position_y: int, units: str):
+   async def moveRelativeXY(self, command: Command, position_x: int, position_y: int, units: str):
         self.service.moveRelativeStart(Nice.NPoint(position_x, position_y), units)
         while not self.service.moveRelativeCompletion().isDone():
             await asyncio.sleep(0.1)
-            np = self.service.getDeviceEncoderPosition(units)
+            p = self.service.getDeviceEncoderPosition(units)
             vp = self.getVelocity(units)
             command.info(
-                DeviceEncoderPosition_X = np[0], 
-                DeviceEncoderPosition_Y = np[1], 
+                DeviceEncoderPosition_X = p.x(), 
+                DeviceEncoderPosition_Y = p.y(), 
                 Units=units,
-                Velocity_X = vp[0],
-                Velocity_Y = vp[1]
+                Velocity_X = vp.x(),
+                Velocity_Y = vp.y()
             )
         self.service.moveRelativeWait()
 
-        np = self.service.getDeviceEncoderPosition(units)
+        p = self.service.getDeviceEncoderPosition(units)
         return command.finish(
-            DeviceEncoderPosition_X = np[0], 
-            DeviceEncoderPosition_Y = np[1], 
+            DeviceEncoderPosition_X = p.x(), 
+            DeviceEncoderPosition_Y = p.y(), 
             Units=units
         )
       
    @command_parser.command()
-   @click.argument("POSITION", type=int)
+   @click.argument("POSITIONX", type=int)
+   @click.argument("POSITIONY", type=int)
    @click.argument('UNITS', type=str, default='STEPS')
    @BasdaCluPythonServiceWorker.wrapper
-   async def moveAbsolute(self, command: Command, position: int, units: str):
+   async def moveAbsoluteXY(self, command: Command, position_x: int, position_y: int, units: str):
         self.service.moveAbsoluteStart(position, units)
         while not self.service.moveAbsoluteCompletion().isDone():
             await asyncio.sleep(0.1)
-            np = self.service.getDeviceEncoderPosition(units)
+            p = self.service.getDeviceEncoderPosition(units)
             vp = self.getVelocity(units)
             command.info(
-                DeviceEncoderPosition_X = np[0], 
-                DeviceEncoderPosition_Y = np[1], 
+                DeviceEncoderPosition_X = p.x(), 
+                DeviceEncoderPosition_Y = p.y(), 
                 Units=units,
                 Velocity_X = vp[0],
                 Velocity_Y = vp[1]
             )
         self.service.moveAbsoluteWait()
 
-        np = self.service.getDeviceEncoderPosition(units)
+        p = self.service.getDeviceEncoderPosition(units)
         return command.finish(
-            DeviceEncoderPosition_X = np[0], 
-            DeviceEncoderPosition_Y = np[1], 
-            Units=units
-        )
-      
-   @command_parser.command()
-   @click.argument('UNITS', type=str, default='STEPS')
-   @BasdaCluPythonServiceWorker.wrapper
-   async def moveToHome(self, command: Command, units: str):
-        self.service.moveToHomeStart()
-        while not self.service.moveToHomeCompletion().isDone():
-            await asyncio.sleep(0.1)
-            np = self.service.getDeviceEncoderPosition(units)
-            vp = self.getVelocity(units)
-            command.info(
-                DeviceEncoderPosition_X = np[0], 
-                DeviceEncoderPosition_Y = np[1], 
-                Units=units,
-                Velocity_X = vp[0],
-                Velocity_Y = vp[1]
-            )
-        self.service.moveToHomeWait()
-
-        np = self.service.getDeviceEncoderPosition(units)
-        return command.finish(
-            DeviceEncoderPosition_X = np[0], 
-            DeviceEncoderPosition_Y = np[1], 
-            AtHome=self.service.isAtHome(),
+            DeviceEncoderPosition_X = p.x(), 
+            DeviceEncoderPosition_Y = p.y(), 
             Units=units
         )
       
    @command_parser.command()
    @click.argument("NAMEDPOSITION", type=int)
    @BasdaCluPythonServiceWorker.wrapper
-   async def moveToNamedPosition(self, command: Command, namedposition: int):
+   async def moveToNamedPositionXY(self, command: Command, namedposition: int):
         self.service.moveToNamedPositionStart(namedposition)
         while not self.service.moveToNamedPositionCompletion().isDone():
             await asyncio.sleep(0.1)
-            np = self.service.getDeviceEncoderPosition(units)
-            vp = self.getVelocity(units)
+            p = self.service.getDeviceEncoderPosition(units)
+            v = self.getVelocity(units)
             command.info(
-                DeviceEncoderPosition_X = np[0], 
-                DeviceEncoderPosition_Y = np[1], 
+                DeviceEncoderPosition_X = p.x(), 
+                DeviceEncoderPosition_Y = p.y(), 
                 Units=units,
-                Velocity_X = vp[0],
-                Velocity_Y = vp[1]
+                Velocity_X = v.x(),
+                Velocity_Y = v.y()
             )
 
         self.service.moveToNamedPositionWait()
@@ -212,27 +172,22 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaCluPythonServiceWorker):
 
    @command_parser.command()
    @BasdaCluPythonServiceWorker.wrapper
-   async def getIncrementalEncoderPosition(self, command: Command):
-        np = self.service.getIncrementalEncoderPosition(units)
-        return command.finish(IncrementalEncoderPosition_X = np[0], IncrementalEncoderPosition_Y = np[1])
+   async def getIncrementalEncoderPositionXY(self, command: Command):
+        p = self.service.getIncrementalEncoderPosition(units)
+        return command.finish(IncrementalEncoderPosition_X = p.x(), IncrementalEncoderPosition_Y = p.y())
       
    @command_parser.command()
    @BasdaCluPythonServiceWorker.wrapper
-   async def getCurrentTime(self, command: Command):
-        return command.finish(CurrentTime=self.service.getCurrentTime())
-      
-   @command_parser.command()
-   @BasdaCluPythonServiceWorker.wrapper
-   async def isAtLimit(self, command: Command):
-        np = self.service.getDeviceEncoderPosition(units)
-        return command.finish(AtLimit_X=np[0], AtLimit_Y=np[1])
+   async def isAtLimitXY(self, command: Command):
+        p = self.service.getDeviceEncoderPosition(units)
+        return command.finish(AtLimit_X=p.x(), AtLimit_Y=p.y())
 
    @command_parser.command()
-   @click.argument("LIMIT_X", type=int)
-   @click.argument("LIMIT_Y", type=int)
+   @click.argument("LIMITX", type=int)
+   @click.argument("LIMITY", type=int)
    @click.argument('UNITS', type=str, default='STEPS')
    @BasdaCluPythonServiceWorker.wrapper
-   async def moveToLimit(self, command: Command, limit_x: int, limit_y: int, units: str):
+   async def moveToLimitXY(self, command: Command, limit_x: int, limit_y: int, units: str):
         if (limit_x == -1):
             command.info(text="move to negative x")
         elif (limit_x == 1):
@@ -253,21 +208,69 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaCluPythonServiceWorker):
         while not self.service.moveToLimitCompletion().isDone():
             await asyncio.sleep(0.1)
             
-            np = self.service.getDeviceEncoderPosition(units)
+            p = self.service.getDeviceEncoderPosition(units)
             command.info(
-                DeviceEncoderPosition_X = np[0], 
-                DeviceEncoderPosition_Y = np[1], 
+                DeviceEncoderPosition_X = p.x(), 
+                DeviceEncoderPosition_Y = p.y(), 
                 Units=units,
                 Velocity = self.service.getVelocity(),
             )
         self.service.moveToLimitWait()
 
         
-        np = self.service.getDeviceEncoderPosition(units)
+        p = self.service.getDeviceEncoderPosition(units)
         return command.finish(
-            DeviceEncoderPosition_X = np[0], 
-            DeviceEncoderPosition_Y = np[1], 
+            DeviceEncoderPosition_X = p.x(), 
+            DeviceEncoderPosition_Y = p.y(), 
             AtLimit=self.service.isAtLimit(), 
             Units=units
         )
       
+   @command_parser.command()
+   @click.argument('UNITS', type=str, default='STEPS')
+   @BasdaCluPythonServiceWorker.wrapper
+   async def moveToHomeXY(self, command: Command, units: str):
+        self.service.moveToHomeStart()
+        while not self.service.moveToHomeCompletion().isDone():
+            await asyncio.sleep(0.1)
+            p = self.service.getDeviceEncoderPosition(units)
+            command.info(
+                DeviceEncoderPosition_X = p.x(), 
+                DeviceEncoderPosition_Y = p.y(), 
+                Units=units,
+                Velocity = self.service.getVelocity()
+            )
+        self.service.moveToHomeWait()
+
+        p = self.service.getDeviceEncoderPosition(units)
+        return command.finish(
+            DeviceEncoderPosition_X = p.x(), 
+            DeviceEncoderPosition_Y = p.y(), 
+            AtHome=self.service.isAtHome(),
+            Units=units
+        )
+      
+   @command_parser.command()
+   @click.argument("NAMEDPOSITION", type=int)
+   @BasdaCluPythonServiceWorker.wrapper
+   async def moveToNamedPositionXY(self, command: Command, namedposition: int):
+        self.service.moveToNamedPositionStart(namedposition)
+        while not self.service.moveToNamedPositionCompletion().isDone():
+            await asyncio.sleep(0.1)
+            p = self.service.getDeviceEncoderPosition(units)
+            command.info(
+                DeviceEncoderPosition_X = p.x(), 
+                DeviceEncoderPosition_Y = p.y(), 
+                Units=units,
+                Velocity = self.service.getVelocity()
+            )
+
+        self.service.moveToNamedPositionWait()
+
+        p = self.service.getDeviceEncoderPosition(units)
+        return command.finish(
+                DeviceEncoderPosition_X = p.x(), 
+                DeviceEncoderPosition_Y = p.y(), 
+                NamedPosition=self.service.getNamedPosition(namedposition))
+
+
