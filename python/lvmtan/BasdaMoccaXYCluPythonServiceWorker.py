@@ -65,7 +65,8 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         return command.finish(
             DeviceEncoderPosition_X=p.x(), 
             DeviceEncoderPosition_Y=p.y(), 
-            Units=units)
+            Units=units
+        )
       
    @command_parser.command()
    @BasdaCluPythonServiceWorker.wrapper
@@ -74,7 +75,7 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         return command.finish(
             Velocity_X = vp.x(),
             Velocity_Y = vp.y()
-            )
+        )
       
    @command_parser.command()
    @click.argument("VELOCITY_X", type=float)
