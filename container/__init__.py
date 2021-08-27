@@ -32,7 +32,15 @@ def config(name, pstfx="-sim.conf"):
 def isRunning(name: str = default_basdard_test):
     command = subprocess.run(shlex.split(f"{container_bin} container exists {name}"))
     return not command.returncode # True if running
-  
+
+def getXauthority():
+    for xa in [f"/run/user/{os.getuid()}/gdm/Xauthority", '~/.Xauthority']:
+        xa=PosixPath(xa).expanduser()
+        if xa.exists():
+            return xa
+    return None
+
+
 @click.command()   
 @click.option("--lvmt_root", default=lvmt_root, type=str)
 @click.option("--use-cache/--no-cache", default=True)
@@ -56,8 +64,8 @@ def start(name: str, with_ui: bool, with_hw: bool, lvmt_root:str):
     run_base = f"--rm -t --name {name} --network=host"
     if os.path.exists('/usr/bin/crun'):
        run_base += f" --runtime /usr/bin/crun"
-    if with_ui and os.environ.get("DISPLAY"):
-        system_xauthority=PosixPath('~/.Xauthority').expanduser()
+    system_xauthority = getXauthority()
+    if with_ui and os.environ.get("DISPLAY") and system_xauthority:
         run_base +=  f" -e DISPLAY -v {system_xauthority}:/root/.Xauthority:Z --ipc=host"
         if os.path.exists('/dev/dri'):
             run_base +=  ' --device /dev/dri'
