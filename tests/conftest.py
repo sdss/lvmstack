@@ -19,7 +19,6 @@ import os
 import pathlib
 
 import pytest
-
 from clu import AMQPActor, AMQPClient, JSONActor
 from clu.protocol import open_connection
 
@@ -42,4 +41,3 @@ def pytest_collection_modifyitems(config, items):
     for item in items:
         if "slow" in item.keywords:
             item.add_marker(skip_slow)
-

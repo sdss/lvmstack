@@ -37,6 +37,7 @@ container_isRunning ="container:isRunning"
 python = ">=3.7,<4"
 sdsstools = ">=0.4.0"
 sdss-clu = ">1.0"
+black = "^21.8b0"
 
 [tool.poetry.dev-dependencies]
 ipython = ">=7.11.0"
