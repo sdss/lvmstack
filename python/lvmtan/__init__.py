@@ -8,19 +8,19 @@
 
 from sdsstools import get_config, get_logger, get_package_version
 
-#from .BasdaMoccaXCluPythonServiceWorker import BasdaMoccaXCluPythonServiceWorker
-#from .BasdaMoccaWheelCluPythonServiceWorker import BasdaMoccaWheelCluPythonServiceWorker
-#from .BasdaMoccaTrajCluPythonServiceWorker import BasdaMoccaTrajCluPythonServiceWorker
 
-#from .BasdaMoccaXYCluPythonServiceWorker import BasdaMoccaXYCluPythonServiceWorker
+# from .BasdaMoccaXCluPythonServiceWorker import BasdaMoccaXCluPythonServiceWorker
+# from .BasdaMoccaWheelCluPythonServiceWorker import BasdaMoccaWheelCluPythonServiceWorker
+# from .BasdaMoccaTrajCluPythonServiceWorker import BasdaMoccaTrajCluPythonServiceWorker
 
+# from .BasdaMoccaXYCluPythonServiceWorker import BasdaMoccaXYCluPythonServiceWorker
 
 
 # pip package name
-NAME = 'sdss-lvmtan'
+NAME = "sdss-lvmtan"
 
 # Loads config. config name is the package name.
-#config = get_config('lvmtan')
+# config = get_config('lvmtan')
 
 # Inits the logging system as NAME. Only shell logging, and exception and warning catching.
 # File logging can be started by calling log.start_file_logger(path).  Filename can be different
