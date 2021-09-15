@@ -15,24 +15,25 @@ from functools import wraps
 
 import click
 import numpy as np
-from Basda import *
-from BasdaService import *
+import Nice
+import Basda 
+import BasdaService
+
 from clu import AMQPActor, Command, command_parser
 from clu.device import Device
-from Nice import *
 
 
 actorServiceWorker = {}
 
 
-class BasdaCluPythonServiceWorker(Worker):
+class BasdaCluPythonServiceWorker(BasdaService.Worker):
     "python arpc worker"
 
     def __init__(self, _svcName):
-        Worker.__init__(self, _svcName)
+        BasdaService.Worker.__init__(self, _svcName)
         self.counter = 0.0
         self.nodelist = []
-        self.rootNode = Application.config()
+        self.rootNode = Nice.Application.config()
         self.cfgDataNode = self.config("CFG.DATA")
         self.cfgNode = self.config("CFG")
         self.conn = {
@@ -43,8 +44,8 @@ class BasdaCluPythonServiceWorker(Worker):
             "port": "5672",
             "version": "0.1.0",
         }
-        self.offline_wait = Time.seconds(1.0)
-        self.online_wait = Time.seconds(0.1)
+        self.offline_wait = Nice.Time.seconds(1.0)
+        self.online_wait = Nice.Time.seconds(0.1)
         self.loop = None
         self.actor = None
         self.svc = None
@@ -121,16 +122,16 @@ class BasdaCluPythonServiceWorker(Worker):
             and self.cfgNode.exist("SERVICE")
             and self.cfgNode.node("SERVICE").hasLeaf()
         ):
-            U9_LOG(self.cfgNode.node("SERVICE").String)
-            self.service = Basdard.interface(self.cfgNode.node("SERVICE").String)
+            Nice.U9_LOG(self.cfgNode.node("SERVICE").String)
+            self.service = Basda.Basdard.interface(self.cfgNode.node("SERVICE").String)
 
     def abort(self):
         self.terminated = True
-        U8_LOG("abort")
+        Nice.U8_LOG("abort")
 
     # def terminate(self):
     # self.terminated = True
-    # U8_LOG("terminate")
+    # Nice.U8_LOG("terminate")
 
     def deinit(self):
         # if  self.connection:
@@ -139,32 +140,32 @@ class BasdaCluPythonServiceWorker(Worker):
         self.loop.close()
 
     def activate(self):
-        I_LOG("Connecting %s " % self.conn)
+        Nice.I_LOG("Connecting %s " % self.conn)
         try:
             self.loop.run_until_complete(self.connect())
-            N_LOG("Connected to %s " % self.conn)
+            Nice.N_LOG("Connected to %s " % self.conn)
             return
 
         except ConnectionRefusedError as e:
-            F_LOG(e)
-            self.worker.setState(ServiceState.OFFLINE)
+            Nice.F_LOG(e)
+            self.worker.setState(BasdaService.ServiceState.OFFLINE)
 
         except ConnectionError as e:
-            F_LOG(e)
-            self.worker.setState(ServiceState.OFFLINE)
+            Nice.F_LOG(e)
+            self.worker.setState(BasdaService.ServiceState.OFFLINE)
 
-        except Exception as e:
-            F_LOG(e)
-            self.worker.setState(ServiceState.OFFLINE)
+        except Nice.Exception as e:
+            Nice.F_LOG(e)
+            self.worker.setState(BasdaService.ServiceState.OFFLINE)
 
-        N_LOG("Failed connecting %s " % self.conn)
+        Nice.N_LOG("Failed connecting %s " % self.conn)
 
     def idleOffline(self):
         if not self.worker.timedWaitForNewState(self.offline_wait):
-            self.worker.setState(ServiceState.ONLINE)
+            self.worker.setState(BasdaService.ServiceState.ONLINE)
 
     def idleOnline(self):
-        while not self.worker.timedWaitForNewState(Time.seconds(0.01)):
+        while not self.worker.timedWaitForNewState(Nice.Time.seconds(0.01)):
             tasks = asyncio.Task.all_tasks(self.loop)
             self.loop.run_until_complete(asyncio.gather(*tasks))
 

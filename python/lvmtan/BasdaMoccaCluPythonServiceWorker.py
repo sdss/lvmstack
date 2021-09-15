@@ -12,6 +12,10 @@ import BasdaService
 import Nice
 import numpy as np
 
+import traceback
+import sys
+import json
+
 from .BasdaMoccaBaseCluPythonServiceWorker import *
 
 
@@ -77,12 +81,10 @@ class BasdaMoccaCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             return command.finish(
                 NamedPosition=self.service.getNamedPosition(namedposition)
             )
-        except Basda.Exception as e:
-            E_LOG(e)
-        except Nice.Exception as e:
-            E_LOG(e)
         except Exception as e:
-            E_LOG(traceback.format_exception(*sys.exc_info()))
+            command.fail(
+                error=e.__repr__()
+            )            
 
     @command_parser.command()
     @click.argument("VELOCITY", type=int)
