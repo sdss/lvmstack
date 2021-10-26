@@ -26,7 +26,7 @@ async def client():
     global test_first_focus_stage_started_by_me
     if not container.isRunning(test_first_focus_stage):
         runner = CliRunner()
-        result = runner.invoke(container.start, ["--with-ui"])
+        result = runner.invoke(container.start, ["--with-ui", "--debug"])
         assert result.exit_code == 0
         test_first_focus_stage_started_by_me = True
 
@@ -59,11 +59,11 @@ async def test_getSchema(client):
 @pytest.mark.asyncio
 async def test_isAtLimit(client):
     for limit in [-1, 1]:
-        cmd = await client_send_command(client, "movetolimit", limit)
+        cmd = await client_send_command(client, "moveToLimit", limit)
         assert cmd.status == CommandStatus.DONE
         assert cmd.replies[-1].body["AtLimit"] == True
 
-        cmd = await client_send_command(client, "isatlimit")
+        cmd = await client_send_command(client, "isAtLimit")
         assert cmd.status == CommandStatus.DONE
         assert cmd.replies[-1].body["AtLimit"] == True
         assert client.models[test_first_focus_stage]["AtLimit"].value == True
@@ -71,10 +71,10 @@ async def test_isAtLimit(client):
 
 @pytest.mark.asyncio
 async def test_isAtHome(client):
-    cmd = await client_send_command(client, "isathome")
+    cmd = await client_send_command(client, "isAtHome")
     assert cmd.status == CommandStatus.DONE
     if not cmd.replies[-1].body["AtHome"]:
-        cmd = await client_send_command(client, "movetohome")
+        cmd = await client_send_command(client, "moveToHome")
         assert cmd.status == CommandStatus.DONE
         assert cmd.replies[-1].body["AtHome"] == True
 

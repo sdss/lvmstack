@@ -36,7 +36,7 @@ async def clients():
 
     if not container.isRunning(lvm_all):
         runner = CliRunner()
-        result = runner.invoke(container.start, ["--with-ui", "--name", lvm_all])
+        result = runner.invoke(container.start, ["--with-ui", "--debug", "--name", lvm_all])
         assert result.exit_code == 0
         lvm_all_started_by_me = True
 
@@ -92,7 +92,7 @@ async def test_isAtLimit(clients):
     for limit in [-1, 1]:
         for svc_name in dict(list(clients.items())[:-1]):
             futures[svc_name] = await client_send_command_async(
-                clients, svc_name, "movetolimit", limit
+                clients, svc_name, "moveToLimit", limit
             )
         for svc_name in dict(list(clients.items())[:-1]):
             cmd = await futures[svc_name]
@@ -100,7 +100,7 @@ async def test_isAtLimit(clients):
             assert cmd.replies[-1].body["AtLimit"] == True
 
         for svc_name in dict(list(clients.items())[:-1]):
-            cmd = await client_send_command_blocking(clients, svc_name, "isatlimit")
+            cmd = await client_send_command_blocking(clients, svc_name, "isAtLimit")
             assert cmd.status == CommandStatus.DONE
             assert cmd.replies[-1].body["AtLimit"] == True
 
@@ -110,7 +110,7 @@ async def test_isAtHome(clients):
     futures = {}
     for svc_name in dict(list(clients.items())[:-1]):
         futures[svc_name] = await client_send_command_async(
-            clients, svc_name, "movetohome"
+            clients, svc_name, "moveToHome"
         )
     for svc_name in dict(list(clients.items())[:-1]):
         cmd = await futures[svc_name]
@@ -118,7 +118,7 @@ async def test_isAtHome(clients):
         assert cmd.replies[-1].body["AtHome"] == True
 
     for svc_name in dict(list(clients.items())[:-1]):
-        cmd = await client_send_command_blocking(clients, svc_name, "isathome")
+        cmd = await client_send_command_blocking(clients, svc_name, "isAtHome")
         assert cmd.status == CommandStatus.DONE
         assert cmd.replies[-1].body["AtHome"] == True
 
