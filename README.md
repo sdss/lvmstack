@@ -77,6 +77,9 @@ For running tests or containers a running RabbitMQ on localhost is expected with
     poetry run container_start --with-hw
     poetry run container_stop
     
+    # debug option, the local version is used instead of the latest github version when the container was built.
+    poetry run container_start --debug
+    
 ### Run tests 
 
     # run tests
