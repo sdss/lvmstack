@@ -21,16 +21,17 @@ class BasdaMoccaXCluPythonServiceWorker(BasdaMoccaCluPythonServiceWorker):
     def __init__(self, _svcName):
         BasdaMoccaCluPythonServiceWorker.__init__(self, _svcName)
 
-    @command_parser.command()
+    @command_parser.command("isAtLimit")
     @BasdaCluPythonServiceWorker.wrapper
     async def isAtLimit(self, command: Command):
         return command.finish(AtLimit=self.service.isAtLimit())
 
-    @command_parser.command()
+    @command_parser.command("moveToLimit")
     @click.argument("LIMIT", type=int)
     @click.argument("UNITS", type=str, default="STEPS")
     @BasdaCluPythonServiceWorker.wrapper
     async def moveToLimit(self, command: Command, limit: int, units: str):
+        '''Move to positive/negative limit'''
         if limit == -1:
             command.info(text="move to negative")
         elif limit == 1:

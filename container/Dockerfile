@@ -21,9 +21,17 @@ RUN apt install -y python3-opencv packagekit-gtk3-module
 RUN apt install -y sudo subversion git lsof
 RUN apt install -y python3-sdss-clu tan-basda-mocca
 
+#RUN apt update -y
+RUN apt install -y python3-setuptools python3-pip python3-toml git
+RUN cd /root && \
+    git clone https://github.com/sdss/lvmtan.git && \
+    (cd lvmtan && python3 setup.py install || echo "fix me") && \
+    rm -rf lvmtan
+
+
+
 WORKDIR /root/lvmt
 
 COPY run-basdard.sh /root
 
 CMD ["/root/run-basdard.sh"]
-

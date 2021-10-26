@@ -21,9 +21,10 @@ class BasdaMoccaWheelCluPythonServiceWorker(BasdaMoccaCluPythonServiceWorker):
     def __init__(self, _svcName):
         BasdaMoccaCluPythonServiceWorker.__init__(self, _svcName)
 
-    @command_parser.command()
+    @command_parser.command("scanAllReferenceSwitches")
     @BasdaCluPythonServiceWorker.wrapper
     async def scanAllReferenceSwitches(self):
+        """Scan all reference switches"""
         self.service.scanAllReferenceSwitchesStart()
         while not self.service.scanAllReferenceSwitchestCompletion().isDone():
             command.info(

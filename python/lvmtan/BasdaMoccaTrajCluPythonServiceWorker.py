@@ -37,16 +37,17 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
             except Exception:
                 raise click.BadParameter(value)
 
-    @command_parser.command()
+    @command_parser.command("changeProfile")
     @click.argument("START_DATE", type=datetime.datetime)
     #   @click.argument('POSITIONS', cls=ConvertStrToList, type=list)
     @click.argument("POSITIONS", type=list)
     @BasdaCluPythonServiceWorker.wrapper
     async def changeProfile(self, start_date: datetime.datetime, positions: list):
+        """Change active trajectory"""
         # U8_LOG("changeProfile %s %s %s" % (start_date, positions, type(self.service)))
         self.service.changeProfile(Nice.Date.now(), Nice.NPoint(Nice.NPoint(positions)))
 
-    @command_parser.command()
+    @command_parser.command("startProfile")
     @click.argument("START_DATE", type=datetime.datetime)
     @click.argument("POSITIONS", type=list)
     @click.argument("FREQUENCY", type=int)
@@ -61,6 +62,7 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
         samples_per_segment: int,
         max_error: int,
     ):
+        """Start trajectory"""
         # U8_LOG("startProfile %s %s %s %s %s" % (start_date, positions, frequency, samples_per_segment, max_error))
         try:
             self.service.startProfileStart(

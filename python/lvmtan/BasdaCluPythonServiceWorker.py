@@ -21,7 +21,7 @@ import BasdaService
 
 from clu import AMQPActor, Command, command_parser
 from clu.device import Device
-
+from . import __version__
 
 actorServiceWorker = {}
 
@@ -42,7 +42,7 @@ class BasdaCluPythonServiceWorker(BasdaService.Worker):
             "password": "guest",
             "host": "127.0.0.1",
             "port": "5672",
-            "version": "0.1.0",
+            "version": __version__,
         }
         self.offline_wait = Nice.Time.seconds(1.0)
         self.online_wait = Nice.Time.seconds(0.1)

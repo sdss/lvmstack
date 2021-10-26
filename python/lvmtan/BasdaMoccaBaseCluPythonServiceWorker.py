@@ -16,6 +16,17 @@ from .BasdaCluPythonServiceWorker import (BasdaCluPythonServiceWorker, Command,
                                           asyncio, click, command_parser)
 
 
+# TODO: use cluplus
+@command_parser.command(name='__commands')
+@click.pass_context
+def __commands(ctx, command: Command):
+    """Returns all commands."""
+
+    # we have to use the help key for the command list, dont want to change the standard model.
+    command.finish(help=[k for k in ctx.command.commands.keys() if k[:2] != '__'])
+
+
+
 class BasdaMoccaBaseCluPythonServiceWorker(BasdaCluPythonServiceWorker):
     "python clu worker"
 
@@ -27,29 +38,36 @@ class BasdaMoccaBaseCluPythonServiceWorker(BasdaCluPythonServiceWorker):
         self.schema["properties"]["Reachable"] = {"type": "boolean"}
         self.schema["properties"]["CurrentTime"] = {"type": "number"}
 
-    @command_parser.command()
+
+
+    @command_parser.command("isReachable")
     @BasdaCluPythonServiceWorker.wrapper
     async def isReachable(self, command: Command):
+        """Check hardware reachability"""
         return command.finish(Reachable=self.service.isReachable())
 
-    @command_parser.command()
+    @command_parser.command("getPositionSwitchStatus")
     @BasdaCluPythonServiceWorker.wrapper
     async def getPositionSwitchStatus(self, command: Command):
+        """Returns position switches status"""
         return command.finish(
             PositionSwitchStatus=self.service.getPositionSwitchStatus()[0].getValue()
         )
 
-    @command_parser.command()
+    @command_parser.command("isAtHome")
     @BasdaCluPythonServiceWorker.wrapper
     async def isAtHome(self, command: Command):
+        """Check if at home position"""
         return command.finish(AtHome=self.service.isAtHome())
 
-    @command_parser.command()
+    @command_parser.command("isMoving")
     @BasdaCluPythonServiceWorker.wrapper
     async def isMoving(self, command: Command):
+        """Check if moving"""
         return command.finish(Moving=self.service.isMoving())
 
-    @command_parser.command()
+    @command_parser.command("getCurrentTime")
     @BasdaCluPythonServiceWorker.wrapper
     async def getCurrentTime(self, command: Command):
+        """Returns internal time counter"""
         return command.finish(CurrentTime=self.service.getCurrentTime())

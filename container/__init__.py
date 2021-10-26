@@ -62,9 +62,12 @@ def build(lvmt_root: str, use_cache: bool):
 @click.option("--lvmt_root", default=lvmt_root, type=str)
 @click.option("--with-ui/--without-ui", default=True)
 @click.option("--with-hw/--without-hw", default=False)
+@click.option("--debug/--no-debug", "-d", default=False)
 @click.option("--name", "-n", default=default_basdard_test, type=str)
-def start(name: str, with_ui: bool, with_hw: bool, lvmt_root: str):
+def start(name: str, with_ui: bool, with_hw: bool, lvmt_root: str, debug:bool):
     lvmt_image = f"localhost/{lvmt_image_name}"
+
+    subprocess.run(shlex.split(f"{container_bin} kill {name}"))
 
     run_base = f"--rm -t --name {name} --network=host"
     if os.path.exists("/usr/bin/crun"):
@@ -77,6 +80,11 @@ def start(name: str, with_ui: bool, with_hw: bool, lvmt_root: str):
         name_ui = config(name, pstfx=".ui")
         if os.path.exists(f"{lvmt_root}/config/{name_ui}"):
             run_base += f" -e BASDARD_UI={name_ui}"
+
+    print(debug)
+    if debug:
+        run_base +=  f" -e TAN_DEBUG=true"
+
     run_with_hw = "-svr.conf" if with_hw else "-sim.conf"
     run_tan = f"-v {lvmt_root}:/root/lvmt:Z -e BASDARD_CONFIG={config(name, pstfx = run_with_hw)}"
     run = f"{container_bin} run {run_base} {run_tan} {lvmt_image}"

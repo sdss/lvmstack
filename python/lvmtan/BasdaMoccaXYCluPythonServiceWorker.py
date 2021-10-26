@@ -35,7 +35,7 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         self.schema["properties"]["AbsoluteEncoderPosition_X"] = {"type": "number"}
         self.schema["properties"]["AbsoluteEncoderPosition_Y"] = {"type": "number"}
 
-    @command_parser.command()
+    @command_parser.command("getAbsoluteEncoderPositionXY")
     @BasdaCluPythonServiceWorker.wrapper
     async def getAbsoluteEncoderPositionXY(self, command: Command):
         p = self.service.getAbsoluteEncoderPosition()
@@ -43,7 +43,7 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             AbsoluteEncoderPosition_X=p.x(), AbsoluteEncoderPosition_Y=p.y()
         )
 
-    @command_parser.command()
+    @command_parser.command("getPositionXY")
     @click.argument("UNITS", type=str, default="STEPS")
     @BasdaCluPythonServiceWorker.wrapper
     async def getPositionXY(self, command: Command, units: str):
@@ -51,7 +51,7 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         p = self.service.getPosition(units)
         return command.finish(Position_X=p.x(), Position_Y=p.y(), Units=units)
 
-    @command_parser.command()
+    @command_parser.command("setPositionXY")
     @click.argument("POSITION_X", type=float)
     @click.argument("POSITION_Y", type=float)
     @BasdaCluPythonServiceWorker.wrapper
@@ -61,7 +61,7 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         self.service.setPosition(Nice.NPoint(position_x, position_y))
         return command.finish()
 
-    @command_parser.command()
+    @command_parser.command("getDeviceEncoderPositionXY")
     @click.argument("UNITS", type=str, default="STEPS")
     @BasdaCluPythonServiceWorker.wrapper
     async def getDeviceEncoderPositionXY(self, command: Command, units: str):
@@ -70,13 +70,13 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             DeviceEncoderPosition_X=p.x(), DeviceEncoderPosition_Y=p.y(), Units=units
         )
 
-    @command_parser.command()
+    @command_parser.command("getVelocityXY")
     @BasdaCluPythonServiceWorker.wrapper
     async def getVelocityXY(self, command: Command):
         vp = self.service.getVelocity()
         return command.finish(Velocity_X=vp.x(), Velocity_Y=vp.y())
 
-    @command_parser.command()
+    @command_parser.command("setVelocityXY")
     @click.argument("VELOCITY_X", type=float)
     @click.argument("VELOCITY_Y", type=float)
     @BasdaCluPythonServiceWorker.wrapper
@@ -87,7 +87,7 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         self.service.setVelocity(velocity)
         return command.finish()
 
-    @command_parser.command()
+    @command_parser.command("getNamedPositionXY")
     @click.argument("NAMEDPOSITION", type=int)
     @BasdaCluPythonServiceWorker.wrapper
     async def getNamedPositionXY(self, command: Command, namedposition: int):
@@ -101,7 +101,7 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         except Exception as e:
             E_LOG(traceback.format_exception(*sys.exc_info()))
 
-    @command_parser.command()
+    @command_parser.command("moveRelativeXY")
     @click.argument("POSITION_X", type=float)
     @click.argument("POSITION_Y", type=float)
     @click.argument("UNITS", type=str, default="STEPS")
@@ -129,7 +129,7 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             DeviceEncoderPosition_X=p.x(), DeviceEncoderPosition_Y=p.y(), Units=units
         )
 
-    @command_parser.command()
+    @command_parser.command("moveAbsoluteXY")
     @click.argument("POSITION_X", type=float)
     @click.argument("POSITION_Y", type=float)
     @click.argument("UNITS", type=str, default="STEPS")
@@ -157,7 +157,7 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             DeviceEncoderPosition_X=p.x(), DeviceEncoderPosition_Y=p.y(), Units=units
         )
 
-    @command_parser.command()
+    @command_parser.command("moveToNamedPositionXY")
     @click.argument("NAMEDPOSITION", type=int)
     @BasdaCluPythonServiceWorker.wrapper
     async def moveToNamedPositionXY(self, command: Command, namedposition: int):
@@ -180,7 +180,7 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             NamedPosition=self.service.getNamedPosition(namedposition)
         )
 
-    @command_parser.command()
+    @command_parser.command("getIncrementalEncoderPositionXY")
     @BasdaCluPythonServiceWorker.wrapper
     async def getIncrementalEncoderPositionXY(self, command: Command):
         p = self.service.getIncrementalEncoderPosition(units)
@@ -188,13 +188,13 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             IncrementalEncoderPosition_X=p.x(), IncrementalEncoderPosition_Y=p.y()
         )
 
-    @command_parser.command()
+    @command_parser.command("isAtLimitXY")
     @BasdaCluPythonServiceWorker.wrapper
     async def isAtLimitXY(self, command: Command):
         p = self.service.getDeviceEncoderPosition(units)
         return command.finish(AtLimit_X=p.x(), AtLimit_Y=p.y())
 
-    @command_parser.command()
+    @command_parser.command("moveToLimitXY")
     @click.argument("LIMIT_X", type=int)
     @click.argument("LIMIT_Y", type=int)
     @click.argument("UNITS", type=str, default="STEPS")
@@ -242,7 +242,7 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             Units=units,
         )
 
-    @command_parser.command()
+    @command_parser.command("moveToHomeXY")
     @click.argument("UNITS", type=str, default="STEPS")
     @BasdaCluPythonServiceWorker.wrapper
     async def moveToHomeXY(self, command: Command, units: str):
@@ -268,7 +268,7 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             Units=units,
         )
 
-    @command_parser.command()
+    @command_parser.command("moveToNamedPositionXY")
     @click.argument("NAMEDPOSITION", type=int)
     @BasdaCluPythonServiceWorker.wrapper
     async def moveToNamedPositionXY(self, command: Command, namedposition: int):
