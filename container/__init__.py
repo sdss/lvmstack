@@ -63,11 +63,13 @@ def build(lvmt_root: str, use_cache: bool):
 @click.option("--with-ui/--without-ui", default=True)
 @click.option("--with-hw/--without-hw", default=False)
 @click.option("--debug/--no-debug", "-d", default=False)
+@click.option("--kill/--no-kill", default=False)
 @click.option("--name", "-n", default=default_basdard_test, type=str)
-def start(name: str, with_ui: bool, with_hw: bool, lvmt_root: str, debug:bool):
+def start(name: str, with_ui: bool, with_hw: bool, lvmt_root: str, debug:bool, kill:bool):
     lvmt_image = f"localhost/{lvmt_image_name}"
 
-    subprocess.run(shlex.split(f"{container_bin} kill {name}"))
+    if kill:
+        subprocess.run(shlex.split(f"{container_bin} kill {name}"))
 
     run_base = f"--rm -t --name {name} --network=host"
     if os.path.exists("/usr/bin/crun"):
