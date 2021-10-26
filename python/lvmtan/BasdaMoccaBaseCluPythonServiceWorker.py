@@ -38,36 +38,57 @@ class BasdaMoccaBaseCluPythonServiceWorker(BasdaCluPythonServiceWorker):
         self.schema["properties"]["Reachable"] = {"type": "boolean"}
         self.schema["properties"]["CurrentTime"] = {"type": "number"}
 
-
-
     @command_parser.command("isReachable")
     @BasdaCluPythonServiceWorker.wrapper
     async def isReachable(self, command: Command):
         """Check hardware reachability"""
-        return command.finish(Reachable=self.service.isReachable())
+        try:
+            return command.finish(
+                Reachable=self.service.isReachable()
+            )
+        except Exception as e:
+            command.fail(error=e)
 
     @command_parser.command("getPositionSwitchStatus")
     @BasdaCluPythonServiceWorker.wrapper
     async def getPositionSwitchStatus(self, command: Command):
         """Returns position switches status"""
-        return command.finish(
-            PositionSwitchStatus=self.service.getPositionSwitchStatus()[0].getValue()
-        )
+        try:
+            return command.finish(
+                PositionSwitchStatus=self.service.getPositionSwitchStatus()[0].getValue()
+            )
+        except Exception as e:
+            command.fail(error=e)
 
     @command_parser.command("isAtHome")
     @BasdaCluPythonServiceWorker.wrapper
     async def isAtHome(self, command: Command):
         """Check if at home position"""
-        return command.finish(AtHome=self.service.isAtHome())
+        try:
+            return command.finish(
+                AtHome=self.service.isAtHome()
+            )
+        except Exception as e:
+            command.fail(error=e)
 
     @command_parser.command("isMoving")
     @BasdaCluPythonServiceWorker.wrapper
     async def isMoving(self, command: Command):
         """Check if moving"""
-        return command.finish(Moving=self.service.isMoving())
+        try:
+            return command.finish(
+                Moving=self.service.isMoving()
+            )
+        except Exception as e:
+            command.fail(error=e)
 
     @command_parser.command("getCurrentTime")
     @BasdaCluPythonServiceWorker.wrapper
     async def getCurrentTime(self, command: Command):
         """Returns internal time counter"""
-        return command.finish(CurrentTime=self.service.getCurrentTime())
+        try:
+            return command.finish(
+                    CurrentTime=self.service.getCurrentTime()
+                )
+        except Exception as e:
+            command.fail(error=e)

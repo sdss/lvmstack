@@ -38,18 +38,26 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
     @command_parser.command("getAbsoluteEncoderPositionXY")
     @BasdaCluPythonServiceWorker.wrapper
     async def getAbsoluteEncoderPositionXY(self, command: Command):
-        p = self.service.getAbsoluteEncoderPosition()
-        return command.finish(
-            AbsoluteEncoderPosition_X=p.x(), AbsoluteEncoderPosition_Y=p.y()
-        )
+        try:
+            p = self.service.getAbsoluteEncoderPosition()
+            return command.finish(
+                AbsoluteEncoderPosition_X=p.x(), AbsoluteEncoderPosition_Y=p.y()
+            )
+        except Exception as e:
+            command.fail(error=e)
 
     @command_parser.command("getPositionXY")
     @click.argument("UNITS", type=str, default="STEPS")
     @BasdaCluPythonServiceWorker.wrapper
     async def getPositionXY(self, command: Command, units: str):
-        Nice.N_LOG("Hello world")
-        p = self.service.getPosition(units)
-        return command.finish(Position_X=p.x(), Position_Y=p.y(), Units=units)
+        try:
+            Nice.N_LOG("Hello world")
+            p = self.service.getPosition(units)
+            return command.finish(Position_X=p.x(), Position_Y=p.y(), Units=units)
+            p = self.service.getAbsoluteEncoderPosition()
+        return command.finish(
+            AbsoluteEncoderPosition_X=p.x(), AbsoluteEncoderPosition_Y=p.y()
+        )
 
     @command_parser.command("setPositionXY")
     @click.argument("POSITION_X", type=float)
@@ -58,23 +66,32 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
     async def setPositionXY(
         self, command: Command, position_x: float, position_y: float
     ):
-        self.service.setPosition(Nice.NPoint(position_x, position_y))
-        return command.finish()
+        try:
+            self.service.setPosition(Nice.NPoint(position_x, position_y))
+            return command.finish()
+        except Exception as e:
+            command.fail(error=e)
 
     @command_parser.command("getDeviceEncoderPositionXY")
     @click.argument("UNITS", type=str, default="STEPS")
     @BasdaCluPythonServiceWorker.wrapper
     async def getDeviceEncoderPositionXY(self, command: Command, units: str):
-        p = self.service.getDeviceEncoderPosition(units)
-        return command.finish(
-            DeviceEncoderPosition_X=p.x(), DeviceEncoderPosition_Y=p.y(), Units=units
-        )
+        try:
+            p = self.service.getDeviceEncoderPosition(units)
+            return command.finish(
+                DeviceEncoderPosition_X=p.x(), DeviceEncoderPosition_Y=p.y(), Units=units
+            )
+        except Exception as e:
+            command.fail(error=e)
 
     @command_parser.command("getVelocityXY")
     @BasdaCluPythonServiceWorker.wrapper
     async def getVelocityXY(self, command: Command):
-        vp = self.service.getVelocity()
-        return command.finish(Velocity_X=vp.x(), Velocity_Y=vp.y())
+        try:
+            vp = self.service.getVelocity()
+            return command.finish(Velocity_X=vp.x(), Velocity_Y=vp.y())
+        except Exception as e:
+            command.fail(error=e)
 
     @command_parser.command("setVelocityXY")
     @click.argument("VELOCITY_X", type=float)
@@ -83,9 +100,12 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
     async def setVelocityXY(
         self, command: Command, velocity_x: float, velocity_y: float
     ):
-        vp = self.service.getVelocity()
-        self.service.setVelocity(velocity)
-        return command.finish()
+        try:
+            vp = self.service.getVelocity()
+            self.service.setVelocity(velocity)
+            return command.finish()
+        except Exception as e:
+            command.fail(error=e)
 
     @command_parser.command("getNamedPositionXY")
     @click.argument("NAMEDPOSITION", type=int)
@@ -94,12 +114,8 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         try:
             p = self.service.getNamedPosition(namedposition)
             return command.finish(NamedPosition_X=p.x(), NamedPosition_Y=p.y())
-        except Basda.Exception as e:
-            E_LOG(e)
-        except Nice.Exception as e:
-            E_LOG(e)
         except Exception as e:
-            E_LOG(traceback.format_exception(*sys.exc_info()))
+            command.fail(error=e)
 
     @command_parser.command("moveRelativeXY")
     @click.argument("POSITION_X", type=float)
@@ -109,25 +125,27 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
     async def moveRelativeXY(
         self, command: Command, position_x: float, position_y: float, units: str
     ):
-        self.service.moveRelativeStart(Nice.Point(position_x, position_y), units)
-        while not self.service.moveRelativeCompletion().isDone():
-            await asyncio.sleep(0.1)
+        try:  
+            self.service.moveRelativeStart(Nice.Point(position_x, position_y), units)
+            while not self.service.moveRelativeCompletion().isDone():
+                await asyncio.sleep(0.1)
+                p = self.service.getDeviceEncoderPosition(units)
+                vp = self.service.getVelocity()
+                command.info(
+                    DeviceEncoderPosition_X=p.x(),
+                    DeviceEncoderPosition_Y=p.y(),
+                    Units=units,
+                    Velocity_X=vp.x(),
+                    Velocity_Y=vp.y(),
+                )
+
+            self.service.moveRelativeWait()
+
             p = self.service.getDeviceEncoderPosition(units)
-            vp = self.service.getVelocity()
-            command.info(
-                DeviceEncoderPosition_X=p.x(),
-                DeviceEncoderPosition_Y=p.y(),
-                Units=units,
-                Velocity_X=vp.x(),
-                Velocity_Y=vp.y(),
+            return command.finish(
+                DeviceEncoderPosition_X=p.x(), DeviceEncoderPosition_Y=p.y(), Units=units
             )
-
-        self.service.moveRelativeWait()
-
-        p = self.service.getDeviceEncoderPosition(units)
-        return command.finish(
-            DeviceEncoderPosition_X=p.x(), DeviceEncoderPosition_Y=p.y(), Units=units
-        )
+        except Exception as e:
 
     @command_parser.command("moveAbsoluteXY")
     @click.argument("POSITION_X", type=float)
@@ -137,48 +155,52 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
     async def moveAbsoluteXY(
         self, command: Command, position_x: float, position_y: float, units: str
     ):
-        self.service.moveAbsoluteStart(Nice.Point(position_x, position_y), units)
-        while not self.service.moveAbsoluteCompletion().isDone():
-            await asyncio.sleep(0.1)
+        try:
+            self.service.moveAbsoluteStart(Nice.Point(position_x, position_y), units)
+            while not self.service.moveAbsoluteCompletion().isDone():
+                await asyncio.sleep(0.1)
+                p = self.service.getDeviceEncoderPosition(units)
+                vp = self.service.getVelocity()
+                command.info(
+                    DeviceEncoderPosition_X=p.x(),
+                    DeviceEncoderPosition_Y=p.y(),
+                    Units=units,
+                    Velocity_X=vp.x(),
+                    Velocity_Y=vp.y(),
+                )
+
+            self.service.moveAbsoluteWait()
+
             p = self.service.getDeviceEncoderPosition(units)
-            vp = self.service.getVelocity()
-            command.info(
-                DeviceEncoderPosition_X=p.x(),
-                DeviceEncoderPosition_Y=p.y(),
-                Units=units,
-                Velocity_X=vp.x(),
-                Velocity_Y=vp.y(),
+            return command.finish(
+                DeviceEncoderPosition_X=p.x(), DeviceEncoderPosition_Y=p.y(), Units=units
             )
-
-        self.service.moveAbsoluteWait()
-
-        p = self.service.getDeviceEncoderPosition(units)
-        return command.finish(
-            DeviceEncoderPosition_X=p.x(), DeviceEncoderPosition_Y=p.y(), Units=units
-        )
+        except Exception as e:
 
     @command_parser.command("moveToNamedPositionXY")
     @click.argument("NAMEDPOSITION", type=int)
     @BasdaCluPythonServiceWorker.wrapper
     async def moveToNamedPositionXY(self, command: Command, namedposition: int):
-        self.service.moveToNamedPositionStart(namedposition)
-        while not self.service.moveToNamedPositionCompletion().isDone():
-            await asyncio.sleep(0.1)
-            p = self.service.getDeviceEncoderPosition(units)
-            v = self.service.getVelocity()
-            command.info(
-                DeviceEncoderPosition_X=p.x(),
-                DeviceEncoderPosition_Y=p.y(),
-                Units=units,
-                Velocity_X=v.x(),
-                Velocity_Y=v.y(),
+        try:
+            self.service.moveToNamedPositionStart(namedposition)
+            while not self.service.moveToNamedPositionCompletion().isDone():
+                await asyncio.sleep(0.1)
+                p = self.service.getDeviceEncoderPosition(units)
+                v = self.service.getVelocity()
+                command.info(
+                    DeviceEncoderPosition_X=p.x(),
+                    DeviceEncoderPosition_Y=p.y(),
+                    Units=units,
+                    Velocity_X=v.x(),
+                    Velocity_Y=v.y(),
+                )
+
+            self.service.moveToNamedPositionWait()
+
+            return command.finish(
+                NamedPosition=self.service.getNamedPosition(namedposition)
             )
-
-        self.service.moveToNamedPositionWait()
-
-        return command.finish(
-            NamedPosition=self.service.getNamedPosition(namedposition)
-        )
+        except Exception as e:
 
     @command_parser.command("getIncrementalEncoderPositionXY")
     @BasdaCluPythonServiceWorker.wrapper

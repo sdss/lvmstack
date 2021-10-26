@@ -23,20 +23,6 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
     def __init__(self, _svcName):
         BasdaMoccaXCluPythonServiceWorker.__init__(self, _svcName)
 
-    # not tested !
-    class ConvertStrToList(click.Option):
-        def type_cast_value(self, ctx, value) -> list:
-            try:
-                value = str(value)
-                assert value.count("[") == 1 and value.count("]") == 1
-                list_as_str = value.replace('"', "'").split("[")[1].split("]")[0]
-                list_of_items = [
-                    item.strip().strip("'") for item in list_as_str.split(",")
-                ]
-                return list_of_items
-            except Exception:
-                raise click.BadParameter(value)
-
     @command_parser.command("changeProfile")
     @click.argument("START_DATE", type=datetime.datetime)
     #   @click.argument('POSITIONS', cls=ConvertStrToList, type=list)
@@ -45,7 +31,10 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
     async def changeProfile(self, start_date: datetime.datetime, positions: list):
         """Change active trajectory"""
         # U8_LOG("changeProfile %s %s %s" % (start_date, positions, type(self.service)))
-        self.service.changeProfile(Nice.Date.now(), Nice.NPoint(Nice.NPoint(positions)))
+        try:
+            self.service.changeProfile(Nice.Date.now(), Nice.NPoint(Nice.NPoint(positions)))
+        except Exception as e:
+            command.fail(error=e)
 
     @command_parser.command("startProfile")
     @click.argument("START_DATE", type=datetime.datetime)
@@ -84,4 +73,4 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
                 await asyncio.sleep(0.01)
             self.service.startProfileWait()
         except Exception as e:
-            E_LOG(e)
+            command.fail(error=e)

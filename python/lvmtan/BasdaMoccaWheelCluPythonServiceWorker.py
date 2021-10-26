@@ -25,14 +25,17 @@ class BasdaMoccaWheelCluPythonServiceWorker(BasdaMoccaCluPythonServiceWorker):
     @BasdaCluPythonServiceWorker.wrapper
     async def scanAllReferenceSwitches(self):
         """Scan all reference switches"""
-        self.service.scanAllReferenceSwitchesStart()
-        while not self.service.scanAllReferenceSwitchestCompletion().isDone():
-            command.info(
+        try:
+            self.service.scanAllReferenceSwitchesStart()
+            while not self.service.scanAllReferenceSwitchestCompletion().isDone():
+                command.info(
+                    DeviceEncoderPosition=self.service.getDeviceEncoderPosition(),
+                    Velocity=self.service.getVelocity(),
+                )
+            self.service.scanAllReferenceSwitchesWait()
+            return command.finish(
+                AtLimit=self.service.isAtLimit(),
                 DeviceEncoderPosition=self.service.getDeviceEncoderPosition(),
-                Velocity=self.service.getVelocity(),
             )
-        self.service.scanAllReferenceSwitchesWait()
-        return command.finish(
-            AtLimit=self.service.isAtLimit(),
-            DeviceEncoderPosition=self.service.getDeviceEncoderPosition(),
-        )
+        except Exception as e:
+            command.fail(error=e)
