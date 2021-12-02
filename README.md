@@ -77,6 +77,9 @@ For running tests or containers a running RabbitMQ on localhost is expected with
     poetry run container_start --with-hw
     poetry run container_stop
     
+    # derotator km with real hardware - check confige file config/test/derot/test.derot.km-dev.conf for correct MOD.TRAJ.CFG.CONNECTION.ADDRESS and MOD.TRAJ.CFG.CONNECTION.MODULE.
+    poetry run container_start --name test.derot.km --with-hw
+    
     # debug option, the local version is used instead of the latest github version when the container was built.
     poetry run container_start --debug
     
