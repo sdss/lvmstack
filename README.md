@@ -69,7 +69,10 @@ For running tests or containers a running RabbitMQ on localhost is expected with
     # all stages config lvm.all-sim.conf
     poetry run container_start --name lvm.all
     poetry run container_stop --name lvm.all
-    
+  
+    # all stages config lvm.all-sim.conf and kill running container
+    poetry run container_start --kill --name lvm.all
+
     # log of the running container, -f output appended data as the file grows.
     podman logs -f lvm.all
 
