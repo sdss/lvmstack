@@ -32,6 +32,6 @@ RUN cd /root && \
 
 WORKDIR /root/lvmt
 
-COPY run-basdard.sh /root
+#COPY run-basdard.sh /root
 
-CMD ["/root/run-basdard.sh"]
+CMD ["/root/lvmtan/container/run-basdard.sh"]
