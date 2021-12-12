@@ -22,7 +22,7 @@ Lvm Tan Clu Wrapper
 As of version 0.0.9 the container is renamed from ubuntu_lvmt_tan to lvmtan
 
 ## Quickstart
-In the version >= 0.0.9 the container doesnt have to be build, a container is download automatically from github.
+Beginning with version  0.0.9 the container doesnt have to be build, a container is download automatically from github.
 
     git clone https://github.com/sdss/lvmtan.git
     cd lvmtan      
