@@ -16,7 +16,7 @@ Lvm Tan Clu Wrapper
 ¹ Setting an alias to use docker might work.
 
     alias podman="sudo docker"
-   
+
 ## Prerequisites
 
 Some linux distributions do not have python >= 3.7 as the standard python3 version.
@@ -41,14 +41,19 @@ Some linux distributions do not have python >= 3.7 as the standard python3 versi
     pip3.9 install poetry
     export PATH=~/.local/bin/:$PATH
 
-## Quick start
 For running tests or containers a running RabbitMQ on localhost is expected with guest/guest
 
-### Download
+## Download
     git clone https://github.com/sdss/lvmtan.git
     cd lvmtan      
 
-### Build
+## Quickstart
+In the latest version the container doesnt have to be build, a container is download automatically from github.
+
+
+    poetry run container_start --kill --name lvm.all
+
+## Build
     # update local py env
     poetry update
     
@@ -60,7 +65,7 @@ For running tests or containers a running RabbitMQ on localhost is expected with
     # rebuild tan container from scratch
     poetry run container_build --no-cache
         
-### Run container (optional)
+## Run container
 
     # default config test.first.focus_stage-sim.conf
     poetry run container_start
@@ -86,7 +91,7 @@ For running tests or containers a running RabbitMQ on localhost is expected with
     # debug option, the local version is used instead of the latest github version when the container was built.
     poetry run container_start --debug
     
-### Run tests 
+## Run tests 
 
     # run tests
     poetry run pytest
@@ -98,7 +103,7 @@ For running tests or containers a running RabbitMQ on localhost is expected with
     DISPLAY= poetry run pytest -p no:logging -s -v -k test_02_lvm_all.py
     
     
-### Publish
+## Publish
     # publish to pypi
     poetry publish --username=USER --password=PASS
     # build rpm package
