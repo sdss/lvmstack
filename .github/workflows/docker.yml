@@ -44,7 +44,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ steps.set-tags.outputs.TAGS }}
-            ghcr.io/$USER/$APP:latest
+            ghcr.io/user/app:latest
           file: ./container/Dockerfile
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
