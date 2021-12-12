@@ -16,6 +16,9 @@ Lvm Tan Clu Wrapper
 ¹ Setting an alias to use docker might work.
 
     alias podman="sudo docker"
+## Note
+
+As of version 0.0.9 the container is renamed from ubuntu_lvmt_tan to lvmtan
 
 ## Quickstart
 In the latest version the container doesnt have to be build, a container is download automatically from github.
