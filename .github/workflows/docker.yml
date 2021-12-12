@@ -25,7 +25,6 @@ jobs:
           else
             echo ::set-output name=TAGS::$USER/$APP:${GITHUB_REF#refs/tags/}
           fi
-          echo $GITHUB_REF
       - name: Show tags
         run: echo ${{ steps.set-tags.outputs.TAGS }}
       - name: Set up QEMU
@@ -43,7 +42,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/${{ steps.set-tags.outputs.TAGS }}
+          tags: |
+          ghcr.io/${{ steps.set-tags.outputs.TAGS }}
+          ghcr.io/$USER/$APP:latest
           file: ./container/Dockerfile
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
