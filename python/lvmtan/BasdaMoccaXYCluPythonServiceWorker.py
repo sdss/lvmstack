@@ -54,10 +54,9 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             Nice.N_LOG("Hello world")
             p = self.service.getPosition(units)
             return command.finish(Position_X=p.x(), Position_Y=p.y(), Units=units)
-            p = self.service.getAbsoluteEncoderPosition()
-        return command.finish(
-            AbsoluteEncoderPosition_X=p.x(), AbsoluteEncoderPosition_Y=p.y()
-        )
+        except Exception as e:
+            command.fail(error=e)
+
 
     @command_parser.command("setPositionXY")
     @click.argument("POSITION_X", type=float)
