@@ -26,6 +26,7 @@ RUN apt install -y python3-setuptools python3-pip python3-toml git
 RUN cd /root && \
     git clone https://github.com/sdss/lvmtan.git && \
     (cd lvmtan && python3 setup.py install || echo "fix me") && \
+    cp lvmtan/container/run-basdard.sh . && \
     rm -rf lvmtan
 
 
@@ -34,4 +35,4 @@ WORKDIR /root/lvmt
 
 #COPY run-basdard.sh /root
 
-CMD ["/root/lvmtan/container/run-basdard.sh"]
+CMD ["/root/run-basdard.sh"]

@@ -24,7 +24,7 @@ import pexpect
 container_bin = "podman"
 lvmt_root = os.environ["PWD"]
 lvmt_image_source_local = "localhost"
-lvmt_image_source_remote = "ghcr.io/sdss/"
+lvmt_image_source_remote = "ghcr.io/sdss"
 lvmt_image_name = "lvmtan"
 
 default_basdard_test = "test.first.focus_stage"
@@ -68,8 +68,13 @@ def build(lvmt_root: str, use_cache: bool):
 @click.option("--kill/--no-kill", default=False)
 @click.option("--name", "-n", default=default_basdard_test, type=str)
 def start(name: str, with_ui: bool, with_hw: bool, lvmt_root: str, debug:bool, kill:bool):
-    lvmt_image = f"{lvmt_image_source_local}/{lvmt_image_name}"
-
+    if not subprocess.run(shlex.split(f"podman image exists {lvmt_image_source_local}/{lvmt_image_name}")).returncode:
+       lvmt_image = f"{lvmt_image_source_local}/{lvmt_image_name}"
+    else:
+       if subprocess.run(shlex.split(f"podman image exists {lvmt_image_source_remote}/{lvmt_image_name}")).returncode:
+           subprocess.run(shlex.split(f"podman pull {lvmt_image_source_remote}/{lvmt_image_name}:latest"))
+       lvmt_image = f"{lvmt_image_source_remote}/{lvmt_image_name}"
+    
     if kill:
         subprocess.run(shlex.split(f"{container_bin} kill {name}"))
 
