@@ -25,6 +25,7 @@ jobs:
           else
             echo ::set-output name=TAGS::$USER/$APP:${GITHUB_REF#refs/tags/}
           fi
+          echo $GITHUB_REF
       - name: Show tags
         run: echo ${{ steps.set-tags.outputs.TAGS }}
       - name: Set up QEMU
