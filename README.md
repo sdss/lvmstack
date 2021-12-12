@@ -17,6 +17,13 @@ Lvm Tan Clu Wrapper
 
     alias podman="sudo docker"
 
+## Quickstart
+In the latest version the container doesnt have to be build, a container is download automatically from github.
+
+    git clone https://github.com/sdss/lvmtan.git
+    cd lvmtan      
+    poetry run container_start --kill --name lvm.all
+
 ## Prerequisites
 
 Some linux distributions do not have python >= 3.7 as the standard python3 version.
@@ -47,11 +54,6 @@ For running tests or containers a running RabbitMQ on localhost is expected with
     git clone https://github.com/sdss/lvmtan.git
     cd lvmtan      
 
-## Quickstart
-In the latest version the container doesnt have to be build, a container is download automatically from github.
-
-
-    poetry run container_start --kill --name lvm.all
 
 ## Build
     # update local py env
