@@ -38,6 +38,18 @@ class BasdaMoccaBaseCluPythonServiceWorker(BasdaCluPythonServiceWorker):
         self.schema["properties"]["Reachable"] = {"type": "boolean"}
         self.schema["properties"]["CurrentTime"] = {"type": "number"}
 
+    @command_parser.command()
+    @BasdaCluPythonServiceWorker.wrapper
+    async def abort(self, command: Command):
+        """Abort running command"""
+        return command.finish(Reachable=self.service.abort())
+
+    @command_parser.command()
+    @BasdaCluPythonServiceWorker.wrapper
+    async def stop(self, command: Command):
+        """Stop running command gracefully"""
+        return command.finish(Reachable=self.service.stop())
+
     @command_parser.command("isReachable")
     @BasdaCluPythonServiceWorker.wrapper
     async def isReachable(self, command: Command):

@@ -24,6 +24,7 @@ class BasdaMoccaXCluPythonServiceWorker(BasdaMoccaCluPythonServiceWorker):
     @command_parser.command("isAtLimit")
     @BasdaCluPythonServiceWorker.wrapper
     async def isAtLimit(self, command: Command):
+       '''Is at positive/negative limit'''
        try:
            return command.finish(AtLimit=self.service.isAtLimit())
        except Exception as e:
