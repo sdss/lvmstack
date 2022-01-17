@@ -17,6 +17,13 @@ from cluplus.proxy import Proxy, invoke, unpack
 
 cbuf = 20
 
+name="test.derot.km"
+amqpc = AMQPClient(name=f"{sys.argv[0]}.client-{uuid.uuid4().hex[:8]}")
+#amqpc.log.sh.setLevel(DEBUG)
+
+km = Proxy(amqpc, name).start()
+
+
 def setSegment(km, idx, traj):
    t =  traj[idx]
    km.chat(1, 221, 4, 0, f"'{t[0]%cbuf} {t[1]} {t[2]} {t[3]} {t[4]} {t[5]}'")
@@ -25,15 +32,17 @@ def setSegment(km, idx, traj):
 
 
 def derot_now(traj):
-
-    name="test.derot.km"
-    amqpc = AMQPClient(name=f"{sys.argv[0]}.client-{uuid.uuid4().hex[:8]}")
-    km = Proxy(amqpc, name).start()
+    if traj[0][3] < 0:
+        print(traj)
+        print(f"Error position {traj[0][3]} < 0")
+        return
+    
+    print(f"Start derotating at {traj[0][3] * 0.00005555555555}")
 
     #km.chat(1,23,0)
     #json.loads(unpack(km.chat(1,1,0)))
     #km.chat(1,24,0)
-
+ 
 
     try:
        ## clear buffer
@@ -46,19 +55,21 @@ def derot_now(traj):
 
     km.moveAbsolute(traj[0][3])
 
-    for i in range(4):
+    dist=7
+
+    for i in range(dist):
        setSegment(km, i, traj)
 
     # profile start from beginning
     km.chat(1, 222, 4, 0)
 
-    upidx=4
+    upidx=dist
     while upidx < len(traj)-1:
         try:
             moidx = int(json.loads(unpack(km.chat(1, 225, 4)))[-1].split(' ')[-1])
             updistance=((upidx%cbuf)-moidx+cbuf)%cbuf
             print(f"pos: {km.getPosition()} updist: {updistance} idx: {upidx}", end = '\r')
-            if updistance < 4:
+            if updistance < dist:
                 setSegment(km,upidx,traj)
                 upidx+=1
             sleep(0.2)
