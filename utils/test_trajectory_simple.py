@@ -46,11 +46,8 @@ def derot_now(traj):
 
     km.moveAbsolute(traj[0][3])
 
-
-    setSegment(km, 0, traj)
-    setSegment(km, 1, traj)
-    setSegment(km, 2, traj)
-    setSegment(km, 3, traj)
+    for i in range(4):
+       setSegment(km, i, traj)
 
     # profile start from beginning
     km.chat(1, 222, 4, 0)
@@ -64,7 +61,7 @@ def derot_now(traj):
             if updistance < 4:
                 setSegment(km,upidx,traj)
                 upidx+=1
-            sleep(0.5)
+            sleep(0.2)
         
         except Exception as ex:
             print(ex)
@@ -76,6 +73,8 @@ def derot_now(traj):
 
     ## clear buffer
     km.chat(1, 226, 4)
+    
+    print("done")
 
 
 import math
