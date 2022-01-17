@@ -11,6 +11,9 @@ import BasdaMoccaX
 import BasdaService
 import Nice
 import numpy as np
+import json
+from asyncio import sleep
+from Basda import ServiceIsBusyException
 
 from .BasdaCluPythonServiceWorker import (BasdaCluPythonServiceWorker, Command,
                                           asyncio, click, command_parser)
@@ -37,7 +40,8 @@ class BasdaMoccaBaseCluPythonServiceWorker(BasdaCluPythonServiceWorker):
         self.schema["properties"]["Moving"] = {"type": "boolean"}
         self.schema["properties"]["Reachable"] = {"type": "boolean"}
         self.schema["properties"]["CurrentTime"] = {"type": "number"}
-
+        self.schema["properties"]["ChatRc"] = {"type": "string"}
+    
     @command_parser.command()
     @BasdaCluPythonServiceWorker.wrapper
     async def abort(self, command: Command):
@@ -104,3 +108,37 @@ class BasdaMoccaBaseCluPythonServiceWorker(BasdaCluPythonServiceWorker):
                 )
         except Exception as e:
             command.fail(error=e)
+
+    @command_parser.command("chat")
+    @click.argument("CARD", type=int)
+    @click.argument("COM", type=int)
+    @click.argument("MODULE", type=int)
+    @click.argument("SELECT", type=int, default=0)
+    @click.argument("PARAMS", type=str, default="")
+    @click.argument("LINES", type=int, default=0)
+    @BasdaCluPythonServiceWorker.wrapper
+    async def chat(self, command: Command, card: int, com: int, module: int, select: int, params: str, lines: int):
+        """Check hardware reachability"""
+        try:
+            try:  
+                self.service.send(str(card),str(com),str(module),str(select),str(params),str(lines))
+                await asyncio.sleep(0.01)
+                rc = self.service.receive().split('\n')
+
+            except ServiceIsBusyException as ex:
+                Nice.W_LOG("got busy exception - wait and try again")
+                await asyncio.sleep(0.4)
+                self.service.send(str(card),str(com),str(module),str(select),str(params),str(lines))
+                await asyncio.sleep(0.01)
+                rc = self.service.receive().split('\n')
+
+            if int(rc[-1].split(' ')[3]) < 0:
+                command.fail(error=Exception(f"Error #{rc[-1]}"))
+
+        except Exception as e:
+            command.fail(error=e)
+
+        return command.finish(
+              ChatRc = json.dumps(rc[:-1])
+        )
+
