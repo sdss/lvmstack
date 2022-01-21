@@ -55,6 +55,7 @@ coverage = {version = ">=5.0", extras = ["toml"]}
 ipdb = ">=0.12.3"
 rstcheck = "^3.3.1"
 Sphinx = "^3.0.0"
+sdss-cluplus = ">=0.0.17"
 
 [tool.isort]
 line_length = 79

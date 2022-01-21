@@ -17,6 +17,7 @@ from cluplus.proxy import Proxy, invoke, unpack
 
 cbuf = 20
 module = 4
+dist = 7
 
 name="test.derot.km"
 amqpc = AMQPClient(name=f"{sys.argv[0]}.client-{uuid.uuid4().hex[:8]}")
@@ -25,28 +26,32 @@ amqpc = AMQPClient(name=f"{sys.argv[0]}.client-{uuid.uuid4().hex[:8]}")
 km = Proxy(amqpc, name).start()
 
 
-def setSegment(km, idx, traj):
-   t =  traj[idx]
-   #print(f"'{idx%cbuf} {t[0]} {t[1]} {t[2]} {t[3]} {t[4]}'")
-   km.chat(1, 221, module, 0, f"'{idx%cbuf} {t[0]} {t[1]} {t[2]} {t[3]} {t[4]}'")
-   t =  traj[idx+1]
-   #print(f"'{(idx+1)%cbuf} 0 0 {t[2]} 0 0'")
-   km.chat(1, 221, module, 0, f"'{(idx+1)%cbuf} 0 0 {t[2]} 0 0'")
+def setSegment(km, idx, t0, t1=None):
+   print (f"'{idx+%cbuf} {t0[0]} {t0[1]} {t0[2]} {t0[3]} {t0[4]}'")
+   km.chat(1, 221, module, 0, f"'{idx%cbuf} {t0[0]} {t0[1]} {t0[2]} {t0[3]} {t0[4]}'")
+   if t1:
+       print(f"'{(idx+1)%cbuf} 0 0 {t1[2]} 0 0'")
+       km.chat(1, 221, module, 0, f"'{(idx+1)%cbuf} 0 0 {t1[2]} 0 0'")
 
 
-def derot_now(traj):
-    if traj[0][2] < 0:
+def derot_now(sid, geoloc, point, deltaTime, polyN):
+
+    traj = sid.mpiaMocon(geoloc, point, None, deltaTime=deltaTime, polyN=1)
+
+    if traj[0][3] < 0:
         print(traj)
-        print(f"Error position {traj[0][2]} < 0")
+        print(f"Error position {traj[0][3]} < 0")
         return
     
-    print(f"Start derotating at {traj[0][2] * 0.00005555555555}")
+    if polyN < dist:
+        print(f"Minimum {dist} segments")
+    
+    km.moveAbsolute(traj[0][3]-1000)
 
     #km.chat(1,23,0)
     #json.loads(unpack(km.chat(1,1,0)))
     #km.chat(1,2module,0)
  
-
     try:
        ## clear buffer
        km.chat(1, 226, module)
@@ -56,24 +61,30 @@ def derot_now(traj):
     # create buffer
     km.chat(1, 220, module, cbuf)
 
-    km.moveAbsolute(traj[0][2])
+    now = astropy.time.Time.now()
+    print(now)
+    traj = sid.mpiaMocon(geoloc, point, None, deltaTime=deltaTime, polyN=dist, time=now)
 
-    dist=7
+    km.moveAbsolute(traj[0][3])
 
     for i in range(dist):
-       setSegment(km, i, traj)
+       setSegment(km, i, traj[i])
+    setSegment(km, i+1, traj[i+1])
 
     # profile start from beginning
     km.chat(1, 222, module, 0)
 
     upidx=dist
-    while upidx < len(traj)-1:
+    while upidx < polyN:
         try:
             moidx = int(json.loads(unpack(km.chat(1, 225, module)))[-1].split(' ')[-1])
             updistance=((upidx%cbuf)-moidx+cbuf)%cbuf
-            print(f"pos: {km.getIncrementalEncoderPosition()} {km.getDeviceEncoderPosition()} updist: {updistance} idx: {upidx}", end = '\r')
+            print(f"pos: {km.getIncrementalEncoderPosition()} {km.getDeviceEncoderPosition()} updist: {updistance} idx: {upidx}", end = '\n')
             if updistance < dist:
-                setSegment(km, upidx, traj)
+                nowpdt = now + astropy.time.TimeDelta(deltaTime*upidx, format='sec')
+                print(nowpdt)
+                sid.mpiaMocon(geoloc, point, None, deltaTime=deltaTime, polyN=1, time=nowpdt)
+                setSegment(km, upidx, traj[0], traj[1])
                 upidx+=1
             sleep(0.2)
         
@@ -162,8 +173,7 @@ def main():
     # If the command line option -N was used, construct
     # the mocon external profile data as a list of lists:
     if args.polyN is not None :
-        moc=sid.mpiaMocon(geoloc, point, None, deltaTime=args.deltaTime, polyN= int(args.polyN))
-        derot_now(moc)
+        derot_now(sid, geoloc, point, int(args.deltaTime), int(args.polyN))
         
 if __name__ == "__main__":
     main()
