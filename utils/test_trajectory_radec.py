@@ -18,6 +18,8 @@ from cluplus.proxy import Proxy, invoke, unpack
 cbuf = 20
 module = 4
 dist = 7
+backlash = 1000
+
 
 name="test.derot.km"
 amqpc = AMQPClient(name=f"{sys.argv[0]}.client-{uuid.uuid4().hex[:8]}")
@@ -27,10 +29,10 @@ km = Proxy(amqpc, name).start()
 
 
 def setSegment(km, idx, t0, t1=None):
-   print (f"'{idx+%cbuf} {t0[0]} {t0[1]} {t0[2]} {t0[3]} {t0[4]}'")
+   #print (f"'{idx%cbuf} {t0[0]} {t0[1]} {t0[2]} {t0[3]} {t0[4]}'")
    km.chat(1, 221, module, 0, f"'{idx%cbuf} {t0[0]} {t0[1]} {t0[2]} {t0[3]} {t0[4]}'")
    if t1:
-       print(f"'{(idx+1)%cbuf} 0 0 {t1[2]} 0 0'")
+       #print(f"'{(idx+1)%cbuf} 0 0 {t1[2]} 0 0'")
        km.chat(1, 221, module, 0, f"'{(idx+1)%cbuf} 0 0 {t1[2]} 0 0'")
 
 
@@ -38,7 +40,7 @@ def derot_now(sid, geoloc, point, deltaTime, polyN):
 
     traj = sid.mpiaMocon(geoloc, point, None, deltaTime=deltaTime, polyN=1)
 
-    if traj[0][3] < 0:
+    if traj[0][2] < 0:
         print(traj)
         print(f"Error position {traj[0][3]} < 0")
         return
@@ -46,7 +48,8 @@ def derot_now(sid, geoloc, point, deltaTime, polyN):
     if polyN < dist:
         print(f"Minimum {dist} segments")
     
-    km.moveAbsolute(traj[0][3]-1000)
+    
+    km.moveAbsolute(traj[0][2]-backlash)
 
     #km.chat(1,23,0)
     #json.loads(unpack(km.chat(1,1,0)))
@@ -62,10 +65,9 @@ def derot_now(sid, geoloc, point, deltaTime, polyN):
     km.chat(1, 220, module, cbuf)
 
     now = astropy.time.Time.now()
-    print(now)
     traj = sid.mpiaMocon(geoloc, point, None, deltaTime=deltaTime, polyN=dist, time=now)
 
-    km.moveAbsolute(traj[0][3])
+    km.moveAbsolute(traj[0][2])
 
     for i in range(dist):
        setSegment(km, i, traj[i])
@@ -75,15 +77,15 @@ def derot_now(sid, geoloc, point, deltaTime, polyN):
     km.chat(1, 222, module, 0)
 
     upidx=dist
+    velocity=traj[i][1]
     while upidx < polyN:
         try:
             moidx = int(json.loads(unpack(km.chat(1, 225, module)))[-1].split(' ')[-1])
             updistance=((upidx%cbuf)-moidx+cbuf)%cbuf
-            print(f"pos: {km.getIncrementalEncoderPosition()} {km.getDeviceEncoderPosition()} updist: {updistance} idx: {upidx}", end = '\n')
+            print(f"pos: {km.getIncrementalEncoderPosition()} {km.getDeviceEncoderPosition()}, velocity: {velocity},  updist: {updistance} idx: {upidx}", end = '\r')
             if updistance < dist:
                 nowpdt = now + astropy.time.TimeDelta(deltaTime*upidx, format='sec')
-                print(nowpdt)
-                sid.mpiaMocon(geoloc, point, None, deltaTime=deltaTime, polyN=1, time=nowpdt)
+                traj = sid.mpiaMocon(geoloc, point, None, deltaTime=deltaTime, polyN=1, time=nowpdt)
                 setSegment(km, upidx, traj[0], traj[1])
                 upidx+=1
             sleep(0.2)
@@ -155,12 +157,10 @@ def main():
 
     # step 1: define where the observatory is on Earth
     geoloc = Site(name = args.site)
-    # print(geoloc)
 
     # step 2: define where the output beam of the siderostat points to
     # and use the LCO defaults.
     sid = Siderostat()
-    # print(sid)
 
     # step 3: define where the sidereostat is pointing on the sky
     point = Target(targ)
