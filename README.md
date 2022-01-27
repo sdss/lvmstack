@@ -12,5 +12,6 @@ For already cloned repos, or older Git versions, use:
     
 ## update 
 
+    git submodule update --remote
     
 
