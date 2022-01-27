@@ -7,8 +7,8 @@
 For already cloned repos, or older Git versions, use:
 
     git clone https://github.com/sdss/lvm.git
-    cd bar
-    git submodule update --init --recursive
+    cd lvm
+    git submodule update --init --recursive --remote
     
 ## update 
 
