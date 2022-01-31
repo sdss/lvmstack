@@ -18,7 +18,7 @@ from cluplus.proxy import Proxy, invoke, unpack
 cbuf = 20
 module = 4
 
-name="test.derot.km"
+name="test.derot.km_lab"
 amqpc = AMQPClient(name=f"{sys.argv[0]}.client-{uuid.uuid4().hex[:8]}")
 #amqpc.log.sh.setLevel(DEBUG)
 

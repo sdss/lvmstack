@@ -18,6 +18,8 @@ from Basda import ServiceIsBusyException
 from .BasdaCluPythonServiceWorker import (BasdaCluPythonServiceWorker, Command,
                                           asyncio, click, command_parser)
 
+# from cluplus.parsers.click import __commands, foo
+
 
 # TODO: use cluplus
 @command_parser.command(name='__commands')
@@ -27,6 +29,26 @@ def __commands(ctx, command: Command):
 
     # we have to use the help key for the command list, dont want to change the standard model.
     command.finish(help=[k for k in ctx.command.commands.keys() if k[:2] != '__'])
+
+
+@command_parser.command(name='foo')
+@click.pass_context
+def foo(ctx, command: Command, *args):
+    """Returns all commands."""
+
+    message = []
+    for k, v in ctx.command.commands.items():
+        if k[:2] == '__': continue
+        line = f"{k}("
+        for v in v.params:
+            line += v.name + ": " + str(v.type).lower()
+            if v.default: line += "=" + str(v.default)
+            line += ", " 
+        line += ")"
+        message.append(line)
+
+    command.finish(help=message)
+
 
 
 
