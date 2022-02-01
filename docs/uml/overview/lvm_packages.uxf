@@ -5,7 +5,7 @@
     <id>UMLPackage</id>
     <coordinates>
       <x>240</x>
-      <y>1040</y>
+      <y>1010</y>
       <w>240</w>
       <h>120</h>
     </coordinates>
@@ -24,7 +24,7 @@ middleware
     <id>UMLPackage</id>
     <coordinates>
       <x>610</x>
-      <y>1040</y>
+      <y>1010</y>
       <w>260</w>
       <h>120</h>
     </coordinates>
@@ -43,7 +43,7 @@ middleware enhacements
     <id>Relation</id>
     <coordinates>
       <x>470</x>
-      <y>1090</y>
+      <y>1060</y>
       <w>160</w>
       <h>40</h>
     </coordinates>
@@ -55,7 +55,7 @@ middleware enhacements
     <id>UMLPackage</id>
     <coordinates>
       <x>850</x>
-      <y>290</y>
+      <y>260</y>
       <w>240</w>
       <h>120</h>
     </coordinates>
@@ -73,7 +73,7 @@ operations
     <id>UMLPackage</id>
     <coordinates>
       <x>200</x>
-      <y>1000</y>
+      <y>970</y>
       <w>1520</w>
       <h>350</h>
     </coordinates>
@@ -87,7 +87,7 @@ halign=left
     <id>UMLPackage</id>
     <coordinates>
       <x>200</x>
-      <y>520</y>
+      <y>490</y>
       <w>600</w>
       <h>420</h>
     </coordinates>
@@ -101,7 +101,7 @@ halign=left
     <id>UMLPackage</id>
     <coordinates>
       <x>830</x>
-      <y>540</y>
+      <y>510</y>
       <w>600</w>
       <h>400</h>
     </coordinates>
@@ -115,7 +115,7 @@ halign=left
     <id>UMLPackage</id>
     <coordinates>
       <x>230</x>
-      <y>800</y>
+      <y>770</y>
       <w>160</w>
       <h>120</h>
     </coordinates>
@@ -133,7 +133,7 @@ twiceasnice actor
     <id>UMLPackage</id>
     <coordinates>
       <x>420</x>
-      <y>800</y>
+      <y>770</y>
       <w>160</w>
       <h>120</h>
     </coordinates>
@@ -151,7 +151,7 @@ planewave actor
     <id>UMLPackage</id>
     <coordinates>
       <x>610</x>
-      <y>800</y>
+      <y>770</y>
       <w>160</w>
       <h>120</h>
     </coordinates>
@@ -168,7 +168,7 @@ camera actor
     <id>UMLPackage</id>
     <coordinates>
       <x>610</x>
-      <y>1190</y>
+      <y>1160</y>
       <w>290</w>
       <h>120</h>
     </coordinates>
@@ -185,7 +185,7 @@ halign=left
     <id>UMLPackage</id>
     <coordinates>
       <x>1470</x>
-      <y>540</y>
+      <y>510</y>
       <w>250</w>
       <h>400</h>
     </coordinates>
@@ -199,7 +199,7 @@ halign=left
     <id>UMLPackage</id>
     <coordinates>
       <x>1180</x>
-      <y>190</y>
+      <y>160</y>
       <w>240</w>
       <h>100</h>
     </coordinates>
@@ -216,7 +216,7 @@ observing parameter files
     <id>Relation</id>
     <coordinates>
       <x>740</x>
-      <y>930</y>
+      <y>900</y>
       <w>160</w>
       <h>110</h>
     </coordinates>
@@ -228,7 +228,7 @@ observing parameter files
     <id>UMLPackage</id>
     <coordinates>
       <x>420</x>
-      <y>590</y>
+      <y>560</y>
       <w>160</w>
       <h>120</h>
     </coordinates>
@@ -247,7 +247,7 @@ acquisition &amp; guiding
     <id>Relation</id>
     <coordinates>
       <x>490</x>
-      <y>700</y>
+      <y>670</y>
       <w>90</w>
       <h>140</h>
     </coordinates>
@@ -259,7 +259,7 @@ acquisition &amp; guiding
     <id>Relation</id>
     <coordinates>
       <x>300</x>
-      <y>700</y>
+      <y>670</y>
       <w>160</w>
       <h>140</h>
     </coordinates>
@@ -271,7 +271,7 @@ acquisition &amp; guiding
     <id>Relation</id>
     <coordinates>
       <x>530</x>
-      <y>700</y>
+      <y>670</y>
       <w>190</w>
       <h>140</h>
     </coordinates>
@@ -283,7 +283,7 @@ acquisition &amp; guiding
     <id>Relation</id>
     <coordinates>
       <x>1080</x>
-      <y>280</y>
+      <y>250</y>
       <w>250</w>
       <h>110</h>
     </coordinates>
@@ -295,7 +295,7 @@ acquisition &amp; guiding
     <id>UMLPackage</id>
     <coordinates>
       <x>390</x>
-      <y>110</y>
+      <y>80</y>
       <w>1160</w>
       <h>330</h>
     </coordinates>
@@ -309,7 +309,7 @@ halign=left
     <id>UMLPackage</id>
     <coordinates>
       <x>540</x>
-      <y>190</y>
+      <y>160</y>
       <w>240</w>
       <h>100</h>
     </coordinates>
@@ -326,7 +326,7 @@ robotic operations
     <id>Relation</id>
     <coordinates>
       <x>770</x>
-      <y>230</y>
+      <y>200</y>
       <w>430</w>
       <h>40</h>
     </coordinates>
@@ -338,7 +338,7 @@ robotic operations
     <id>Relation</id>
     <coordinates>
       <x>650</x>
-      <y>280</y>
+      <y>250</y>
       <w>220</w>
       <h>100</h>
     </coordinates>
@@ -350,7 +350,7 @@ robotic operations
     <id>Relation</id>
     <coordinates>
       <x>570</x>
-      <y>400</y>
+      <y>370</y>
       <w>340</w>
       <h>160</h>
     </coordinates>
@@ -362,7 +362,7 @@ robotic operations
     <id>Relation</id>
     <coordinates>
       <x>950</x>
-      <y>400</y>
+      <y>370</y>
       <w>230</w>
       <h>180</h>
     </coordinates>
@@ -374,7 +374,7 @@ robotic operations
     <id>Relation</id>
     <coordinates>
       <x>1040</x>
-      <y>400</y>
+      <y>370</y>
       <w>660</w>
       <h>180</h>
     </coordinates>
@@ -386,7 +386,7 @@ robotic operations
     <id>UMLPackage</id>
     <coordinates>
       <x>1490</x>
-      <y>600</y>
+      <y>570</y>
       <w>160</w>
       <h>120</h>
     </coordinates>
@@ -404,7 +404,7 @@ halign=left
     <id>UMLPackage</id>
     <coordinates>
       <x>1050</x>
-      <y>590</y>
+      <y>560</y>
       <w>160</w>
       <h>140</h>
     </coordinates>
@@ -424,7 +424,7 @@ spec. control
     <id>UMLPackage</id>
     <coordinates>
       <x>860</x>
-      <y>800</y>
+      <y>770</y>
       <w>160</w>
       <h>120</h>
     </coordinates>
@@ -442,7 +442,7 @@ spec electronics
     <id>UMLPackage</id>
     <coordinates>
       <x>1050</x>
-      <y>800</y>
+      <y>770</y>
       <w>160</w>
       <h>120</h>
     </coordinates>
@@ -460,7 +460,7 @@ camera system actor
     <id>UMLPackage</id>
     <coordinates>
       <x>1240</x>
-      <y>800</y>
+      <y>770</y>
       <w>160</w>
       <h>120</h>
     </coordinates>
@@ -478,7 +478,7 @@ guide camera actor
     <id>Relation</id>
     <coordinates>
       <x>1160</x>
-      <y>720</y>
+      <y>690</y>
       <w>190</w>
       <h>120</h>
     </coordinates>
@@ -490,7 +490,7 @@ guide camera actor
     <id>Relation</id>
     <coordinates>
       <x>1120</x>
-      <y>720</y>
+      <y>690</y>
       <w>90</w>
       <h>120</h>
     </coordinates>
@@ -502,7 +502,7 @@ guide camera actor
     <id>Relation</id>
     <coordinates>
       <x>940</x>
-      <y>720</y>
+      <y>690</y>
       <w>160</w>
       <h>120</h>
     </coordinates>
@@ -514,7 +514,7 @@ guide camera actor
     <id>Relation</id>
     <coordinates>
       <x>1090</x>
-      <y>930</y>
+      <y>900</y>
       <w>100</w>
       <h>110</h>
     </coordinates>
@@ -526,7 +526,7 @@ guide camera actor
     <id>Relation</id>
     <coordinates>
       <x>1330</x>
-      <y>930</y>
+      <y>900</y>
       <w>280</w>
       <h>110</h>
     </coordinates>
@@ -538,7 +538,7 @@ guide camera actor
     <id>UMLPackage</id>
     <coordinates>
       <x>240</x>
-      <y>1190</y>
+      <y>1160</y>
       <w>240</w>
       <h>120</h>
     </coordinates>
@@ -557,7 +557,7 @@ middleware
     <id>Relation</id>
     <coordinates>
       <x>360</x>
-      <y>1150</y>
+      <y>1120</y>
       <w>90</w>
       <h>80</h>
     </coordinates>
@@ -569,7 +569,7 @@ middleware
     <id>UMLClass</id>
     <coordinates>
       <x>190</x>
-      <y>110</y>
+      <y>80</y>
       <w>150</w>
       <h>40</h>
     </coordinates>
@@ -584,8 +584,8 @@ lvm packages
     <id>UMLPackage</id>
     <coordinates>
       <x>970</x>
-      <y>1050</y>
-      <w>140</w>
+      <y>1020</y>
+      <w>160</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>araviscam
@@ -594,7 +594,6 @@ halign=left
 * GigE camera
  + FLIR Blackfly S GigE
 
-
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -602,7 +601,7 @@ halign=left
     <id>UMLPackage</id>
     <coordinates>
       <x>970</x>
-      <y>1220</y>
+      <y>1190</y>
       <w>590</w>
       <h>90</h>
     </coordinates>
@@ -616,7 +615,7 @@ base camera module</panel_attributes>
     <id>UMLPackage</id>
     <coordinates>
       <x>1170</x>
-      <y>1050</y>
+      <y>1020</y>
       <w>170</w>
       <h>110</h>
     </coordinates>
@@ -633,7 +632,7 @@ halign=left
     <id>UMLPackage</id>
     <coordinates>
       <x>1390</x>
-      <y>1050</y>
+      <y>1020</y>
       <w>160</w>
       <h>110</h>
     </coordinates>
@@ -642,14 +641,15 @@ halign=left
 halign=left
 * virtual camera
  + skyimages
- + defocus</panel_attributes>
+ + defocus
+ </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>1060</x>
-      <y>1150</y>
+      <y>1120</y>
       <w>250</w>
       <h>110</h>
     </coordinates>
@@ -661,7 +661,7 @@ halign=left
     <id>Relation</id>
     <coordinates>
       <x>1250</x>
-      <y>1150</y>
+      <y>1120</y>
       <w>120</w>
       <h>110</h>
     </coordinates>
@@ -673,7 +673,7 @@ halign=left
     <id>Relation</id>
     <coordinates>
       <x>1390</x>
-      <y>1150</y>
+      <y>1120</y>
       <w>120</w>
       <h>110</h>
     </coordinates>
