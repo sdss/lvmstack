@@ -4,7 +4,7 @@
 ![lvm package overview](docs/uml/overview/lvm_packages.png)
 
 ## Notes
-### clone with all lvm modules
+### clone with all lvm packages
 
     git clone --recurse-submodules -j8 --remote-submodules https://github.com/sdss/lvm.git
     
