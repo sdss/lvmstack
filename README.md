@@ -1,6 +1,10 @@
 # lvm superproject
 
-## clone with all lvm modules
+
+![lvm package overview](docs/uml/overview/lvm_packages.png)
+
+## Notes
+### clone with all lvm modules
 
     git clone --recurse-submodules -j8 --remote-submodules https://github.com/sdss/lvm.git
     
@@ -10,7 +14,7 @@ For already cloned repos, or older Git versions, use:
     cd lvm
     git submodule update --init --recursive --remote
     
-## update 
+### update 
 
     git submodule update --remote
     
