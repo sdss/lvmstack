@@ -50,3 +50,7 @@
 	path = lvmieb
 	url = https://github.com/sdss/lvmieb
 	branch = master
+[submodule "lvmcore"]
+	path = lvmcore
+	url = https://github.com/sdss/lvmcore
+	branch = master
