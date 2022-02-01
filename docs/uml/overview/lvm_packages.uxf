@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>8</zoom_level>
+  <zoom_level>10</zoom_level>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>192</x>
-      <y>912</y>
-      <w>192</w>
-      <h>96</h>
+      <x>240</x>
+      <y>1140</y>
+      <w>240</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>clu
 --
@@ -23,10 +23,10 @@ middleware
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>488</x>
-      <y>912</y>
-      <w>208</w>
-      <h>96</h>
+      <x>610</x>
+      <y>1140</y>
+      <w>260</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>cluplus
 --
@@ -42,10 +42,10 @@ middleware enhacements
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>376</x>
-      <y>952</y>
-      <w>128</w>
-      <h>32</h>
+      <x>470</x>
+      <y>1190</y>
+      <w>160</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;import&gt;&gt;</panel_attributes>
@@ -54,10 +54,10 @@ middleware enhacements
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>680</x>
-      <y>312</y>
-      <w>192</w>
-      <h>96</h>
+      <x>850</x>
+      <y>390</y>
+      <w>240</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lvmops
 --
@@ -72,10 +72,10 @@ operations
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>160</x>
-      <y>880</y>
-      <w>1216</w>
-      <h>280</h>
+      <x>200</x>
+      <y>1100</y>
+      <w>1520</w>
+      <h>350</h>
     </coordinates>
     <panel_attributes>core
 --
@@ -86,10 +86,10 @@ halign=left
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>160</x>
-      <y>496</y>
-      <w>480</w>
-      <h>336</h>
+      <x>200</x>
+      <y>620</y>
+      <w>600</w>
+      <h>420</h>
     </coordinates>
     <panel_attributes>telescope control system
 --
@@ -100,10 +100,10 @@ halign=left
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>664</x>
-      <y>512</y>
-      <w>480</w>
-      <h>320</h>
+      <x>830</x>
+      <y>640</y>
+      <w>600</w>
+      <h>400</h>
     </coordinates>
     <panel_attributes>spectograph control system
 --
@@ -114,10 +114,10 @@ halign=left
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>184</x>
-      <y>720</y>
-      <w>128</w>
-      <h>96</h>
+      <x>230</x>
+      <y>900</y>
+      <w>160</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lvmtan
 --
@@ -132,10 +132,10 @@ twiceasnice actor
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>336</x>
-      <y>720</y>
-      <w>128</w>
-      <h>96</h>
+      <x>420</x>
+      <y>900</y>
+      <w>160</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lvmpwi
 --
@@ -150,28 +150,27 @@ planewave actor
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>488</x>
-      <y>720</y>
-      <w>128</w>
-      <h>96</h>
+      <x>610</x>
+      <y>900</y>
+      <w>160</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lvmcam
 --
 halign=left
 camera actor
 
-* basecam camera pks
- + araviscam (7)
- + skymakercam (opt)</panel_attributes>
++ araviscam (7)
++ skymakercam (opt)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>752</x>
-      <y>912</y>
-      <w>232</w>
-      <h>96</h>
+      <x>610</x>
+      <y>1290</y>
+      <w>290</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lvmtipo
 --
@@ -185,10 +184,10 @@ halign=left
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>1176</x>
-      <y>512</y>
-      <w>200</w>
-      <h>320</h>
+      <x>1470</x>
+      <y>640</y>
+      <w>250</w>
+      <h>400</h>
     </coordinates>
     <panel_attributes>enclosure control system
 --
@@ -199,10 +198,10 @@ halign=left
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>944</x>
-      <y>232</y>
-      <w>192</w>
-      <h>80</h>
+      <x>1180</x>
+      <y>290</y>
+      <w>240</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lvmcore
 --
@@ -216,10 +215,10 @@ observing parameter files
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>592</x>
-      <y>824</y>
-      <w>128</w>
-      <h>88</h>
+      <x>740</x>
+      <y>1030</y>
+      <w>160</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;import&gt;&gt;</panel_attributes>
@@ -228,10 +227,10 @@ observing parameter files
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>336</x>
-      <y>552</y>
-      <w>128</w>
-      <h>96</h>
+      <x>420</x>
+      <y>690</y>
+      <w>160</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lvmagp
 --
@@ -247,10 +246,10 @@ acquisition &amp; guiding
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>392</x>
-      <y>640</y>
-      <w>72</w>
-      <h>112</h>
+      <x>490</x>
+      <y>800</y>
+      <w>90</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;access&gt;&gt;</panel_attributes>
@@ -259,10 +258,10 @@ acquisition &amp; guiding
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>240</x>
-      <y>640</y>
-      <w>128</w>
-      <h>112</h>
+      <x>300</x>
+      <y>800</y>
+      <w>160</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;access&gt;&gt;</panel_attributes>
@@ -271,10 +270,10 @@ acquisition &amp; guiding
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>424</x>
-      <y>640</y>
-      <w>152</w>
-      <h>112</h>
+      <x>530</x>
+      <y>800</y>
+      <w>190</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;access&gt;&gt;</panel_attributes>
@@ -283,10 +282,10 @@ acquisition &amp; guiding
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>864</x>
-      <y>304</y>
-      <w>200</w>
-      <h>88</h>
+      <x>1080</x>
+      <y>380</y>
+      <w>250</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;import&gt;&gt;</panel_attributes>
@@ -295,10 +294,10 @@ acquisition &amp; guiding
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>312</x>
-      <y>168</y>
-      <w>928</w>
-      <h>264</h>
+      <x>390</x>
+      <y>210</y>
+      <w>1160</w>
+      <h>330</h>
     </coordinates>
     <panel_attributes>observation system
 --
@@ -309,10 +308,10 @@ halign=left
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>432</x>
-      <y>232</y>
-      <w>192</w>
-      <h>80</h>
+      <x>540</x>
+      <y>290</y>
+      <w>240</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lvmrop
 --
@@ -326,10 +325,10 @@ robotic operations
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>616</x>
-      <y>264</y>
-      <w>344</w>
-      <h>32</h>
+      <x>770</x>
+      <y>330</y>
+      <w>430</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;import&gt;&gt;</panel_attributes>
@@ -338,10 +337,10 @@ robotic operations
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>520</x>
-      <y>304</y>
-      <w>176</w>
-      <h>80</h>
+      <x>650</x>
+      <y>380</y>
+      <w>220</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;import&gt;&gt;</panel_attributes>
@@ -350,10 +349,10 @@ robotic operations
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>456</x>
-      <y>400</y>
-      <w>272</w>
-      <h>128</h>
+      <x>570</x>
+      <y>500</y>
+      <w>340</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;access&gt;&gt;</panel_attributes>
@@ -362,10 +361,10 @@ robotic operations
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>760</x>
-      <y>400</y>
-      <w>184</w>
-      <h>144</h>
+      <x>950</x>
+      <y>500</y>
+      <w>230</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;access&gt;&gt;</panel_attributes>
@@ -374,10 +373,10 @@ robotic operations
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>832</x>
-      <y>400</y>
-      <w>528</w>
-      <h>144</h>
+      <x>1040</x>
+      <y>500</y>
+      <w>660</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;access&gt;&gt;</panel_attributes>
@@ -386,10 +385,10 @@ robotic operations
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>1192</x>
-      <y>560</y>
-      <w>128</w>
-      <h>96</h>
+      <x>1490</x>
+      <y>700</y>
+      <w>160</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lvmecp
 --
@@ -404,10 +403,10 @@ halign=left
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>840</x>
-      <y>552</y>
-      <w>128</w>
-      <h>112</h>
+      <x>1050</x>
+      <y>690</y>
+      <w>160</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lvmscp
 --
@@ -424,10 +423,10 @@ spec. control
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>688</x>
-      <y>720</y>
-      <w>128</w>
-      <h>96</h>
+      <x>860</x>
+      <y>900</y>
+      <w>160</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lvmieb
 --
@@ -442,15 +441,15 @@ spec electronics
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>840</x>
-      <y>720</y>
-      <w>128</w>
-      <h>96</h>
+      <x>1050</x>
+      <y>900</y>
+      <w>160</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>archon
 --
 halign=left
-camera system
+camera system actor
 
 * ccd (9)
 
@@ -460,10 +459,10 @@ camera system
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>992</x>
-      <y>720</y>
-      <w>128</w>
-      <h>96</h>
+      <x>1240</x>
+      <y>900</y>
+      <w>160</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lvmnps
 --
@@ -478,10 +477,10 @@ guide camera actor
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>928</x>
-      <y>656</y>
-      <w>152</w>
-      <h>96</h>
+      <x>1160</x>
+      <y>820</y>
+      <w>190</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;access&gt;&gt;</panel_attributes>
@@ -490,10 +489,10 @@ guide camera actor
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>896</x>
-      <y>656</y>
-      <w>72</w>
-      <h>96</h>
+      <x>1120</x>
+      <y>820</y>
+      <w>90</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;access&gt;&gt;</panel_attributes>
@@ -502,10 +501,10 @@ guide camera actor
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>752</x>
-      <y>656</y>
-      <w>128</w>
-      <h>96</h>
+      <x>940</x>
+      <y>820</y>
+      <w>160</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;access&gt;&gt;</panel_attributes>
@@ -514,10 +513,10 @@ guide camera actor
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>872</x>
-      <y>824</y>
-      <w>80</w>
-      <h>88</h>
+      <x>1090</x>
+      <y>1030</y>
+      <w>100</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;import&gt;&gt;</panel_attributes>
@@ -526,10 +525,10 @@ guide camera actor
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1064</x>
-      <y>824</y>
-      <w>224</w>
-      <h>88</h>
+      <x>1330</x>
+      <y>1030</y>
+      <w>280</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;import&gt;&gt;</panel_attributes>
@@ -538,10 +537,10 @@ guide camera actor
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>192</x>
-      <y>1032</y>
-      <w>192</w>
-      <h>96</h>
+      <x>240</x>
+      <y>1290</y>
+      <w>240</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>sdsstools
 --
@@ -557,10 +556,10 @@ middleware
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>1000</y>
-      <w>72</w>
-      <h>64</h>
+      <x>360</x>
+      <y>1250</y>
+      <w>90</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;import&gt;&gt;</panel_attributes>
@@ -569,10 +568,10 @@ middleware
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>152</x>
-      <y>96</y>
-      <w>120</w>
-      <h>32</h>
+      <x>190</x>
+      <y>210</y>
+      <w>150</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>halign=center
 fontsize=24
@@ -580,5 +579,106 @@ lvm packages
 
 </panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>970</x>
+      <y>1150</y>
+      <w>140</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>araviscam
+--
+halign=left
+* GigE cameras
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>970</x>
+      <y>1320</y>
+      <w>590</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>basecam
+--
+halign=left
+base camera module</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1170</x>
+      <y>1150</y>
+      <w>170</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>archon
+--
+halign=left
+* archon cameras
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1390</x>
+      <y>1150</y>
+      <w>160</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>skymakercam
+--
+halign=left
+* virtual camera
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1060</x>
+      <y>1250</y>
+      <w>250</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+&lt;&lt;import&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;230.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1250</x>
+      <y>1250</y>
+      <w>120</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+&lt;&lt;import&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;100.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1390</x>
+      <y>1250</y>
+      <w>120</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+&lt;&lt;import&gt;&gt;</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;90.0</additional_attributes>
   </element>
 </diagram>
