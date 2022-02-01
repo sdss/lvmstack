@@ -372,13 +372,15 @@ robotic operations
     <id>UMLPackage</id>
     <coordinates>
       <x>1490</x>
-      <y>570</y>
+      <y>560</y>
       <w>160</w>
-      <h>120</h>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lvmecp
 --
 halign=left
+enclosure 
+
 * dome
 * lamps
 * HVAC
