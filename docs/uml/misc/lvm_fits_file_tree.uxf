@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLHierarchy</id>
+    <coordinates>
+      <x>50</x>
+      <y>40</y>
+      <w>800</w>
+      <h>810</h>
+    </coordinates>
+    <panel_attributes>type=Package
+lvm
+	tcs
+		sci
+			%Y%m%d
+				lvm.tcs.sci.%Y%m%d_xxxx.fits
+		skye
+			%Y%m%d
+				lvm.tcs.skye.%Y%m%d_xxxx.fits
+		skyw
+			%Y%m%d
+				lvm.tcs.skyw.%Y%m%d_xxxx.fits
+		spec
+			%Y%m%d
+				lvm.tcs.spec.%Y%m%d_xxxx.fits
+	scs
+		sp1
+			%Y%m%d
+				lvm.scs.sp1.%Y%m%d_xxxx.fits
+		sp2
+			%Y%m%d
+				lvm.scs.sp2.%Y%m%d_xxxx.fits
+		sp3
+			%Y%m%d
+				lvm.scs.sp3.%Y%m%d_xxxx.fits
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
