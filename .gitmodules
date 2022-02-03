@@ -23,7 +23,7 @@
 	url = https://github.com/sdss/lvmecp
 	branch = master
 [submodule "lvmscp"]
-	path = _lvmscp
+	path = lvmscp
 	url = https://github.com/sdss/lvmscp
 	branch = master
 [submodule "lvmops"]
