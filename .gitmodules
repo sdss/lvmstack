@@ -55,7 +55,7 @@
 	url = https://github.com/sdss/lvmcore
 	branch = master
 [submodule "basecam"]
-	path = basecam
+	path = basecam0
 	url = https://github.com/sdss/basecam
 	branch = main
 [submodule "lvmnps"]
