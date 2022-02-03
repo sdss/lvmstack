@@ -35,7 +35,7 @@
 	url = https://github.com/sdss/lvmcam
 	branch = main
 [submodule "lvmagp"]
-	path = lvmagp
+	path = _lvmagp
 	url = https://github.com/sdss/lvmagp
 	branch = master
 [submodule "lvmpwi"]
