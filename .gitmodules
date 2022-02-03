@@ -47,7 +47,7 @@
 	url = https://github.com/sdss/lvmtan
 	branch = main
 [submodule "lvmieb"]
-	path = lvmieb
+	path = _lvmieb
 	url = https://github.com/sdss/lvmieb
 	branch = master
 [submodule "lvmcore"]
