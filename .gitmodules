@@ -19,7 +19,7 @@
 	url = https://github.com/sdss/lvmtipo
 	branch = main
 [submodule "lvmecp"]
-	path = lvmecp
+	path = _lvmecp
 	url = https://github.com/sdss/lvmecp
 	branch = master
 [submodule "lvmscp"]
