@@ -6,6 +6,10 @@
 	path = cluplus
 	url = https://github.com/sdss/cluplus
 	branch = master
+[submodule "basecam"]
+	path = basecam
+	url = https://github.com/sdss/basecam
+	branch = main
 [submodule "araviscam"]
 	path = aravsicam
 	url = https://github.com/sdss/araviscam
@@ -54,10 +58,6 @@
 	path = lvmcore
 	url = https://github.com/sdss/lvmcore
 	branch = master
-[submodule "basecam"]
-	path = basecam
-	url = https://github.com/sdss/basecam
-	branch = main
 [submodule "lvmnps"]
 	path = lvmnps
 	url = https://github.com/sdss/lvmnps
