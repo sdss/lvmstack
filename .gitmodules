@@ -7,7 +7,7 @@
 	url = https://github.com/sdss/cluplus
 	branch = master
 [submodule "araviscam"]
-	path = araviscam GigE module
+	path = aravsicam
 	url = https://github.com/sdss/araviscam
 	branch = main
 [submodule "skymakercam"]
