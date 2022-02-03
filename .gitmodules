@@ -62,3 +62,7 @@
 	path = lvmnps
 	url = https://github.com/sdss/lvmnps
 	branch = master
+[submodule "archon"]
+	path = archon
+	url = https://github.com/sdss/archon
+	branch = main
