@@ -39,7 +39,7 @@
 	url = https://github.com/sdss/lvmagp
 	branch = master
 [submodule "lvmpwi"]
-	path = _lvmpwi
+	path = lvmpwi
 	url = https://github.com/sdss/lvmpwi
 	branch = main
 [submodule "lvmtan"]
