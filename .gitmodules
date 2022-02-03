@@ -1,5 +1,5 @@
 [submodule "clu"]
-	path = _clu
+	path = clu
 	url = https://github.com/sdss/clu
 	branch = main
 [submodule "cluplus"]
