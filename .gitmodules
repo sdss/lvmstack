@@ -15,7 +15,7 @@
 	url = https://github.com/sdss/skymakercam
 	branch = master
 [submodule "lvmtipo"]
-	path = _lvmtipo
+	path = lvmtipo
 	url = https://github.com/sdss/lvmtipo
 	branch = main
 [submodule "lvmecp"]
