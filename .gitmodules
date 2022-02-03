@@ -3,7 +3,7 @@
 	url = https://github.com/sdss/clu
 	branch = main
 [submodule "cluplus"]
-	path = _cluplus
+	path = cluplus
 	url = https://github.com/sdss/cluplus
 	branch = master
 [submodule "araviscam"]
