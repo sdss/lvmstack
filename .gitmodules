@@ -11,7 +11,7 @@
 	url = https://github.com/sdss/araviscam
 	branch = main
 [submodule "skymakercam"]
-	path = _skymakercam
+	path = skymakercam
 	url = https://github.com/sdss/skymakercam
 	branch = master
 [submodule "lvmtipo"]
