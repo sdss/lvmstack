@@ -3,8 +3,6 @@
 
 ![lvm package overview](docs/uml/overview/lvm_packages.png)
 
-## Let's put a table listing lgmagp = Autoguider Package, etc.. here.
-
 ## Notes
 ### clone with all lvm packages
 
