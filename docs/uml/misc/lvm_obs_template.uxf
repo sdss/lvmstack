@@ -5,7 +5,7 @@
     <id>UMLNote</id>
     <coordinates>
       <x>40</x>
-      <y>110</y>
+      <y>60</y>
       <w>230</w>
       <h>310</h>
     </coordinates>
@@ -33,9 +33,9 @@
     <id>UMLClass</id>
     <coordinates>
       <x>410</x>
-      <y>110</y>
+      <y>40</y>
       <w>230</w>
-      <h>140</h>
+      <h>210</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 OBS Template
@@ -44,7 +44,9 @@ responsibilities
 -- read lvmcore obs param files
 -- execute
  * as commandline script
- * as rop task</panel_attributes>
+ * as rop task
+-- exception handling
+ * severity: fatal, alert, error, ...</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -76,7 +78,7 @@ Aquisition Template
     <id>Relation</id>
     <coordinates>
       <x>260</x>
-      <y>180</y>
+      <y>130</y>
       <w>170</w>
       <h>30</h>
     </coordinates>

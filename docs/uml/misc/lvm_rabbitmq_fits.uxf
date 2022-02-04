@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLHierarchy</id>
+    <coordinates>
+      <x>260</x>
+      <y>120</y>
+      <w>250</w>
+      <h>860</h>
+    </coordinates>
+    <panel_attributes>type=Package
+lvm
+	tcs
+		sci
+			ag
+			foc
+			km
+			cam
+			sid
+		skye
+			ag
+			foc
+			km
+			cam
+			sid
+		skyw
+			ag
+			foc
+			km
+			cam
+			sid
+		spec
+			ag
+			fibsel
+			km
+			cam
+			sid
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLHierarchy</id>
+    <coordinates>
+      <x>530</x>
+      <y>120</y>
+      <w>230</w>
+      <h>860</h>
+    </coordinates>
+    <panel_attributes>type=Package
+lvm
+	scs
+		sc
+		sp1
+		sp2
+		sp3
+		nps
+		ieb
+	ecs
+		ec
+		dome
+		lamps
+		hvac
+		meteo</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>220</x>
+      <y>80</y>
+      <w>580</w>
+      <h>920</h>
+    </coordinates>
+    <panel_attributes>RabbitMQ</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLHierarchy</id>
+    <coordinates>
+      <x>970</x>
+      <y>110</y>
+      <w>250</w>
+      <h>860</h>
+    </coordinates>
+    <panel_attributes>type=Package
+ti
+ 	a
+ 	f
+	k
+	c
+	s
+te
+ 	a
+ 	f
+	k
+	c
+	s
+tw
+ 	a
+ 	f
+	k
+	c
+	s
+tp
+ 	a
+ 	f
+	k
+	c
+	s</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLHierarchy</id>
+    <coordinates>
+      <x>1240</x>
+      <y>110</y>
+      <w>250</w>
+      <h>860</h>
+    </coordinates>
+    <panel_attributes>type=Package
+sc
+	c
+	1
+	2
+	3
+	n
+	i
+ec
+	c
+	d
+	l
+	h
+	m
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>950</x>
+      <y>80</y>
+      <w>580</w>
+      <h>920</h>
+    </coordinates>
+    <panel_attributes>Fitskey 3 letter prefix for subsystem data</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>800</x>
+      <y>550</y>
+      <w>150</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+&lt;&lt;map&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
+  </element>
+</diagram>

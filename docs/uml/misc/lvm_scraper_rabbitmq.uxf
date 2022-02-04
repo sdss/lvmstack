@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>170</x>
+      <y>440</y>
+      <w>320</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lvmscrap
+--
+halign=left
+scrapping telemetry rabbitMQ
+
+* RabbitMQ exchange ?
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLHierarchy</id>
+    <coordinates>
+      <x>700</x>
+      <y>110</y>
+      <w>250</w>
+      <h>950</h>
+    </coordinates>
+    <panel_attributes>type=Package
+lvm
+	tcs
+		sci
+			ag
+			foc
+			km
+			cam
+			sid
+		skye
+			ag
+			foc
+			km
+			cam
+			sid
+		skyw
+			ag
+			foc
+			km
+			cam
+			sid
+		spec
+			ag
+			fibsel
+			km
+			cam
+			sid
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>480</x>
+      <y>490</y>
+      <w>200</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+&lt;&lt;access&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLHierarchy</id>
+    <coordinates>
+      <x>970</x>
+      <y>110</y>
+      <w>230</w>
+      <h>940</h>
+    </coordinates>
+    <panel_attributes>type=Package
+lvm
+	scs
+		sc
+		sp1
+		sp2
+		sp3
+		nps
+		ieb
+	ecs
+		ec
+		dome
+		lamps
+		hvac
+		meteo</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>660</x>
+      <y>70</y>
+      <w>610</w>
+      <h>1030</h>
+    </coordinates>
+    <panel_attributes>RabbitMQ</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
