@@ -66,3 +66,7 @@
 	path = archon
 	url = https://github.com/sdss/archon
 	branch = main
+[submodule "lvmscraper"]
+	path = lvmscraper
+	url = https://github.com/sdss/lvmscraper
+	branch = main
