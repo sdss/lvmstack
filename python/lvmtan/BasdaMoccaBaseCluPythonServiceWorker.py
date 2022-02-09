@@ -49,27 +49,6 @@ class BasdaMoccaBaseCluPythonServiceWorker(BasdaCluPythonServiceWorker):
         except Exception as e:
             command.fail(error=e)
 
-    @command_parser.command("status")
-    @BasdaCluPythonServiceWorker.wrapper
-    async def isReachable(self, command: Command):
-        """Check hardware reachability"""
-        try:
-            units="STEPS"
-            reachable = self.service.isReachable()
-            return command.finish(
-                Reachable=reachable,
-                AtHome=self.service.isAtHome() if reachable else "Unknown",
-                AtLimit=self.service.isAtLimit() if reachable else "Unknown",
-                Moving=self.service.isMoving() if reachable else "Unknown",
-                CurrentTime=self.service.getCurrentTime() if reachable else "Unknown",
-                PositionSwitchStatus=self.service.getPositionSwitchStatus()[0].getValue() if reachable else "Unknown",
-                DeviceEncoderPosition=self.service.getDeviceEncoderPosition(units) if reachable else "Unknown",
-                Units=units if reachable else "Unknown",
-                Velocity=self.service.getVelocity() if reachable else "Unknown",
-            )
-        except Exception as e:
-            command.fail(error=e)
-
     @command_parser.command("getPositionSwitchStatus")
     @BasdaCluPythonServiceWorker.wrapper
     async def getPositionSwitchStatus(self, command: Command):
