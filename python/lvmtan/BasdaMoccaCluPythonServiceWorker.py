@@ -32,6 +32,17 @@ class BasdaMoccaCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         self.schema["properties"]["PositionSwitchStatus"] = {"type": "number"}
         self.schema["properties"]["NamedPosition"] = {"type": "number"}
 
+    @command_parser.command("getCurrentTime")
+    @BasdaCluPythonServiceWorker.wrapper
+    async def getCurrentTime(self, command: Command):
+        """Returns internal time counter"""
+        try:
+            return command.finish(
+                    CurrentTime=self.service.getCurrentTime()
+                )
+        except Exception as e:
+            command.fail(error=e)
+
     @command_parser.command("getAbsoluteEncoderPosition")
     @BasdaCluPythonServiceWorker.wrapper
     async def getAbsoluteEncoderPosition(self, command: Command):
@@ -138,13 +149,8 @@ class BasdaMoccaCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
                 )
             self.service.moveRelativeWait()
 
-            return command.finish(
-                DeviceEncoderPosition=self.service.getDeviceEncoderPosition(units),
-                Units=units,
-                Velocity=self.service.getVelocity(),
-                AtHome=self.service.isAtHome(),
-                AtLimit=self.service.isAtLimit(),
-            )
+            return command.finish(**self._status(units))
+
         except Exception as e:
             command.fail(error=e)
 
@@ -165,13 +171,8 @@ class BasdaMoccaCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
                 )
             self.service.moveAbsoluteWait()
 
-            return command.finish(
-                DeviceEncoderPosition=self.service.getDeviceEncoderPosition(units),
-                Units=units,
-                Velocity=self.service.getVelocity(),
-                AtHome=self.service.isAtHome(),
-                AtLimit=self.service.isAtLimit(),
-            )
+            return command.finish(**self._status(units))
+
         except Exception as e:
             command.fail(error=e)
 
@@ -191,13 +192,8 @@ class BasdaMoccaCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
                 )
             self.service.moveToHomeWait()
 
-            return command.finish(
-                DeviceEncoderPosition=self.service.getDeviceEncoderPosition(units),
-                Units=units,
-                Velocity=self.service.getVelocity(),
-                AtHome=self.service.isAtHome(),
-                AtLimit=self.service.isAtLimit(),
-            )
+            return command.finish(**self._status(units))
+
         except Exception as e:
             command.fail(error=e)
 
@@ -220,9 +216,7 @@ class BasdaMoccaCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
 
             self.service.moveToNamedPositionWait()
 
-            return command.finish(
-                DeviceEncoderPosition=self.service.getDeviceEncoderPosition(units),
-                NamedPosition=self.service.getNamedPosition(namedposition),
-            )
+            return command.finish(**self._status(units))
+
         except Exception as e:
             command.fail(error=e)

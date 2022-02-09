@@ -38,16 +38,40 @@ class BasdaMoccaBaseCluPythonServiceWorker(BasdaCluPythonServiceWorker):
         self.schema["properties"]["Reachable"] = {"type": "boolean"}
         self.schema["properties"]["CurrentTime"] = {"type": "number"}
 
+
+    def _status(self, units, reachable=True):
+        return {
+            "Reachable": reachable,
+            "AtHome": self.service.isAtHome() if reachable else "Unknown",
+            "Moving": self.service.isMoving() if reachable else "Unknown",
+            "PositionSwitchStatus": self.service.getPositionSwitchStatus()[0].getValue() if reachable else "Unknown",
+            "DeviceEncoderPosition": self.service.getDeviceEncoderPosition(units) if reachable else "Unknown",
+            "Units": units if reachable else "Unknown",
+            "Velocity": self.service.getVelocity() if reachable else "Unknown",
+        }
+    
+
+    @command_parser.command("status")
+    @BasdaCluPythonServiceWorker.wrapper
+    async def status(self, command: Command):
+        """Check status"""
+        try:
+            return command.finish( **self._status("STEPS", self.service.isReachable()) )
+        except Exception as e:
+            command.fail(error=e)
+
+
     @command_parser.command("isReachable")
     @BasdaCluPythonServiceWorker.wrapper
     async def isReachable(self, command: Command):
         """Check hardware reachability"""
         try:
             return command.finish(
-                Reachable=reachable
+                Reachable=self.service.isReachable()
             )
         except Exception as e:
             command.fail(error=e)
+
 
     @command_parser.command("getPositionSwitchStatus")
     @BasdaCluPythonServiceWorker.wrapper
@@ -82,13 +106,3 @@ class BasdaMoccaBaseCluPythonServiceWorker(BasdaCluPythonServiceWorker):
         except Exception as e:
             command.fail(error=e)
 
-    @command_parser.command("getCurrentTime")
-    @BasdaCluPythonServiceWorker.wrapper
-    async def getCurrentTime(self, command: Command):
-        """Returns internal time counter"""
-        try:
-            return command.finish(
-                    CurrentTime=self.service.getCurrentTime()
-                )
-        except Exception as e:
-            command.fail(error=e)

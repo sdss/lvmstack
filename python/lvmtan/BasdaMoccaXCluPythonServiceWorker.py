@@ -13,7 +13,7 @@ import Nice
 import numpy as np
 
 from .BasdaMoccaCluPythonServiceWorker import *
-
+from .BasdaMoccaBaseCluPythonServiceWorker import *
 
 class BasdaMoccaXCluPythonServiceWorker(BasdaMoccaCluPythonServiceWorker):
     "python clu x worker"
@@ -22,26 +22,8 @@ class BasdaMoccaXCluPythonServiceWorker(BasdaMoccaCluPythonServiceWorker):
         BasdaMoccaCluPythonServiceWorker.__init__(self, _svcName)
 
 
-    @command_parser.command("status")
-    @BasdaCluPythonServiceWorker.wrapper
-    async def isReachable(self, command: Command):
-        """Check hardware reachability"""
-        try:
-            units="STEPS"
-            reachable = self.service.isReachable()
-            return command.finish(
-                Reachable=reachable,
-                AtHome=self.service.isAtHome() if reachable else "Unknown",
-                AtLimit=self.service.isAtLimit() if reachable else "Unknown",
-                Moving=self.service.isMoving() if reachable else "Unknown",
-                CurrentTime=self.service.getCurrentTime() if reachable else "Unknown",
-                PositionSwitchStatus=self.service.getPositionSwitchStatus()[0].getValue() if reachable else "Unknown",
-                DeviceEncoderPosition=self.service.getDeviceEncoderPosition(units) if reachable else "Unknown",
-                Units=units if reachable else "Unknown",
-                Velocity=self.service.getVelocity() if reachable else "Unknown",
-            )
-        except Exception as e:
-            command.fail(error=e)
+    def _status(self, units, reachable=True):
+        return {**BasdaMoccaBaseCluPythonServiceWorker._status(self, units), **{"AtLimit": self.service.isAtLimit() if reachable else "Unknown"}}
 
 
     @command_parser.command("isAtLimit")
@@ -76,12 +58,7 @@ class BasdaMoccaXCluPythonServiceWorker(BasdaMoccaCluPythonServiceWorker):
                 )
             self.service.moveToLimitWait()
 
-            return command.finish(
-                DeviceEncoderPosition=self.service.getDeviceEncoderPosition(units),
-                Units=units,
-                Velocity=self.service.getVelocity(),
-                AtHome=self.service.isAtHome(),
-                AtLimit=self.service.isAtLimit(),
-            )
+            return command.finish(**self._status(units))
+
         except Exception as e:
             command.fail(error=e)

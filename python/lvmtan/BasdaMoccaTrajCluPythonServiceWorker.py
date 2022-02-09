@@ -23,6 +23,9 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
     def __init__(self, _svcName):
         BasdaMoccaXCluPythonServiceWorker.__init__(self, _svcName)
 
+    def _status(self, units, reachable=True):
+        return {**BasdaMoccaXCluPythonServiceWorker._status(self, units), **{"CurrentTime": self.service.getCurrentTime() if reachable else "Unknown"}}
+
     @command_parser.command("changeProfile")
     @click.argument("START_DATE", type=datetime.datetime)
     #   @click.argument('POSITIONS', cls=ConvertStrToList, type=list)
