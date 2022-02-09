@@ -24,7 +24,6 @@ class BasdaMoccaXCluPythonServiceWorker(BasdaMoccaCluPythonServiceWorker):
     @command_parser.command("isAtLimit")
     @BasdaCluPythonServiceWorker.wrapper
     async def isAtLimit(self, command: Command):
-       '''Is at positive/negative limit'''
        try:
            return command.finish(AtLimit=self.service.isAtLimit())
        except Exception as e:
@@ -55,9 +54,11 @@ class BasdaMoccaXCluPythonServiceWorker(BasdaMoccaCluPythonServiceWorker):
             self.service.moveToLimitWait()
 
             return command.finish(
-                AtLimit=self.service.isAtLimit(),
                 DeviceEncoderPosition=self.service.getDeviceEncoderPosition(units),
                 Units=units,
+                Velocity=self.service.getVelocity(),
+                AtHome=self.service.isAtHome(),
+                AtLimit=self.service.isAtLimit(),
             )
         except Exception as e:
             command.fail(error=e)

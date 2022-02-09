@@ -11,14 +11,9 @@ import BasdaMoccaX
 import BasdaService
 import Nice
 import numpy as np
-import json
-from asyncio import sleep
-from Basda import ServiceIsBusyException
 
 from .BasdaCluPythonServiceWorker import (BasdaCluPythonServiceWorker, Command,
                                           asyncio, click, command_parser)
-
-# from cluplus.parsers.click import __commands, foo
 
 
 # TODO: use cluplus
@@ -29,26 +24,6 @@ def __commands(ctx, command: Command):
 
     # we have to use the help key for the command list, dont want to change the standard model.
     command.finish(help=[k for k in ctx.command.commands.keys() if k[:2] != '__'])
-
-
-@command_parser.command(name='foo')
-@click.pass_context
-def foo(ctx, command: Command, *args):
-    """Returns all commands."""
-
-    message = []
-    for k, v in ctx.command.commands.items():
-        if k[:2] == '__': continue
-        line = f"{k}("
-        for v in v.params:
-            line += v.name + ": " + str(v.type).lower()
-            if v.default: line += "=" + str(v.default)
-            line += ", " 
-        line += ")"
-        message.append(line)
-
-    command.finish(help=message)
-
 
 
 
@@ -62,19 +37,6 @@ class BasdaMoccaBaseCluPythonServiceWorker(BasdaCluPythonServiceWorker):
         self.schema["properties"]["Moving"] = {"type": "boolean"}
         self.schema["properties"]["Reachable"] = {"type": "boolean"}
         self.schema["properties"]["CurrentTime"] = {"type": "number"}
-        self.schema["properties"]["ChatRc"] = {"type": "string"}
-    
-    @command_parser.command()
-    @BasdaCluPythonServiceWorker.wrapper
-    async def abort(self, command: Command):
-        """Abort running command"""
-        return command.finish(Reachable=self.service.abort())
-
-    @command_parser.command()
-    @BasdaCluPythonServiceWorker.wrapper
-    async def stop(self, command: Command):
-        """Stop running command gracefully"""
-        return command.finish(Reachable=self.service.stop())
 
     @command_parser.command("isReachable")
     @BasdaCluPythonServiceWorker.wrapper
@@ -82,7 +44,28 @@ class BasdaMoccaBaseCluPythonServiceWorker(BasdaCluPythonServiceWorker):
         """Check hardware reachability"""
         try:
             return command.finish(
-                Reachable=self.service.isReachable()
+                Reachable=reachable
+            )
+        except Exception as e:
+            command.fail(error=e)
+
+    @command_parser.command("status")
+    @BasdaCluPythonServiceWorker.wrapper
+    async def isReachable(self, command: Command):
+        """Check hardware reachability"""
+        try:
+            units="STEPS"
+            reachable = self.service.isReachable()
+            return command.finish(
+                Reachable=reachable,
+                AtHome=self.service.isAtHome() if reachable else "Unknown",
+                AtLimit=self.service.isAtLimit() if reachable else "Unknown",
+                Moving=self.service.isMoving() if reachable else "Unknown",
+                CurrentTime=self.service.getCurrentTime() if reachable else "Unknown",
+                PositionSwitchStatus=self.service.getPositionSwitchStatus()[0].getValue() if reachable else "Unknown",
+                DeviceEncoderPosition=self.service.getDeviceEncoderPosition(units) if reachable else "Unknown",
+                Units=units if reachable else "Unknown",
+                Velocity=self.service.getVelocity() if reachable else "Unknown",
             )
         except Exception as e:
             command.fail(error=e)
@@ -130,37 +113,3 @@ class BasdaMoccaBaseCluPythonServiceWorker(BasdaCluPythonServiceWorker):
                 )
         except Exception as e:
             command.fail(error=e)
-
-    @command_parser.command("chat")
-    @click.argument("CARD", type=int)
-    @click.argument("COM", type=int)
-    @click.argument("MODULE", type=int)
-    @click.argument("SELECT", type=int, default=0)
-    @click.argument("PARAMS", type=str, default="")
-    @click.argument("LINES", type=int, default=0)
-    @BasdaCluPythonServiceWorker.wrapper
-    async def chat(self, command: Command, card: int, com: int, module: int, select: int, params: str, lines: int):
-        """Check hardware reachability"""
-        try:
-            try:  
-                self.service.send(str(card),str(com),str(module),str(select),str(params),str(lines))
-                await asyncio.sleep(0.01)
-                rc = self.service.receive().split('\n')
-
-            except ServiceIsBusyException as ex:
-                Nice.W_LOG("got busy exception - wait and try again")
-                await asyncio.sleep(0.4)
-                self.service.send(str(card),str(com),str(module),str(select),str(params),str(lines))
-                await asyncio.sleep(0.01)
-                rc = self.service.receive().split('\n')
-
-            if int(rc[-1].split(' ')[3]) < 0:
-                command.fail(error=Exception(f"Error #{rc[-1]}"))
-
-        except Exception as e:
-            command.fail(error=e)
-
-        return command.finish(
-              ChatRc = json.dumps(rc[:-1])
-        )
-

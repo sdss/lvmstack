@@ -141,6 +141,9 @@ class BasdaMoccaCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             return command.finish(
                 DeviceEncoderPosition=self.service.getDeviceEncoderPosition(units),
                 Units=units,
+                Velocity=self.service.getVelocity(),
+                AtHome=self.service.isAtHome(),
+                AtLimit=self.service.isAtLimit(),
             )
         except Exception as e:
             command.fail(error=e)
@@ -165,6 +168,9 @@ class BasdaMoccaCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             return command.finish(
                 DeviceEncoderPosition=self.service.getDeviceEncoderPosition(units),
                 Units=units,
+                Velocity=self.service.getVelocity(),
+                AtHome=self.service.isAtHome(),
+                AtLimit=self.service.isAtLimit(),
             )
         except Exception as e:
             command.fail(error=e)
@@ -187,8 +193,10 @@ class BasdaMoccaCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
 
             return command.finish(
                 DeviceEncoderPosition=self.service.getDeviceEncoderPosition(units),
-                AtHome=self.service.isAtHome(),
                 Units=units,
+                Velocity=self.service.getVelocity(),
+                AtHome=self.service.isAtHome(),
+                AtLimit=self.service.isAtLimit(),
             )
         except Exception as e:
             command.fail(error=e)
@@ -206,6 +214,8 @@ class BasdaMoccaCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
                     DeviceEncoderPosition=self.service.getDeviceEncoderPosition(units),
                     Units=units,
                     Velocity=self.service.getVelocity(),
+                    AtHome=self.service.isAtHome(),
+                    AtLimit=self.service.isAtLimit(),
                 )
 
             self.service.moveToNamedPositionWait()
