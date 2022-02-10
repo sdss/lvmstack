@@ -455,7 +455,7 @@ camera system actor
     <panel_attributes>lvmnps
 --
 halign=left
-guide camera actor
+network power switch
 
 * LN2
 * lamps (4+4)
