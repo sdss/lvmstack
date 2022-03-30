@@ -16,7 +16,6 @@ import numpy as np
 from Nice import I_LOG, U9_LOG
 from .BasdaMoccaXCluPythonServiceWorker import *
 
-
 import asyncio
 import math
 import numpy
@@ -29,8 +28,8 @@ from lvmtipo.siderostat import Siderostat
 from lvmtipo.fiber import Fiber
 from lvmtipo.target import Target
 
-#from astropy.utils import iers
-#iers.conf.auto_download = False
+from astropy.utils import iers
+iers.conf.auto_download = False
 
 class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
     "python clu worker"
@@ -74,19 +73,21 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
         site: str,
     ):
         """Start slew"""
-        I_LOG(f"startSlew {ra} {dec} {delta_time} {site}")
+        I_LOG(f"start slew now {ra} {dec} {delta_time} {site}")
 
         targ = astropy.coordinates.SkyCoord(ra=ra, dec=dec, unit=(u.hourangle, u.deg))
+        I_LOG(f"start slew now {ra} {dec} {delta_time} {site}")
 
         self.point = Target(targ)
-#        I_LOG(f"target is {targ} {point}")
+        I_LOG(f"target is {targ} {point}")
 
         self.geoloc = Site(name = site)
 
         # calculate the field angle (in radians)
         try:
             position = math.degrees(self.sid.fieldAngle(self.geoloc, self.point, None))
-            # U9_LOG(f"field angle {position} deg")
+            
+            I_LOG(f"field angle {position} deg")
             self.service.moveAbsoluteStart(position, "DEG")
             while not self.service.moveAbsoluteCompletion().isDone():
                 await asyncio.sleep(0.1)
@@ -98,7 +99,7 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
             self.service.moveAbsoluteWait()
 
         except Exception as e:
-            command.fail(error=e)
+            return command.fail(error=e)
 
         try:
             loop = asyncio.get_event_loop()
@@ -124,7 +125,7 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
     ):
         """Stop slew"""
         self.task.cancel()
-        self.task=None
+        self.task = None
     
 
     #@command_parser.command("changeProfile")
