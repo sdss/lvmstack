@@ -36,7 +36,6 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
 
     def __init__(self, _svcName):
         BasdaMoccaXCluPythonServiceWorker.__init__(self, _svcName)
-#        self.schema["properties"]["FieldRotation"] = {"type": "number"}
         self.task = None
         self.geoloc = None
         self.sid = Siderostat()
@@ -56,8 +55,6 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
 
             await asyncio.sleep(delta_time)
 
-
-
     @command_parser.command("slewStart")
     @click.argument("RA", type=float)
     @click.argument("DEC", type=float)
@@ -76,10 +73,9 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
         I_LOG(f"start slew now {ra} {dec} {delta_time} {site}")
 
         targ = astropy.coordinates.SkyCoord(ra=ra, dec=dec, unit=(u.hourangle, u.deg))
-        I_LOG(f"start slew now {ra} {dec} {delta_time} {site}")
+#        I_LOG(astropy.version.version)
 
         self.point = Target(targ)
-        I_LOG(f"target is {targ} {point}")
 
         self.geoloc = Site(name = site)
 
