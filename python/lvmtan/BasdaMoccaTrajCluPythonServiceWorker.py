@@ -55,6 +55,7 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
 
             await asyncio.sleep(delta_time)
 
+
     @command_parser.command("slewStart")
     @click.argument("RA", type=float)
     @click.argument("DEC", type=float)
@@ -102,14 +103,14 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
             if self.task:
                 self.task.cancel()
             self.task = loop.create_task(self.slewTick(delta_time))
-            command.info(
-                DeviceEncoderPosition=self.service.getDeviceEncoderPosition("DEG"),
-                Units="DEG",
-                Velocity=self.service.getVelocity(),
-            )
         except Exception as e:
             command.fail(error=e)
-            return
+
+        return command.finish(
+            DeviceEncoderPosition=self.service.getDeviceEncoderPosition("DEG"),
+            Units="DEG",
+            Velocity=self.service.getVelocity(),
+        )
             
             
 
@@ -120,8 +121,15 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
         command: Command
     ):
         """Stop slew"""
-        self.task.cancel()
-        self.task = None
+        if self.task:
+            self.task.cancel()
+            self.task = None
+        return command.finish(
+            DeviceEncoderPosition=self.service.getDeviceEncoderPosition("DEG"),
+            Units="DEG",
+            Velocity=self.service.getVelocity(),
+        )
+        
     
 
     #@command_parser.command("changeProfile")
