@@ -72,18 +72,18 @@ async def client_send_command_async(clients: {}, name: str, cmd: str, *args):
     return await clients[name].send_command(name, cmd, *args)
 
 
-@pytest.mark.asyncio
-async def test_getSchema(clients):
-    for svc_name in dict(list(clients.items())):
-        cmd = await client_send_command_blocking(clients, svc_name, "get_schema")
-        schema = json.loads(cmd.replies[-1].body["schema"])
-        assert schema["additionalProperties"] == False
-        assert schema["properties"]["AtLimit"]["type"] == "boolean"
-        assert schema["properties"]["AtHome"]["type"] == "boolean"
-        assert schema["properties"]["Moving"]["type"] == "boolean"
-        assert schema["properties"]["Velocity"]["type"] == "number"
-        assert schema["properties"]["DeviceEncoderPosition"]["type"] == "number"
-        assert schema["properties"]["Position"]["type"] == "number"
+#@pytest.mark.asyncio
+#async def test_getSchema(clients):
+    #for svc_name in dict(list(clients.items())):
+        #cmd = await client_send_command_blocking(clients, svc_name, "get_schema")
+        #schema = json.loads(cmd.replies[-1].body["schema"])
+        #assert schema["additionalProperties"] == False
+        #assert schema["properties"]["AtLimit"]["type"] == "boolean"
+        #assert schema["properties"]["AtHome"]["type"] == "boolean"
+        #assert schema["properties"]["Moving"]["type"] == "boolean"
+        #assert schema["properties"]["Velocity"]["type"] == "number"
+        #assert schema["properties"]["DeviceEncoderPosition"]["type"] == "number"
+        #assert schema["properties"]["Position"]["type"] == "number"
 
 
 @pytest.mark.asyncio
