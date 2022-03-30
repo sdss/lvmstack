@@ -124,6 +124,7 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
         if self.task:
             self.task.cancel()
             self.task = None
+
         return command.finish(
             DeviceEncoderPosition=self.service.getDeviceEncoderPosition("DEG"),
             Units="DEG",
