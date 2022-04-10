@@ -81,10 +81,10 @@ class BasdaMoccaCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
     @BasdaCluPythonServiceWorker.wrapper
     async def getDeviceEncoderPosition(self, command: Command, unit: str):
         """Returns internal motorcontroller position counter in supplied  unit"""
-        unit = unit if len(unit) else self.unit
+        unit = unit if len(unit) else "STEPS"
         try:
             return command.finish(
-                DeviceEncoder={"Position": self.service.getDeviceEncoderPosition("STEPS"), "Unit": "STEPS"}
+                DeviceEncoder={"Position": self.service.getDeviceEncoderPosition(unit), "Unit": unit}
             )
         except Exception as e:
             command.fail(error=e)
