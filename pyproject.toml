@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sdss-lvmtan"
-version = "0.0.10"
+version = "0.0.11"
 description = "Lvm Tan Clu Wrapper"
 authors = ["Florian Briegel <briegel@mpia.de>"]
 license = "BSD-3-Clause"

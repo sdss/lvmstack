@@ -59,6 +59,8 @@ class BasdaCluPythonServiceWorker(BasdaService.Worker):
             },
             "additionalProperties": False,
         }
+        self.unit = "STEPS"
+
 
     async def connect(self):
         await self.actor.start()
@@ -124,6 +126,12 @@ class BasdaCluPythonServiceWorker(BasdaService.Worker):
         ):
             Nice.U9_LOG(self.cfgNode.node("SERVICE").String)
             self.service = Basda.Basdard.interface(self.cfgNode.node("SERVICE").String)
+            
+        if (
+            self.cfgNode.exist("UNIT")
+            and self.cfgNode.node("UNIT").hasLeaf()
+        ):
+            self.unit = self.cfgNode.node("UNIT").String
 
     def abort(self):
         self.terminated = True

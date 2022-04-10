@@ -39,24 +39,24 @@ class BasdaMoccaBaseCluPythonServiceWorker(BasdaCluPythonServiceWorker):
         self.schema["properties"]["CurrentTime"] = {"type": "number"}
 
 
-    def _status(self, units, reachable=True):
+    def _status(self, reachable=True):
         return {
             "Reachable": reachable,
             "AtHome": self.service.isAtHome() if reachable else "Unknown",
             "Moving": self.service.isMoving() if reachable else "Unknown",
             "PositionSwitchStatus": self.service.getPositionSwitchStatus()[0].getValue() if reachable else "Unknown",
-            "DeviceEncoderPosition": self.service.getDeviceEncoderPosition(units) if reachable else "Unknown",
-            "Units": units if reachable else "Unknown",
+            "Position": self.service.getPosition() if reachable else "Unknown",
+            "DeviceEncoder": {"Position": self.service.getDeviceEncoderPosition("STEPS") if reachable else "Unknown", "Unit": "STEPS"},
             "Velocity": self.service.getVelocity() if reachable else "Unknown",
         }
-    
+
 
     @command_parser.command("status")
     @BasdaCluPythonServiceWorker.wrapper
     async def status(self, command: Command):
         """Check status"""
         try:
-            return command.finish( **self._status("STEPS", self.service.isReachable()) )
+            return command.finish( **self._status(self.service.isReachable()) )
         except Exception as e:
             command.fail(error=e)
 

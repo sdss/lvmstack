@@ -41,8 +41,8 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
         self.sid = Siderostat()
         self.point = None
 
-    def _status(self, units, reachable=True):
-        return {**BasdaMoccaXCluPythonServiceWorker._status(self, units), **{"CurrentTime": self.service.getCurrentTime() if reachable else "Unknown"}}
+    def _status(self, reachable=True):
+        return {**BasdaMoccaXCluPythonServiceWorker._status(self), **{"CurrentTime": self.service.getCurrentTime() if reachable else "Unknown"}}
 
     async def slewTick(self, delta_time):
         while True:
@@ -89,9 +89,11 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
             while not self.service.moveAbsoluteCompletion().isDone():
                 await asyncio.sleep(0.1)
                 command.info(
-                    DeviceEncoderPosition=self.service.getDeviceEncoderPosition("DEG"),
-                    Units="DEG",
+                    Position=self.service.getPosition(),
+                    DeviceEncoder={"Position": self.service.getDeviceEncoderPosition("STEPS"), "Unit": "STEPS"},
                     Velocity=self.service.getVelocity(),
+                    AtHome=self.service.isAtHome(),
+                    AtLimit=self.service.isAtLimit(),
                 )
             self.service.moveAbsoluteWait()
 
@@ -106,11 +108,7 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
         except Exception as e:
             command.fail(error=e)
 
-        return command.finish(
-            DeviceEncoderPosition=self.service.getDeviceEncoderPosition("DEG"),
-            Units="DEG",
-            Velocity=self.service.getVelocity(),
-        )
+        return command.finish(**self._status())
             
             
 
@@ -125,11 +123,7 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
             self.task.cancel()
             self.task = None
 
-        return command.finish(
-            DeviceEncoderPosition=self.service.getDeviceEncoderPosition("DEG"),
-            Units="DEG",
-            Velocity=self.service.getVelocity(),
-        )
+        return command.finish(**self._status())
         
     
 

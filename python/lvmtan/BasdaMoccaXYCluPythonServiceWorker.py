@@ -47,9 +47,10 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             command.fail(error=e)
 
     @command_parser.command("getPositionXY")
-    @click.argument("UNITS", type=str, default="STEPS")
+    @click.argument("UNIT", type=str, default="")
     @BasdaCluPythonServiceWorker.wrapper
     async def getPositionXY(self, command: Command, units: str):
+        unit = unit if len(unit) else self.unit
         try:
             Nice.N_LOG("Hello world")
             p = self.service.getPosition(units)
@@ -72,9 +73,10 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
             command.fail(error=e)
 
     @command_parser.command("getDeviceEncoderPositionXY")
-    @click.argument("UNITS", type=str, default="STEPS")
+    @click.argument("UNIT", type=str, default="")
     @BasdaCluPythonServiceWorker.wrapper
     async def getDeviceEncoderPositionXY(self, command: Command, units: str):
+        unit = unit if len(unit) else self.unit
         try:
             p = self.service.getDeviceEncoderPosition(units)
             return command.finish(
@@ -119,11 +121,12 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
     @command_parser.command("moveRelativeXY")
     @click.argument("POSITION_X", type=float)
     @click.argument("POSITION_Y", type=float)
-    @click.argument("UNITS", type=str, default="STEPS")
+    @click.argument("UNIT", type=str, default="")
     @BasdaCluPythonServiceWorker.wrapper
     async def moveRelativeXY(
         self, command: Command, position_x: float, position_y: float, units: str
     ):
+        unit = unit if len(unit) else self.unit
         try:  
             self.service.moveRelativeStart(Nice.Point(position_x, position_y), units)
             while not self.service.moveRelativeCompletion().isDone():
@@ -149,11 +152,12 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
     @command_parser.command("moveAbsoluteXY")
     @click.argument("POSITION_X", type=float)
     @click.argument("POSITION_Y", type=float)
-    @click.argument("UNITS", type=str, default="STEPS")
+    @click.argument("UNIT", type=str, default="")
     @BasdaCluPythonServiceWorker.wrapper
     async def moveAbsoluteXY(
         self, command: Command, position_x: float, position_y: float, units: str
     ):
+        unit = unit if len(unit) else self.unit
         try:
             self.service.moveAbsoluteStart(Nice.Point(position_x, position_y), units)
             while not self.service.moveAbsoluteCompletion().isDone():
@@ -218,11 +222,12 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
     @command_parser.command("moveToLimitXY")
     @click.argument("LIMIT_X", type=int)
     @click.argument("LIMIT_Y", type=int)
-    @click.argument("UNITS", type=str, default="STEPS")
+    @click.argument("UNIT", type=str, default="")
     @BasdaCluPythonServiceWorker.wrapper
     async def moveToLimitXY(
         self, command: Command, limit_x: int, limit_y: int, units: str
     ):
+        unit = unit if len(unit) else self.unit
         if limit_x == -1:
             command.info(text="move to negative x")
         elif limit_x == 1:
@@ -264,9 +269,10 @@ class BasdaMoccaXYCluPythonServiceWorker(BasdaMoccaBaseCluPythonServiceWorker):
         )
 
     @command_parser.command("moveToHomeXY")
-    @click.argument("UNITS", type=str, default="STEPS")
+    @click.argument("UNIT", type=str, default="")
     @BasdaCluPythonServiceWorker.wrapper
     async def moveToHomeXY(self, command: Command, units: str):
+        unit = unit if len(unit) else self.unit
         self.service.moveToHomeStart()
         while not self.service.moveToHomeCompletion().isDone():
             await asyncio.sleep(0.1)

@@ -22,8 +22,8 @@ class BasdaMoccaXCluPythonServiceWorker(BasdaMoccaCluPythonServiceWorker):
         BasdaMoccaCluPythonServiceWorker.__init__(self, _svcName)
 
 
-    def _status(self, units, reachable=True):
-        return {**BasdaMoccaBaseCluPythonServiceWorker._status(self, units), **{"AtLimit": self.service.isAtLimit() if reachable else "Unknown"}}
+    def _status(self, reachable=True):
+        return {**BasdaMoccaBaseCluPythonServiceWorker._status(self), **{"AtLimit": self.service.isAtLimit() if reachable else "Unknown"}}
 
 
     @command_parser.command("isAtLimit")
@@ -36,9 +36,8 @@ class BasdaMoccaXCluPythonServiceWorker(BasdaMoccaCluPythonServiceWorker):
 
     @command_parser.command("moveToLimit")
     @click.argument("LIMIT", type=int)
-    @click.argument("UNITS", type=str, default="STEPS")
     @BasdaCluPythonServiceWorker.wrapper
-    async def moveToLimit(self, command: Command, limit: int, units: str):
+    async def moveToLimit(self, command: Command, limit: int):
         '''Move to positive/negative limit'''
         try:
             if limit == -1:
@@ -52,13 +51,15 @@ class BasdaMoccaXCluPythonServiceWorker(BasdaMoccaCluPythonServiceWorker):
                 await asyncio.sleep(0.1)
 
                 command.info(
-                    DeviceEncoderPosition=self.service.getDeviceEncoderPosition(units),
-                    Units=units,
+                    Position=self.service.getPosition(),
+                    DeviceEncoder={"Position": self.service.getDeviceEncoderPosition("STEPS"), "Unit": "STEPS"},
                     Velocity=self.service.getVelocity(),
+                    AtHome=self.service.isAtHome(),
+                    AtLimit=self.service.isAtLimit(),
                 )
             self.service.moveToLimitWait()
 
-            return command.finish(**self._status(units))
+            return command.finish(**self._status())
 
         except Exception as e:
             command.fail(error=e)
