@@ -52,7 +52,6 @@ async def test_getSchema(client):
     assert schema["properties"]["AtHome"]["type"] == "boolean"
     assert schema["properties"]["Moving"]["type"] == "boolean"
     assert schema["properties"]["Velocity"]["type"] == "number"
-    assert schema["properties"]["DeviceEncoderPosition"]["type"] == "number"
     assert schema["properties"]["Position"]["type"] == "number"
 
 
