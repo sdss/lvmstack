@@ -1,0 +1,51 @@
+# Save the output of this file and use kubectl create -f to import
+# it into Kubernetes.
+#
+# Created with podman-3.4.4
+
+# NOTE: If you generated this yaml from an unprivileged and rootless podman container on an SELinux
+# enabled system, check the podman generate kube man page for steps to follow to ensure that your pod/container
+# has the right permissions to access the volumes added.
+---
+apiVersion: v1
+kind: Pod
+metadata:
+#  annotations:
+#    bind-mount-options:/home/briegel/workspace/lvmt/lvm/lvmpwi: Z
+  creationTimestamp: "2022-06-08T14:35:32Z"
+  labels:
+    app: lvm-skye-pwi-sim
+  name: lvm-skye-pwi-sim
+spec:
+  containers:
+  - image: ghcr.io/sdss/lvmpwi:latest
+    name: lvm-skye-pwi
+    ports:
+    - containerPort: 5900
+      hostPort: 5903
+    securityContext:
+      capabilities: {}
+    volumeMounts:
+    - mountPath: /dev
+      name: dev-host-0
+    - mountPath: /root/lvmt
+      name: home-briegel-workspace-lvmt-lvm-lvmpwi-host-1
+    env:
+    - name: PWI_NAME
+      value: "lvm.skye.pwi"
+    - name: PWI_GEOM
+      value: "800x600"
+    - name: PWI_SIMULATOR
+      value: "true"
+    - name: LVMT_RMQ
+      value: "limo"
+  volumes:
+  - hostPath:
+      path: /dev
+      type: Directory
+    name: dev-host-0
+  - hostPath:
+      path: /home/briegel/workspace/lvmt/lvm/lvmpwi
+      type: Directory
+    name: home-briegel-workspace-lvmt-lvm-lvmpwi-host-1
+
