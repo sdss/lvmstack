@@ -1,0 +1,45 @@
+# Save the output of this file and use kubectl create -f to import
+# it into Kubernetes.
+#
+# Created with podman-3.4.4
+
+# NOTE: If you generated this yaml from an unprivileged and rootless podman container on an SELinux
+# enabled system, check the podman generate kube man page for steps to follow to ensure that your pod/container
+# has the right permissions to access the volumes added.
+---
+apiVersion: v1
+kind: Pod
+metadata:
+#  annotations:
+#    bind-mount-options:/home/briegel/workspace/lvmt/lvm/lvmpwi: Z
+  creationTimestamp: "2022-06-08T14:35:32Z"
+  labels:
+    app: lvm-sci-pwi-sim
+  name: lvm-sci-pwi-sim
+spec:
+  containers:
+  - image: ghcr.io/sdss/lvmpwi:latest
+    name: lvm-sci-pwi
+    ports:
+    - containerPort: 5900
+      hostPort: 5901
+    securityContext:
+      capabilities: {}
+    volumeMounts:
+    - mountPath: /root/lvmt
+      name: data-lvm-host-1
+    env:
+    - name: RMQ_HOST
+      value: "nicelab"
+    - name: BASDARD_PORT
+      value: 40000
+    - name: BASDARD_CONFIG
+      value: lvm/lvm.moe-sim.conf
+    - name: LVMT_RMQ
+      value: "nicelab"
+  volumes:
+  - hostPath:
+      path: /lvm/lvmtan
+      type: Directory
+    name: data-lvm-host-1
+
