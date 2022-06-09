@@ -38,7 +38,7 @@ spec:
     - name: PWI_SIMULATOR
       value: "true"
     - name: LVMT_RMQ
-      value: "limo"
+      value: "nicelab"
   volumes:
   - hostPath:
       path: /dev
