@@ -1,0 +1,36 @@
+minikube version
+minikube start
+minikube stop
+minikube delete 
+
+kubectl get pods
+
+minikube config set driver podman
+
+minikube start --mount --mount-string="$HOME/workspace/lvm:/lvm" --container-runtime=cri-o
+
+minikube addons list
+minikube addons enable metrics-server
+minikube addons enable dashboard
+
+minikube ip
+minikube dashboard --url&
+kubectl proxy&
+kubectl proxy --address='0.0.0.0'&
+
+#http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
+
+kubectl create -f lvm_sci_pwi-sim.yaml
+kubectl create -f lvm_skyw_pwi-sim.yaml
+kubectl create -f lvm_skye_pwi-sim.yaml
+kubectl create -f lvm_spec_pwi-sim.yaml
+
+
+vncviewer $(minikube ip):1
+vncviewer $(minikube ip):2
+vncviewer $(minikube ip):3
+vncviewer $(minikube ip):4
+
+
+kubectl get pod,svc -n default
+
