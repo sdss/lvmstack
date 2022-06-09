@@ -18,7 +18,7 @@ metadata:
   name: lvm-sci-pwi-sim
 spec:
   containers:
-  - image: ghcr.io/sdss/lvmpwi:latest
+  - image: ghcr.io/sdss/lvmpwi:0.0.10
     name: lvm-sci-pwi
     ports:
     - containerPort: 5900
@@ -26,20 +26,26 @@ spec:
     securityContext:
       capabilities: {}
     volumeMounts:
+    - mountPath: /dev
+      name: dev-host-0
     - mountPath: /root/lvmt
       name: data-lvm-host-1
     env:
-    - name: RMQ_HOST
-      value: "nicelab"
-    - name: BASDARD_PORT
-      value: 40000
-    - name: BASDARD_CONFIG
-      value: lvm/lvm.moe-sim.conf
+    - name: PWI_NAME
+      value: "lvm.sci.pwi"
+    - name: PWI_GEOM
+      value: "800x600"
+    - name: PWI_SIMULATOR
+      value: "true"
     - name: LVMT_RMQ
-      value: "nicelab"
+      value: "192.168.178.44"
   volumes:
   - hostPath:
-      path: /lvm/lvmtan
+      path: /dev
+      type: Directory
+    name: dev-host-0
+  - hostPath:
+      path: /lvm/lvmpwi
       type: Directory
     name: data-lvm-host-1
 

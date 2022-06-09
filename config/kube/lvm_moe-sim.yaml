@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2022-06-08T14:35:32Z"
+  labels:
+    app: lvm-moe-sim
+  name: lvm-moe-sim
+spec:
+  containers:
+  - image: ghcr.io/sdss/lvmtan:latest
+    name: lvm-moe
+    ports:
+    - containerPort: 40000
+      hostPort: 40000
+    securityContext:
+      capabilities: {}
+    volumeMounts:
+    - mountPath: /root/lvmt
+      name: data-lvm-host-1
+    env:
+    - name: BASDARD_PORT
+      value: "40000"
+    - name: BASDARD_CONFIG
+      value: "lvm/lvm.moe-sim.conf"
+    - name: LVMT_RMQ
+      value: "limo"
+  volumes:
+  - hostPath:
+      path: /lvm/lvmtan
+      type: Directory
+    name: data-lvm-host-1
+
