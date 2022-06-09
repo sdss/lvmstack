@@ -7,7 +7,8 @@ kubectl get pods
 
 minikube config set driver podman
 
-minikube start --mount --mount-string="$HOME/workspace/lvm:/lvm" --container-runtime=cri-o
+minikube start --mount --mount-string="$HOME/workspace/lvmt/lvm:/lvm" --container-runtime=cri-o --extra-config=kubelet.housekeeping-interval=10s
+
 
 minikube addons list
 minikube addons enable metrics-server

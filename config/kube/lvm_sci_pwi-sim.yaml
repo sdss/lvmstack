@@ -38,7 +38,7 @@ spec:
     - name: PWI_SIMULATOR
       value: "true"
     - name: LVMT_RMQ
-      value: "192.168.178.44"
+      value: "192.168.49.2"
   volumes:
   - hostPath:
       path: /dev

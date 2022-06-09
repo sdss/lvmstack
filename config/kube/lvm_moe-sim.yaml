@@ -23,7 +23,7 @@ spec:
     - name: BASDARD_CONFIG
       value: "lvm/lvm.moe-sim.conf"
     - name: LVMT_RMQ
-      value: "limo"
+      value: "192.168.49.2"
   volumes:
   - hostPath:
       path: /lvm/lvmtan
