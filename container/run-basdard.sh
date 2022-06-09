@@ -1,16 +1,16 @@
 #!/usr/bin/bash -l
 
-BASDARD_NAME = `basename ${BASDARD_CONFIG##*/} .conf`
-test -n "$BASDARD_PORT" && BASDARD_PORT = `shuf -i 2000-65000 -n 1`
-BASDARD_ADAPTER = "[NAME=$BASDARD_NAME,PORT=$BASDARD_PORT]"
+BASDARD_NAME=`basename ${BASDARD_CONFIG##*/} .conf`
+test -n "$BASDARD_PORT" && BASDARD_PORT=`shuf -i 2000-65000 -n 1`
+BASDARD_ADAPTER="[NAME=$BASDARD_NAME,PORT=$BASDARD_PORT]"
 
 LVMT_PATH=/root/lvmt
 PATH=$LVMT_PATH/scripts:$PATH
 
 if [ $RMQ_HOST ]; then 
-     RMQ_CONNECTION = "[user=guest,password=guest,host=$RMQ_HOST,port=5672]"
+     RMQ_CONNECTION="[user=guest,password=guest,host=$RMQ_HOST,port=5672]"
 else
-     test -n "$RMQ_CONNECTION" && RMQ_CONNECTION = "[user=guest,password=guest,host=localhost,port=5672]"
+     test -n "$RMQ_CONNECTION" && RMQ_CONNECTION="[user=guest,password=guest,host=localhost,port=5672]"
 fi
 
 
