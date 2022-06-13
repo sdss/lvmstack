@@ -21,6 +21,10 @@ kubectl proxy --address='0.0.0.0'&
 
 #http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
 
+kubectl create -f kube/rabbitmq.yaml
+
+kubectl create -f lvm_moe-sim.yaml 
+
 kubectl create -f lvm_sci_pwi-sim.yaml
 kubectl create -f lvm_skyw_pwi-sim.yaml
 kubectl create -f lvm_skye_pwi-sim.yaml
@@ -33,5 +37,16 @@ vncviewer $(minikube ip):3
 vncviewer $(minikube ip):4
 
 
+kubectl delete -n default pod lvm_moe-sim&
+
+kubectl delete -n default pod lvm-sci-pwi-sim&
+kubectl delete -n default pod lvm-skyw-pwi-sim&
+kubectl delete -n default pod lvm-skye-pwi-sim&
+kubectl delete -n default pod lvm-spec-pwi-sim&
+
+
+
 kubectl get pod,svc -n default
 
+ip route add 10.96.0.0/12 via $(minikube ip) # svc
+ip route add 172.17.0.0/16 via $(minikube ip) # pods
