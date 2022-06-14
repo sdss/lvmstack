@@ -2,6 +2,7 @@ minikube version
 minikube start
 minikube stop
 minikube delete 
+minikube status 
 
 kubectl get pods
 
@@ -21,20 +22,26 @@ kubectl proxy&
 
 #http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
 
-kubectl create -f kube/rabbitmq.yaml
+kubectl create -f config/kube/rabbitmq.yaml
 
-kubectl create -f lvm_moe-sim.yaml 
+kubectl create -f config/kube/lvm_moe-sim.yaml 
 
-kubectl create -f lvm_sci_pwi-sim.yaml
-kubectl create -f lvm_skyw_pwi-sim.yaml
-kubectl create -f lvm_skye_pwi-sim.yaml
-kubectl create -f lvm_spec_pwi-sim.yaml
+kubectl create -f config/kube/lvm_sci_pwi-sim.yaml
+kubectl create -f config/kube/lvm_skyw_pwi-sim.yaml
+kubectl create -f config/kube/lvm_skye_pwi-sim.yaml
+kubectl create -f config/kube/lvm_spec_pwi-sim.yaml
 
 
 vncviewer $(minikube ip):1
 vncviewer $(minikube ip):2
 vncviewer $(minikube ip):3
 vncviewer $(minikube ip):4
+
+kubectl create -f config/kube/lvm_sci_agcam-sim.yaml
+kubectl create -f config/kube/lvm_skyw_agcam-sim.yaml
+kubectl create -f config/kube/lvm_skyeagcam-sim.yaml
+kubectl create -f config/kube/lvm_spec_agcam-sim.yaml
+
 
 
 kubectl delete -n default pod lvm_moe-sim&
