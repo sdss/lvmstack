@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2022-06-08T14:35:32Z"
+  labels:
+    app: lvm-scraper
+  name: lvm-scraper
+spec:
+  containers:
+  - image: ghcr.io/sdss/lvmscraper:0.0.15
+    name: lvm-moe
+    ports:
+    - containerPort: 8085
+      hostPort: 8085
+    securityContext:
+      capabilities: {}
+    volumeMounts:
+    - mountPath: /root/lvmscraper
+      name: data-lvm-host-1
+    env:
+    - name: LVMT_RMQ
+      value: "192.168.49.2"
+  volumes:
+  - hostPath:
+      path: /lvm/lvmscraper
+      type: Directory
+    name: data-lvm-host-1
+

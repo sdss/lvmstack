@@ -14,6 +14,8 @@ minikube start --mount --mount-string="$HOME/workspace/lvmt/lvm:/lvm" --containe
 minikube addons list
 minikube addons enable metrics-server
 minikube addons enable dashboard
+minikube addons list
+
 
 minikube ip
 minikube dashboard --url&
@@ -31,7 +33,6 @@ kubectl create -f config/kube/lvm_skyw_pwi-sim.yaml
 kubectl create -f config/kube/lvm_skye_pwi-sim.yaml
 kubectl create -f config/kube/lvm_spec_pwi-sim.yaml
 
-
 vncviewer $(minikube ip):1
 vncviewer $(minikube ip):2
 vncviewer $(minikube ip):3
@@ -39,7 +40,7 @@ vncviewer $(minikube ip):4
 
 kubectl create -f config/kube/lvm_sci_agcam-sim.yaml
 kubectl create -f config/kube/lvm_skyw_agcam-sim.yaml
-kubectl create -f config/kube/lvm_skyeagcam-sim.yaml
+kubectl create -f config/kube/lvm_skye_agcam-sim.yaml
 kubectl create -f config/kube/lvm_spec_agcam-sim.yaml
 
 
