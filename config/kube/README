@@ -51,6 +51,7 @@ kubectl delete -n default pod lvm-skyw-pwi-sim&
 kubectl delete -n default pod lvm-skye-pwi-sim&
 kubectl delete -n default pod lvm-spec-pwi-sim&
 
+niceQUI --MOE.CONFIG:Endpoint=[NAME=lvm.moe-sim,HOST=$(minikube ip),PORT=40000]+UI=lvmtan/config/lvm/lvm.all.ui 
 
 
 kubectl get pod,svc -n default
