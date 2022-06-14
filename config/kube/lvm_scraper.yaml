@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
   - image: ghcr.io/sdss/lvmscraper:latest
-    name: lvm-moe
+    name: lvm-scraper
     ports:
     - containerPort: 8085
       hostPort: 8085
