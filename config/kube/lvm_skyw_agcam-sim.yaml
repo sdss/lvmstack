@@ -25,6 +25,8 @@ spec:
       value: "skymakercam"
     - name: LVMT_RMQ
       value: "192.168.49.2"
+    - name: LVM_DATA_ROOT
+      value: "/data"
   volumes:
   - hostPath:
       path: /lvm/wasndas/lvmcam

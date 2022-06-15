@@ -4,11 +4,14 @@ minikube stop
 minikube delete 
 minikube status 
 
+
+LVM_ROOT=$HOME/workspace/lvm
+
 kubectl get pods
 
 minikube config set driver podman
 
-minikube start --mount --mount-string="$HOME/workspace/lvmt/lvm:/lvm" --container-runtime=cri-o --extra-config=kubelet.housekeeping-interval=10s
+minikube start --mount --mount-string="$LVM_ROOT:/lvm" --container-runtime=cri-o --extra-config=kubelet.housekeeping-interval=10s
 
 
 minikube addons list
@@ -27,6 +30,7 @@ kubectl proxy&
 kubectl create -f config/kube/rabbitmq.yaml
 
 kubectl create -f config/kube/lvm_moe-sim.yaml 
+kubectl create -f config/kube/lvm_scraper.yaml
 
 kubectl create -f config/kube/lvm_sci_pwi-sim.yaml
 kubectl create -f config/kube/lvm_skyw_pwi-sim.yaml
@@ -43,6 +47,8 @@ kubectl create -f config/kube/lvm_skyw_agcam-sim.yaml
 kubectl create -f config/kube/lvm_skye_agcam-sim.yaml
 kubectl create -f config/kube/lvm_spec_agcam-sim.yaml
 
+niceQUI --MOE.CONFIG:Endpoint=[NAME=lvm.moe-sim,HOST=$(minikube ip),PORT=40000]+UI=$LVM_ROOT/lvmtan/config/lvm/lvm.all.ui 
+python3.9 $LVM_ROOT/wasndas/lvmcam/utils/simple_camui.py -c lvm.sci.agcam -k lvm.sci.km -t lvm.sci.pwi -H $(minikube ip)
 
 
 kubectl delete -n default pod lvm_moe-sim&
@@ -51,8 +57,6 @@ kubectl delete -n default pod lvm-sci-pwi-sim&
 kubectl delete -n default pod lvm-skyw-pwi-sim&
 kubectl delete -n default pod lvm-skye-pwi-sim&
 kubectl delete -n default pod lvm-spec-pwi-sim&
-
-niceQUI --MOE.CONFIG:Endpoint=[NAME=lvm.moe-sim,HOST=$(minikube ip),PORT=40000]+UI=lvmtan/config/lvm/lvm.all.ui 
 
 
 kubectl get pod,svc -n default
