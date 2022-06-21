@@ -24,7 +24,10 @@ spec:
     - containerPort: 5900
       hostPort: 5901
     securityContext:
-      capabilities: {}
+      privileged: true
+#      capabilities: {"MKNOD"}
+#      capabilities: 
+#        add: ["MKNOD"]
     volumeMounts:
     - mountPath: /dev
       name: dev-host-0
@@ -40,12 +43,13 @@ spec:
     - name: LVMT_RMQ
       value: "192.168.49.2"
   volumes:
-  - hostPath:
+  - name: dev-host-0
+    hostPath:
       path: /dev
       type: Directory
-    name: dev-host-0
-  - hostPath:
+  - name: data-lvm-host-1
+    hostPath:
       path: /lvm/lvmpwi
       type: Directory
-    name: data-lvm-host-1
 
+    

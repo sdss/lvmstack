@@ -13,6 +13,9 @@ minikube config set driver podman
 
 minikube start --mount --mount-string="$LVM_ROOT:/lvm" --container-runtime=cri-o --extra-config=kubelet.housekeeping-interval=10s
 
+#--memory 4096 --cpus 2 --network=host
+
+#https://robotics.stackexchange.com/questions/15745/how-can-i-receive-genicam-packets-from-a-device-in-a-docker-container
 
 minikube addons list
 minikube addons enable metrics-server
@@ -63,3 +66,7 @@ kubectl get pod,svc -n default
 
 ip route add 10.96.0.0/12 via $(minikube ip) # svc
 ip route add 172.17.0.0/16 via $(minikube ip) # pods
+
+
+
+kubectl apply -f /usr/share/k8s-yaml/multus/multus.yaml
