@@ -6,8 +6,10 @@ metadata:
     app: lvm-sci-agcam-sim
   name: lvm-sci-agcam-sim
 spec:
+  hostNetwork: true
+  dnsPolicy: ClusterFirstWithHostNet  volumes:
   containers:
-  - image: ghcr.io/wasndas/lvmcam:0.0.9
+  - image: ghcr.io/wasndas/lvmcam:0.0.10
     name: lvm-sci-agcam
     securityContext:
       capabilities: {}
@@ -27,7 +29,6 @@ spec:
       value: "192.168.49.2"
     - name: LVM_DATA_ROOT
       value: "/data"
-  volumes:
   - hostPath:
       path: /lvm/wasndas/lvmcam
       type: Directory

@@ -5,11 +5,11 @@ minikube delete
 minikube status 
 
 
-LVM_ROOT=$HOME/workspace/lvm
+LVM_ROOT=$HOME/workspace/lvmt/lvm
 
-kubectl get pods
 
 minikube config set driver podman
+minikube config set container-runtime cri-o
 
 minikube start --mount --mount-string="$LVM_ROOT:/lvm" --container-runtime=cri-o --extra-config=kubelet.housekeeping-interval=10s
 
@@ -26,9 +26,9 @@ minikube addons list
 minikube ip
 minikube dashboard --url&
 kubectl proxy&
-#kubectl proxy --address='0.0.0.0'&
+# kubectl proxy --address='0.0.0.0'&
 
-#http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
+# http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
 
 kubectl create -f config/kube/rabbitmq.yaml
 
@@ -62,11 +62,21 @@ kubectl delete -n default pod lvm-skye-pwi-sim&
 kubectl delete -n default pod lvm-spec-pwi-sim&
 
 
-kubectl get pod,svc -n default
 
 ip route add 10.96.0.0/12 via $(minikube ip) # svc
 ip route add 172.17.0.0/16 via $(minikube ip) # pods
 
-
-
+kubectl create -f config/kube/kube-flannel.yml
 kubectl apply -f /usr/share/k8s-yaml/multus/multus.yaml
+
+sudo podman exec -ti minikube bash -l
+
+kubectl get pod,svc -n default
+kubectl create -f config/kube/lvm_sci_pwi-sim.yaml
+kubectl exec lvm-sci-pwi-sim -- capsh --print
+
+# https://github.com/flannel-io/flannel/blob/master/Documentation/kube-flannel.yml
+kubectl get psp
+kubectl create -f config/kube/lvm_sci_pwi-sim.yaml
+
+
