@@ -5,7 +5,7 @@
 [submodule "cluplus"]
 	path = cluplus
 	url = https://github.com/sdss/cluplus
-	branch = master
+	branch = main
 [submodule "basecam"]
 	path = basecam
 	url = https://github.com/sdss/basecam
@@ -17,7 +17,7 @@
 [submodule "skymakercam"]
 	path = skymakercam
 	url = https://github.com/sdss/skymakercam
-	branch = master
+	branch = main
 [submodule "lvmtipo"]
 	path = lvmtipo
 	url = https://github.com/sdss/lvmtipo
