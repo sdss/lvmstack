@@ -54,10 +54,6 @@
 	path = lvmieb
 	url = https://github.com/sdss/lvmieb
 	branch = main
-[submodule "lvmcore"]
-	path = lvmcore
-	url = https://github.com/sdss/lvmcore
-	branch = master
 [submodule "lvmnps"]
 	path = lvmnps
 	url = https://github.com/sdss/lvmnps
