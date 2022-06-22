@@ -7,7 +7,7 @@ metadata:
   name: lvm-skyw-agcam-sim
 spec:
   containers:
-  - image: ghcr.io/wasndas/lvmcam:0.0.9
+  - image: ghcr.io/wasndas/lvmcam:latest
     name: lvm-skyw-agcam
     securityContext:
       capabilities: {}

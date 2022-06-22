@@ -57,7 +57,7 @@ LVM_ROOT=$HOME/workspace/lvm
 
 mkdir $LVM_ROOT/var/rabbitmq
 mkdir $LVM_ROOT/var/data && chmod 777 $LVM_ROOT/var/data
-mkdir $LVM_ROOT/var/jupyter
+mkdir $LVM_ROOT/var/jupyter && chmod 777 $LVM_ROOT/var/jupyter
 
 minikube config set driver podman
 minikube config set container-runtime cri-o

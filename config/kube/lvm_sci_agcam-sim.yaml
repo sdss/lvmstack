@@ -6,20 +6,10 @@ metadata:
     app: lvm-sci-agcam-sim
   name: lvm-sci-agcam-sim
 spec:
-  privileged: true
-  allowPrivilegeEscalation: true
-  allowedCapabilities:
-  - '*'
-  volumes:
-  - '*'
   hostNetwork: true
-  hostPorts:
-  - min: 2048
-    max: 65535
-  hostIPC: true
-  hostPID: true
+#  dnsPolicy: ClusterFirstWithHostNet
   containers:
-  - image: ghcr.io/wasndas/lvmcam:0.0.10
+  - image: ghcr.io/wasndas/lvmcam:latest
     name: lvm-sci-agcam
     securityContext:
       capabilities: {}
