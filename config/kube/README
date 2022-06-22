@@ -112,6 +112,10 @@ kubectl delete -n default pod lvm-skyw-pwi-sim&
 kubectl delete -n default pod lvm-skye-pwi-sim&
 kubectl delete -n default pod lvm-spec-pwi-sim&
 
+kubectl delete -n default pod lvm-sci-agcam-sim&
+kubectl delete -n default pod lvm-skyw-agcam-sim&
+kubectl delete -n default pod lvm-skye-agcam-sim&
+kubectl delete -n default pod lvm-spec-agcam-sim&
 
 
 ip route add 10.96.0.0/12 via $(minikube ip) # svc
