@@ -25,11 +25,11 @@
 [submodule "lvmecp"]
 	path = lvmecp
 	url = https://github.com/sdss/lvmecp
-	branch = master
+	branch = main
 [submodule "lvmscp"]
 	path = lvmscp
 	url = https://github.com/sdss/lvmscp
-	branch = master
+	branch = main
 [submodule "lvmops"]
 	path = lvmops
 	url = https://github.com/sdss/lvmops
@@ -53,7 +53,7 @@
 [submodule "lvmieb"]
 	path = lvmieb
 	url = https://github.com/sdss/lvmieb
-	branch = master
+	branch = main
 [submodule "lvmcore"]
 	path = lvmcore
 	url = https://github.com/sdss/lvmcore
@@ -61,7 +61,7 @@
 [submodule "lvmnps"]
 	path = lvmnps
 	url = https://github.com/sdss/lvmnps
-	branch = master
+	branch = main
 [submodule "archon"]
 	path = archon
 	url = https://github.com/sdss/archon
