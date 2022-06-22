@@ -1,0 +1,44 @@
+# kubectl create -f to import
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2022-06-08T14:35:32Z"
+  labels:
+    app: lvm-nps-sim
+  name: lvm-nps-sim
+spec:
+  containers:
+  - image: ghcr.io/sdss/lvmnps:0.2.3
+    name: lvm-nps
+    securityContext:
+      capabilities: {}
+    volumeMounts:
+    - mountPath: /root/lvmnps
+      name: data-lvm-host-1
+    - mountPath: /data
+      name: data-lvm-host-2
+    env:
+    - name: LVMT_NPS_PATH
+      value: "/root/lvmnps"
+    - name: LVMT_NPS_CONFIG
+      value: "$(LVMT_NPS_PATH)/python/lvmnps/etc/lvmnps_dummy.yml"
+    - name: LVMT_RMQ
+      value: "192.168.49.2"
+    command: ["/bin/sh"]
+    args: ["-c", "echo $LVMT_NPS_CONFIG; \
+                  NPS_CONF=${LVMT_NPS_CONFIG%.*}_${LVMT_RMQ}.yml; \
+                  sed \"s/host: .*$/host: $LVMT_RMQ/\" < $LVMT_NPS_CONFIG > ${LVMT_NPS_CONFIG%.*}_${LVMT_RMQ}.yml; \
+                  echo $NPS_CONF; \
+                  trap : TERM INT; lvmnps -v -c $NPS_CONF start --debug  & wait"]
+  volumes:
+  - name: data-lvm-host-1
+    hostPath:
+      path: /lvm/lvmnps
+      type: Directory
+  - name: data-lvm-host-2
+    hostPath:
+      path: /lvm/var/data
+      type: Directory
+
+    

@@ -1,4 +1,51 @@
+Step 2: Installing Minikube
+
+# https://minikube.sigs.k8s.io/docs/start/
+
+
+1. Download the Minikube binary package using the wget command:
+
+wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+
+
+hen, use the chmod command to give the file executive permission:
+
+chmod +x minikube-linux-amd64
+
+3. Finally, move the file to the /usr/local/bin directory:
+
+sudo mv minikube-linux-amd64 /usr/local/bin/minikube
+
+4. With that, you have finished setting up Minikube. Verify the installation by checking the version of the software:
+
 minikube version
+
+Step 3: Installing Kubectl
+
+Apart from installing Minikube, you also need to set up kubectl, the command line tool for working with Kubernetes.
+
+1. Run the following command to download kubectl:
+
+curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+
+2. Give it executive permission:
+
+chmod +x kubectl
+
+3. Move it to the same directory where you previously stored Minikube:
+
+sudo mv kubectl  /usr/local/bin/
+
+4. Verify the installation by running:
+
+kubectl version --client -o json
+
+5. Add passwordless sudo for podman/docker
+
+sudo echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/podman" /etc/sudoers.d/$USERminikube version
+
+
+
 minikube start
 minikube stop
 minikube delete 
