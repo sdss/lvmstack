@@ -1,63 +1,58 @@
+
+Step 1:
+
+git clone https://github.com/sdss/lvm.git
+cd lvm
+mkdir wasndas
+(cd wasndas && git clone https://github.com/wasndas/lvmjupyter)
+(cd wasndas && git clone https://github.com/wasndas/lvmcam)
+(cd wasndas && git clone https://github.com/wasndas/lvmagp)
+
 Step 2: Installing Minikube
 
 # https://minikube.sigs.k8s.io/docs/start/
 
-
-1. Download the Minikube binary package using the wget command:
+1. Install minikube
 
 wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-
-
-hen, use the chmod command to give the file executive permission:
-
 chmod +x minikube-linux-amd64
-
-3. Finally, move the file to the /usr/local/bin directory:
-
-sudo mv minikube-linux-amd64 /usr/local/bin/minikube
-
-4. With that, you have finished setting up Minikube. Verify the installation by checking the version of the software:
-
+minikube-linux-amd64 ~/.local/bin/minikube # or: sudo mv minikube-linux-amd64 /usr/local/bin/minikube
 minikube version
 
 Step 3: Installing Kubectl
 
-Apart from installing Minikube, you also need to set up kubectl, the command line tool for working with Kubernetes.
-
-1. Run the following command to download kubectl:
-
+1. Install kubectl
 curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-
-2. Give it executive permission:
-
 chmod +x kubectl
-
-3. Move it to the same directory where you previously stored Minikube:
-
-sudo mv kubectl  /usr/local/bin/
-
-4. Verify the installation by running:
-
+mv kubectl ~/.local/bin/ # or: sudo mv kubectl  /usr/local/bin/
 kubectl version --client -o json
 
-5. Add passwordless sudo for podman/docker
+2a. Add passwordless sudo for podman
 
-sudo echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/podman" /etc/sudoers.d/$USERminikube version
+USER_SUDO_FILE=/etc/sudoers.d/$USER;  echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/podman" | sudo tee -a $USER_SUDO_FILE > /dev/null
+
+2a. Add  docker group
+sudo usermod -aG docker $USER && newgrp docker
+
+export LVM_ROOT=$PWD
+
+minikube config set driver podman
+minikube config set container-runtime cri-o
+
+minikube start --mount --mount-string="$LVM_ROOT:/lvm" --container-runtime=cri-o --extra-config=kubelet.housekeeping-interval=10s  
+
+--network-plugin=cni --cni=flannel
 
 
 
 minikube start
-# minikube stop
-# minikube delete 
-
+minikube stop
+minikube delete 
 minikube status 
 
 
-LVM_ROOT=$HOME/workspace/lvm
+LVM_ROOT=$HOME/workspace/lvmt/lvm
 
-mkdir $LVM_ROOT/var/rabbitmq
-mkdir $LVM_ROOT/var/data && chmod 777 $LVM_ROOT/var/data
-mkdir $LVM_ROOT/var/jupyter && chmod 777 $LVM_ROOT/var/jupyter
 
 minikube config set driver podman
 minikube config set container-runtime cri-o
@@ -112,10 +107,6 @@ kubectl delete -n default pod lvm-skyw-pwi-sim&
 kubectl delete -n default pod lvm-skye-pwi-sim&
 kubectl delete -n default pod lvm-spec-pwi-sim&
 
-kubectl delete -n default pod lvm-sci-agcam-sim&
-kubectl delete -n default pod lvm-skyw-agcam-sim&
-kubectl delete -n default pod lvm-skye-agcam-sim&
-kubectl delete -n default pod lvm-spec-agcam-sim&
 
 
 ip route add 10.96.0.0/12 via $(minikube ip) # svc
