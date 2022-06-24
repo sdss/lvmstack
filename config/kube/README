@@ -39,27 +39,11 @@ export LVM_ROOT=$PWD
 minikube config set driver podman
 minikube config set container-runtime cri-o
 
-minikube start --mount --mount-string="$LVM_ROOT:/lvm" --container-runtime=cri-o --extra-config=kubelet.housekeeping-interval=10s  
-
---network-plugin=cni --cni=flannel
-
-
-
-minikube start
-minikube stop
-minikube delete 
-minikube status 
-
-
-LVM_ROOT=$HOME/workspace/lvmt/lvm
-
-
-minikube config set driver podman
-minikube config set container-runtime cri-o
-
-minikube start --mount --mount-string="$LVM_ROOT:/lvm" --container-runtime=cri-o --extra-config=kubelet.housekeeping-interval=10s
-
+minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s  
+# minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s --network-plugin=cni --cni=flannel
 #--memory 4096 --cpus 2 --network=host
+
+minikube status 
 
 #https://robotics.stackexchange.com/questions/15745/how-can-i-receive-genicam-packets-from-a-device-in-a-docker-container
 
@@ -68,11 +52,12 @@ minikube addons enable metrics-server
 minikube addons enable dashboard
 minikube addons list
 
-
 minikube ip
+
 minikube dashboard --url&
+
 kubectl proxy&
-# kubectl proxy --address='0.0.0.0'&
+kubectl proxy --address='0.0.0.0'&
 
 # http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
 
