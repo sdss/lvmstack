@@ -8,6 +8,10 @@ mkdir wasndas
 (cd wasndas && git clone https://github.com/wasndas/lvmcam)
 (cd wasndas && git clone https://github.com/wasndas/lvmagp)
 
+mkdir -p var/data && chmod 777 var/data
+mkdir -p var/jupyter && chmod 777 var/jupyter
+mkdir -p var/rabbitmq && chmod 777 var/rabbitmq
+
 Step 2: Installing Minikube
 
 # https://minikube.sigs.k8s.io/docs/start/
@@ -39,7 +43,8 @@ export LVM_ROOT=$PWD
 minikube config set driver podman
 minikube config set container-runtime cri-o
 
-minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s  
+minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s  --memory 32768 --cpus=8 
+ 
 # minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s --network-plugin=cni --cni=flannel
 #--memory 4096 --cpus 2 --network=host
 
