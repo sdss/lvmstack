@@ -63,23 +63,25 @@ kubectl proxy --address='0.0.0.0'&
 
 kubectl create -f config/kube/rabbitmq.yaml
 
-kubectl create -f config/kube/lvm_moe-sim.yaml 
-kubectl create -f config/kube/lvm_scraper.yaml
+kubectl create -f $LVM_ROOT/config/kube/lvm_moe-sim.yaml 
+kubectl create -f $LVM_ROOT/config/kube/lvm_scraper.yaml
 
-kubectl create -f config/kube/lvm_sci_pwi-sim.yaml
-kubectl create -f config/kube/lvm_skyw_pwi-sim.yaml
-kubectl create -f config/kube/lvm_skye_pwi-sim.yaml
-kubectl create -f config/kube/lvm_spec_pwi-sim.yaml
+kubectl create -f $LVM_ROOT/config/kube/lvm_sci_pwi-sim.yaml
+kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_pwi-sim.yaml
+kubectl create -f $LVM_ROOT/config/kube/lvm_skye_pwi-sim.yaml
+kubectl create -f $LVM_ROOT/config/kube/lvm_spec_pwi-sim.yaml
 
 vncviewer $(minikube ip):1
 vncviewer $(minikube ip):2
 vncviewer $(minikube ip):3
 vncviewer $(minikube ip):4
 
-kubectl create -f config/kube/lvm_sci_agcam-sim.yaml
-kubectl create -f config/kube/lvm_skyw_agcam-sim.yaml
-kubectl create -f config/kube/lvm_skye_agcam-sim.yaml
-kubectl create -f config/kube/lvm_spec_agcam-sim.yaml
+kubectl create -f $LVM_ROOT/config/kube/lvm_sci_agcam-sim.yaml
+kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_agcam-sim.yaml
+kubectl create -f $LVM_ROOT/config/kube/lvm_skye_agcam-sim.yaml
+kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agcam-sim.yaml
+
+kubectl create -f $LVM_ROOT/config/kube/jupyter.yaml
 
 niceQUI --MOE.CONFIG:Endpoint=[NAME=lvm.moe-sim,HOST=$(minikube ip),PORT=40000]+UI=$LVM_ROOT/lvmtan/config/lvm/lvm.all.ui 
 python3.9 $LVM_ROOT/wasndas/lvmcam/utils/simple_camui.py -c lvm.sci.agcam -k lvm.sci.km -t lvm.sci.pwi -H $(minikube ip)
@@ -91,6 +93,10 @@ kubectl delete -n default pod lvm-sci-pwi-sim&
 kubectl delete -n default pod lvm-skyw-pwi-sim&
 kubectl delete -n default pod lvm-skye-pwi-sim&
 kubectl delete -n default pod lvm-spec-pwi-sim&
+
+
+apt update
+apt install -y iputils-ping iproute2
 
 
 
@@ -111,3 +117,5 @@ kubectl get psp
 kubectl create -f config/kube/lvm_sci_pwi-sim.yaml
 
 
+
+kubectl apply -f https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset-thick-plugin.yml
