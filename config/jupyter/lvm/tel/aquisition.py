@@ -16,7 +16,7 @@ from lvm.tel.astrometry import Astrometry
 import click
 
 
-async def aquisition(telsubsys, ra, dec, exptime, fine_focus=False, logger = get_logger("lvm_tel_focus"), level = DEBUG):
+async def aquisition(telsubsys, ra, dec, exptime, fine_focus=False, logger = get_logger("lvm_tel_focus"), level = INFO):
     try:
         focus_temperature = 42 # get from somewhere a temperature.
         

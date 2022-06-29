@@ -12,11 +12,12 @@ from sdsstools import get_logger
 from math import nan
 from astropy.io import fits
 
+
 # TODO: put some real astronomy in here.
 
 class Astrometry:
     @staticmethod
-    async def calc(telsubsys, ra, dec, exptime=5):
+    async def calc(telsubsys, ra, dec, exptime=5, logger = get_logger("lvm_tel_astrometry"), level = INFO):
         try:
             rc = await telsubsys.agc.expose(exptime)
             file_east = rc["east"]["filename"]
