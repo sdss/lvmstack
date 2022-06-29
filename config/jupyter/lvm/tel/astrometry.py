@@ -5,7 +5,7 @@
 # @Filename: lvm/tel/astrometry.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
-from lvm.actors import lvm
+from lvmtipo.actors import lvm
 from logging import DEBUG, INFO
 from sdsstools import get_logger
 
@@ -34,7 +34,7 @@ class Astrometry:
            raise ex
 
 
-def main():
+async def main():
     import argparse
     
     parser = argparse.ArgumentParser()
@@ -53,13 +53,16 @@ def main():
 
     args = parser.parse_args()
     
-    telsubsys = lvm.execute(lvm.from_string(args.telsubsys))
+    telsubsys = await lvm.from_string(args.telsubsys)
 
-    lvm.execute(Astrometry.calc(telsubsys, args.ra, args.dec, args.exptime), verbose=args.verbose)
+    await Astrometry.calc(telsubsys, args.ra, args.dec, args.exptime, level = DEBUG if args.verbose else INFO)
 
 
 if __name__ == '__main__':
 
-    main()
+    import asyncio
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
 
 

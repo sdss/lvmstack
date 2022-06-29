@@ -15,6 +15,7 @@ from lvm.tel.astrometry import Astrometry
 
 import click
 
+
 async def aquisition(telsubsys, ra, dec, exptime, fine_focus=False, logger = get_logger("lvm_tel_focus"), level = DEBUG):
     try:
         focus_temperature = 42 # get from somewhere a temperature.
@@ -22,6 +23,7 @@ async def aquisition(telsubsys, ra, dec, exptime, fine_focus=False, logger = get
         focus = Focus(telsubsys)
 
         logger.debug(f"move tel/km {ra}:{dec} & temp2foc {focus_temperature}")
+
         await invoke(
             telsubsys.km.slewStart(ra, dec), 
             telsubsys.pwi.gotoRaDecJ2000(ra, dec),
@@ -52,17 +54,19 @@ async def aquisition(telsubsys, ra, dec, exptime, fine_focus=False, logger = get
 @click.option('-e', '--exptime', default=5.0, help='Expose for for exptime seconds.')
 @click.option('-r', '--ra', type=float, help='RA J2000 in hours.')
 @click.option('-d', '--dec', type=float, help='DEC J2000 in degrees.')
-def main(verbose, telsubsys, exptime, ra, dec):
+async def main(verbose, telsubsys, exptime, ra, dec):
 
-    loop=asyncio.get_event_loop()
+    telsubsys = await lvm.from_string(telsubsys)
 
-    telsubsys = lvm.execute(lvm.from_string(telsubsys))
-
-    lvm.execute(aquisition(telsubsys, ra, dec, exptime), verbose=verbose)
+    await aquisition(telsubsys, ra, dec, exptime, level = DEBUG if args.verbose else INFO)
 
             
 if __name__ == '__main__':
 
-    main()
+    import asyncio
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
 
 

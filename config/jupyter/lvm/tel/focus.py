@@ -14,7 +14,7 @@ from astropy.io import fits
 
 
 class Focus():
-    def __init__(self, telsubsys, logger = get_logger("lvm_tel_focus"), level = DEBUG):
+    def __init__(self, telsubsys, logger = get_logger("lvm_tel_focus"), level = INFO):
         self.telsubsys = telsubsys
         
         #TODO: should go somewhere in a subclass
