@@ -36,12 +36,12 @@
 	branch = main
 [submodule "lvmcam"]
 	path = lvmcam
-	url = https://github.com/sdss/lvmcam
+	url = https://github.com/wasndas/lvmcam
 	branch = refactor
 [submodule "lvmagp"]
 	path = lvmagp
-	url = https://github.com/sdss/lvmagp
-	branch = refactor
+	url = https://github.com/wasndas/lvmagp
+	branch = main
 [submodule "lvmpwi"]
 	path = lvmpwi
 	url = https://github.com/sdss/lvmpwi
