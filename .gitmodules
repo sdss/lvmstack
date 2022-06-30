@@ -58,3 +58,9 @@
 	path = lvmscraper
 	url = https://github.com/sdss/lvmscraper
 	branch = main
+[submodule "lvmagp"]
+	path = lvmagp
+	url = https://github.com/wasndas/lvmagp
+[submodule "lvmcam"]
+	path = lvmcam
+	url = https://github.com/wasndas/lvmcam
