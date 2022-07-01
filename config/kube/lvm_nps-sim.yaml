@@ -24,6 +24,8 @@ spec:
       value: "lvmnps"
     - name: LVM_ACTOR_CONFIG
       value: "lvmnps_dummy"
+    - name: LVM_ACTOR_ARGS
+      value: "--verbose"
     - name: LVM_DEBUG
       value: "yes"
     - name: LVM_RMQ_HOST

@@ -15,7 +15,8 @@ RUN apt install -y pkg-config libgirepository1.0-dev \
  
 RUN apt install -y python3-pip
 
-RUN pip3 install sdss-lvmnps \
+RUN pip3 install sdss-lvmscraper \
+                 sdss-lvmnps \
                  sdss-lvmcam \
                  sdss-lvmagp \
                  sdss-lvmieb \

@@ -6,8 +6,9 @@ metadata:
     app: lvm-scraper
   name: lvm-scraper
 spec:
+  terminationGracePeriodSeconds: 0
   containers:
-  - image: ghcr.io/sdss/lvmscraper:latest
+  - image: localhost/lvm_actor:latest
     name: lvm-scraper
     ports:
     - containerPort: 8085
@@ -15,16 +16,22 @@ spec:
     securityContext:
       capabilities: {}
     volumeMounts:
-    - mountPath: /root/lvmscraper
+    - mountPath: /root/lvm
       name: data-lvm-host-1
     env:
-    - name: LVMT_RMQ
+    - name: LVM_ACTOR
+      value: "lvmscraper"
+    - name: LVM_ACTOR_CONFIG
+      value: "scraper"
+    - name: LVM_ACTOR_ARGS
+      value: "--verbose"
+    - name: LVM_DEBUG
+      value: "yes"
+    - name: LVM_RMQ_HOST
       value: "192.168.49.2"
-    - name: LVMT_DEBUG
-      value: "true"
   volumes:
   - hostPath:
-      path: /lvm/lvmscraper
+      path: /lvm
       type: Directory
     name: data-lvm-host-1
 

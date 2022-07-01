@@ -23,13 +23,15 @@ fi
 export LVMT_DATA_ROOT="${LVM_DATA_ROOT:=/data}"
 
 if [ $LVM_RMQ_HOST ]; then 
+  LVM_ACTOR_CONFIG_ABS=$LVM_ACTOR_PATH/etc/${LVM_ACTOR_CONFIG}_${LVM_RMQ_HOST}
   sed "s/host: .*$/host: $LVM_RMQ_HOST/" < $LVM_ACTOR_PATH/etc/$LVM_ACTOR_CONFIG.yml \
-            > $HOME/${LVM_ACTOR_CONFIG}_${LVM_RMQ_HOST}.yml
-  LVM_ACTOR_CONFIG_ABS=$HOME/${LVM_ACTOR_CONFIG}_${LVM_RMQ_HOST}
+            > ${LVM_ACTOR_CONFIG_ABS}.yml
+  
 else
   LVM_ACTOR_CONFIG_ABS=$LVM_ACTOR_PATH/etc/${LVM_ACTOR_CONFIG}
 fi
 
+echo "Using config: $LVM_ACTOR_CONFIG_ABS"
 ${PYTHON} $LVM_ACTOR_PATH/__main__.py -c ${LVM_ACTOR_CONFIG_ABS}.yml ${LVM_ACTOR_ARGS} start --debug
 
 #trap : TERM INT; ${PYTHON} $LVM_ACTOR_PATH/__main__.py -c ${LVM_ACTOR_CONFIG_ABS}.yml ${LVM_ACTOR_ARGS} start --debug  & wait"]
