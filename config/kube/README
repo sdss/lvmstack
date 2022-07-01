@@ -118,6 +118,10 @@ sudo podman exec -ti minikube podman images
 minikube ssh -- sudo podman images
 minikube addons enable registry
 
+minikube image push 192.168.49.2:5000/lvm_actor
+
+minikube image ls
+minikube image build --tag $(minikube ip):5000/lvm_actor .
 
 
 kubectl get pod,svc -n default

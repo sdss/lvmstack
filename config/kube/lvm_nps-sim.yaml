@@ -9,7 +9,7 @@ metadata:
   name: lvm-nps-sim
 spec:
   containers:
-  - image: localhost/lvm_actor:latest
+  - image: 192.168.49.2:5000/lvm_actor:latest
     name: lvm-nps
     securityContext:
       capabilities: {}
