@@ -5,46 +5,40 @@ kind: Pod
 metadata:
   creationTimestamp: "2022-06-08T14:35:32Z"
   labels:
-    app: lvm-nps-sim
-  name: lvm-nps-sim
+    app: lvm-scp
+  name: lvm-scp
 spec:
-  terminationGracePeriodSeconds: 0
+  terminationGracePeriodSeconds: 3
   containers:
   - image: localhost/lvm_actor:latest
-    name: lvm-nps
+    name: lvm-scp
     imagePullPolicy: Never
     securityContext:
       capabilities: {}
     volumeMounts:
-    - mountPath: /root/lvmnps
+    - mountPath: /root/lvmscp
       name: data-lvm-host-1
     - mountPath: /data
       name: data-lvm-host-2
     env:
     - name: LVM_ACTOR
-      value: "lvmnps"
-    - name: LVM_ACTOR_CONFIG
-      value: "lvmnps_dummy"
+      value: "lvmscp"
     - name: LVM_ACTOR_ARGS
       value: "--verbose"
     - name: LVM_DEBUG
       value: "yes"
     - name: LVM_RMQ_HOST
       value: "192.168.49.2"
-    #command: ["/bin/sh"]
-    #args: ["-c", "echo $LVMT_NPS_CONFIG; \
-                  #NPS_CONF=${LVMT_NPS_CONFIG%.*}_${LVMT_RMQ}.yml; \
-                  #sed \"s/host: .*$/host: $LVMT_RMQ/\" < $LVMT_NPS_CONFIG > ${LVMT_NPS_CONFIG%.*}_${LVMT_RMQ}.yml; \
-                  #echo $NPS_CONF; \
-                  #trap : TERM INT; lvmnps -v -c $NPS_CONF start --debug  & wait"]
   volumes:
   - name: data-lvm-host-1
     hostPath:
-      path: /lvm/lvmnps
+      path: /lvm/lvmscp
       type: Directory
-  - name: data-lvm-host-2
-    hostPath:
+  - hostPath:
       path: /lvm/var/data
       type: Directory
+    name: data-lvm-host-2
+
+
 
     

@@ -1,0 +1,51 @@
+# -*- coding: utf-8 -*-
+#
+# @Author: Florian Briegel (briegel@mpia.de)
+# @Date: 2022-07-01
+# @Filename: lvm_TEMPLATE_pwi.yaml
+# @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
+---
+apiVersion: v1
+kind: Pod
+metadata:
+#  annotations:
+#    bind-mount-options:/home/briegel/workspace/lvmt/lvm/lvmpwi: Z
+  creationTimestamp: "2022-06-08T14:35:32Z"
+  labels:
+    app: ${POD_NAME}
+  name: ${POD_NAME}
+spec:
+  containers:
+  - image: ghcr.io/sdss/lvmpwi:latest
+    name: ${POD_NAME}
+    ports:
+    - containerPort: 5900
+      hostPort: ${HOST_PORT}
+    securityContext:
+      privileged: true
+#      capabilities: {"MKNOD"}
+#      capabilities: 
+#        add: ["MKNOD"]
+    volumeMounts:
+    - mountPath: /dev
+      name: dev-host-0
+    - mountPath: /root/lvmt
+      name: data-lvm-host-1
+    env:
+    - name: PWI_NAME
+      value: ${LVM_ACTOR_NAME}
+    - name: PWI_GEOM
+      value: ${PWI_GEOM:-"1024x768"}
+    - name: PWI_SIMULATOR
+      value: ${PWI_SIMULATOR:-"true"}
+    - name: LVM_RMQ_HOST
+      value: ${LVM_RMQ_HOST:-$(minikube ip)}
+  volumes:
+  - name: dev-host-0
+    hostPath:
+      path: /dev
+      type: Directory
+  - name: data-lvm-host-1
+    hostPath:
+      path: /lvm/lvmpwi
+      type: Directory
