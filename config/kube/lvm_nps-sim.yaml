@@ -9,7 +9,7 @@ metadata:
   name: lvm-nps-sim
 spec:
   containers:
-  - image: ghcr.io/sdss/lvmnps:0.2.3
+  - image: localhost/lvm_actor:latest
     name: lvm-nps
     securityContext:
       capabilities: {}

@@ -111,7 +111,14 @@ ip route add 172.17.0.0/16 via $(minikube ip) # pods
 kubectl create -f config/kube/kube-flannel.yml
 kubectl apply -f /usr/share/k8s-yaml/multus/multus.yaml
 
-sudo podman exec -ti minikube bash -l
+# https://jamesdefabia.github.io/docs/user-guide/kubectl-cheatsheet/
+# https://minikube.sigs.k8s.io/docs/handbook/pushing/
+
+sudo podman exec -ti minikube podman images
+minikube ssh -- sudo podman images
+minikube addons enable registry
+
+
 
 kubectl get pod,svc -n default
 kubectl create -f config/kube/lvm_sci_pwi-sim.yaml
