@@ -69,6 +69,9 @@ kubectl proxy --address='0.0.0.0'&
 kubectl create -f config/kube/rabbitmq.yaml
 
 kubectl create -f $LVM_ROOT/config/kube/lvm_moe-sim.yaml 
+
+minikube build --tag localhost/lvm_actor:$(date +"%y%m%d") ${LVM_ROOT}/config/container/actor/
+
 kubectl create -f $LVM_ROOT/config/kube/lvm_scraper.yaml
 
 kubectl create -f $LVM_ROOT/config/kube/lvm_sci_pwi-sim.yaml
@@ -114,19 +117,31 @@ kubectl apply -f /usr/share/k8s-yaml/multus/multus.yaml
 # https://jamesdefabia.github.io/docs/user-guide/kubectl-cheatsheet/
 # https://minikube.sigs.k8s.io/docs/handbook/pushing/
 
-sudo podman exec -ti minikube podman images
+# access minikube container
 minikube ssh -- sudo podman images
-minikube addons enable registry
+# or
+sudo podman exec -ti minikube podman images
 
-minikube image push 192.168.49.2:5000/lvm_actor
-
+# access minkube images
 minikube image ls
-minikube image build --tag $(minikube ip):5000/lvm_actor .
+minikube image build --tag localhost/lvm_actor:$(date +"%y%m%d") $()/config/container/actor/
+
+
+
+# external 
+# minikube addons enable registry
+# minikube image push 192.168.49.2:5000/lvm_actor
+
 
 
 kubectl get pod,svc -n default
 kubectl create -f config/kube/lvm_sci_pwi-sim.yaml
 kubectl exec lvm-sci-pwi-sim -- capsh --print
+
+# TODO
+
+https://kubernetes.io/docs/concepts/configuration/configmap/
+
 
 # https://github.com/flannel-io/flannel/blob/master/Documentation/kube-flannel.yml
 kubectl get psp

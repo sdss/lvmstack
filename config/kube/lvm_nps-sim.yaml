@@ -9,8 +9,9 @@ metadata:
   name: lvm-nps-sim
 spec:
   containers:
-  - image: 192.168.49.2:5000/lvm_actor:latest
+  - image: localhost/lvm_actor:latest
     name: lvm-nps
+    imagePullPolicy: Never
     securityContext:
       capabilities: {}
     volumeMounts:
@@ -25,12 +26,13 @@ spec:
       value: "$(LVMT_NPS_PATH)/python/lvmnps/etc/lvmnps_dummy.yml"
     - name: LVMT_RMQ
       value: "192.168.49.2"
-    command: ["/bin/sh"]
-    args: ["-c", "echo $LVMT_NPS_CONFIG; \
-                  NPS_CONF=${LVMT_NPS_CONFIG%.*}_${LVMT_RMQ}.yml; \
-                  sed \"s/host: .*$/host: $LVMT_RMQ/\" < $LVMT_NPS_CONFIG > ${LVMT_NPS_CONFIG%.*}_${LVMT_RMQ}.yml; \
-                  echo $NPS_CONF; \
-                  trap : TERM INT; lvmnps -v -c $NPS_CONF start --debug  & wait"]
+    #command: ["/bin/sh"]
+    #args: ["-c", "echo $LVMT_NPS_CONFIG; \
+                  #NPS_CONF=${LVMT_NPS_CONFIG%.*}_${LVMT_RMQ}.yml; \
+                  #sed \"s/host: .*$/host: $LVMT_RMQ/\" < $LVMT_NPS_CONFIG > ${LVMT_NPS_CONFIG%.*}_${LVMT_RMQ}.yml; \
+                  #echo $NPS_CONF; \
+                  #trap : TERM INT; lvmnps -v -c $NPS_CONF start --debug  & wait"]
+    restartPolicy: Never
   volumes:
   - name: data-lvm-host-1
     hostPath:
