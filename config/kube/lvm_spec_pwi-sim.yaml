@@ -18,6 +18,7 @@ metadata:
   name: lvm-spec-pwi-sim
 spec:
   containers:
+  terminationGracePeriodSeconds: 0
   - image: ghcr.io/sdss/lvmpwi:latest
     name: lvm-spec-pwi
     ports:

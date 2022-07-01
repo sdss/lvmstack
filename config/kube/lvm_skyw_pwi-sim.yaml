@@ -17,6 +17,7 @@ metadata:
     app: lvm-skyw-pwi-sim
   name: lvm-skyw-pwi-sim
 spec:
+  terminationGracePeriodSeconds: 0
   containers:
   - image: ghcr.io/sdss/lvmpwi:latest
     name: lvm-skyw-pwi

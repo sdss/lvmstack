@@ -17,6 +17,7 @@ metadata:
     app: lvm-sci-pwi-sim
   name: lvm-sci-pwi-sim
 spec:
+  terminationGracePeriodSeconds: 0
   containers:
   - image: ghcr.io/sdss/lvmpwi:0.0.10
     name: lvm-sci-pwi
