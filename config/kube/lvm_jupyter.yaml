@@ -12,15 +12,15 @@ kind: Pod
 metadata:
   creationTimestamp: "2022-06-15T16:23:58Z"
   labels:
-    app: jupyter
-  name: jupyter
+    app: lvm-jupyter
+  name: lvm-jupyter
 spec:
   containers:
   - args:
     - start-notebook.sh
     - --LabApp.token=''
-    image: ghcr.io/wasndas/lvmjupyter:latest
-    name: jupyter
+    image: localhost/lvm_jupyter:latest
+    name: lvm-jupyter
     ports:
     - containerPort: 8888
       hostPort: 8082

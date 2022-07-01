@@ -21,7 +21,7 @@ spec:
     - name: LVM_ACTOR
       value: "lvmagp"
     - name: LVM_ACTOR_CONFIG
-      value: "lvm.sci.ag"
+      value: "lvm.sci.agp"
     - name: LVM_ACTOR_ARGS
       value: "--verbose"
     - name: LVM_DEBUG
