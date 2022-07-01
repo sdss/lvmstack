@@ -66,13 +66,18 @@ kubectl proxy --address='0.0.0.0'&
 
 # http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
 
-kubectl create -f config/kube/rabbitmq.yaml
+kubectl create -f $LVM_ROOT/config/kube/rabbitmq.yaml
 
 kubectl create -f $LVM_ROOT/config/kube/lvm_moe-sim.yaml 
 
-minikube build --tag localhost/lvm_actor:$(date +"%y%m%d") ${LVM_ROOT}/config/container/actor/
+# access minkube images
+
+minikube image build --tag localhost/lvm_actor:$(date +"%y%m%d") ${LVM_ROOT}/config/container/actor/
+minikube image build --tag localhost/lvm_actor ${LVM_ROOT}/config/container/actor/
+minikube image ls
 
 kubectl create -f $LVM_ROOT/config/kube/lvm_scraper.yaml
+kubectl create -f $LVM_ROOT/config/kube/lvm_nps-sim.yaml
 
 kubectl create -f $LVM_ROOT/config/kube/lvm_sci_pwi-sim.yaml
 kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_pwi-sim.yaml
@@ -122,9 +127,6 @@ minikube ssh -- sudo podman images
 # or
 sudo podman exec -ti minikube podman images
 
-# access minkube images
-minikube image ls
-minikube image build --tag localhost/lvm_actor:$(date +"%y%m%d") $()/config/container/actor/
 
 
 
@@ -137,6 +139,9 @@ minikube image build --tag localhost/lvm_actor:$(date +"%y%m%d") $()/config/cont
 kubectl get pod,svc -n default
 kubectl create -f config/kube/lvm_sci_pwi-sim.yaml
 kubectl exec lvm-sci-pwi-sim -- capsh --print
+
+kubectl exec -ti lvm-nps-sim -- bash -l
+
 
 # TODO
 

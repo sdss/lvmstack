@@ -20,11 +20,13 @@ spec:
     - mountPath: /data
       name: data-lvm-host-2
     env:
-    - name: LVMT_NPS_PATH
-      value: "/root/lvmnps"
-    - name: LVMT_NPS_CONFIG
-      value: "$(LVMT_NPS_PATH)/python/lvmnps/etc/lvmnps_dummy.yml"
-    - name: LVMT_RMQ
+    - name: LVM_ACTOR
+      value: "lvmnps"
+    - name: LVM_ACTOR_CONFIG
+      value: "lvmnps_dummy"
+    - name: LVM_DEBUG
+      value: "yes"
+    - name: LVM_RMQ_HOST
       value: "192.168.49.2"
     #command: ["/bin/sh"]
     #args: ["-c", "echo $LVMT_NPS_CONFIG; \
@@ -32,7 +34,6 @@ spec:
                   #sed \"s/host: .*$/host: $LVMT_RMQ/\" < $LVMT_NPS_CONFIG > ${LVMT_NPS_CONFIG%.*}_${LVMT_RMQ}.yml; \
                   #echo $NPS_CONF; \
                   #trap : TERM INT; lvmnps -v -c $NPS_CONF start --debug  & wait"]
-    restartPolicy: Never
   volumes:
   - name: data-lvm-host-1
     hostPath:
