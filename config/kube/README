@@ -121,6 +121,6 @@ kubectl exec lvm-sci-pwi-sim -- capsh --print
 kubectl get psp
 kubectl create -f config/kube/lvm_sci_pwi-sim.yaml
 
-
+https://github.com/kvaps/bridget/
 
 kubectl apply -f https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset-thick-plugin.yml
