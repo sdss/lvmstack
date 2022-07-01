@@ -4,7 +4,7 @@ PYTHON=/usr/bin/python3
 
 # LVM_ACTOR # (Mandatory)
 
-# LVM_RMQ_HOST #(Optional)
+# LVM_RMQ_HOST #(Mandatory for kubernetes)
 # LVM_ACTOR_ARGS # (Optional)
 # LVM_DEBUG=true # (Optional)
 

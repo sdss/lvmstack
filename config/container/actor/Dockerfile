@@ -21,7 +21,7 @@ RUN pip3 install sdss-lvmscraper \
                  sdss-lvmagp \
                  sdss-lvmieb \
                  sdss-lvmscp 
-                 #sdss-lvmecp not available for 3.10
+                 #sdss-lvmecp not available for 3.10 only works in debug mode
                  
 
 WORKDIR /root
