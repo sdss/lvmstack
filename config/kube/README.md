@@ -26,29 +26,29 @@ For minikube a container or virtual machine has to be select, in the following s
 
     sudo usermod -aG docker $USER && newgrp docker
     
-
-# Download all the necessary files for lvm from github:
+## Download all the necessary files for lvm from github:
 
     git clone https://github.com/sdss/lvm.git
     cd lvm
+    
+    # Define LVM root
+    export LVM_ROOT=$PWD
 
     # for now we do store persistent data here:
-    mkdir -p var/data && chmod 777 var/data
-    mkdir -p var/jupyter && chmod 777 var/jupyter
-    mkdir -p var/rabbitmq && chmod 777 var/rabbitmq
+    mkdir -p ${LVM_ROOT}/var/data && chmod 777 ${LVM_ROOT}/var/data
+    mkdir -p ${LVM_ROOT}/var/jupyter && chmod 777 ${LVM_ROOT}/var/jupyter
+    mkdir -p ${LVM_ROOT}/var/rabbitmq && chmod 777 ${LVM_ROOT}/var/rabbitmq
 
 
 # Start minikube
 
-## Define LVM root
-    export LVM_ROOT=$PWD
+## Configure minikube
 
-### Setting podman as minikube container
+### Setting only for podman as minikube container (optional)
 
     minikube config set driver podman
     minikube config set container-runtime cri-o
 
-## Configure minikube
 
     # check memory and cpu numbers
     minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s --memory 16384 --cpus=2 
@@ -68,122 +68,86 @@ For minikube a container or virtual machine has to be select, in the following s
 ### The dashboard can be accessed with this link:
     http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
 
-
-
 ## Start rabbitmq
 
+     # rabbitmq: http://192.168.49.2:8081
      kubectl create -f $LVM_ROOT/config/kube/rabbitmq.yaml
 
-### Access rabbitmq dasboard
+Check address 192.168.49.2 with 'minikube ip', before proceeding, please check that rabbitmq dashboard is reachable.
 
-     http://192.168.49.2:8081
+## Build containers into minikube
 
+     minikube image build --tag localhost/lvm_actor ${LVM_ROOT}/config/container/actor/
+     minikube image build --tag localhost/lvm_jupyter ${LVM_ROOT}/config/container/jupyter/
+     minikube image ls
 
+     # minikube image build --tag localhost/lvm_actor:$(date +"%y%m%d") ${LVM_ROOT}/config/container/actor/
 
-## Start lvm actor & services
-Before starting please check that rabbitmq dashboard is reachable.
+## Start lvm containers   
+
+     # jupyter: http://192.168.49.2:8082
+     kubectl create -f $LVM_ROOT/config/kube/lvm_jupyter.yaml
 
      kubectl create -f $LVM_ROOT/config/kube/lvm_moe-sim.yaml 
 
-# minikube image build --tag localhost/lvm_actor:$(date +"%y%m%d") ${LVM_ROOT}/config/container/actor/
-minikube image build --tag localhost/lvm_actor ${LVM_ROOT}/config/container/actor/
+     # lvmscraper: http://192.168.49.2:8085/
+     kubectl create -f $LVM_ROOT/config/kube/lvm_scraper.yaml
 
-minikube image build --tag localhost/lvm_jupyter /home/briegel/workspace/lvm/config/container/jupyter/
-minikube image ls
+     kubectl create -f $LVM_ROOT/config/kube/lvm_nps-sim.yaml
+     
+     kubectl create -f $LVM_ROOT/config/kube/lvm_ieb.yaml
+     kubectl create -f $LVM_ROOT/config/kube/lvm_ecp.yaml
+     kubectl create -f $LVM_ROOT/config/kube/lvm_scp.yaml # fails
 
-kubectl create -f $LVM_ROOT/config/kube/lvm_scraper.yaml
-kubectl create -f $LVM_ROOT/config/kube/lvm_nps-sim.yaml
+     kubectl create -f $LVM_ROOT/config/kube/lvm_sci_pwi-sim.yaml
+     kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_pwi-sim.yaml
+     kubectl create -f $LVM_ROOT/config/kube/lvm_skye_pwi-sim.yaml
+     kubectl create -f $LVM_ROOT/config/kube/lvm_spec_pwi-sim.yaml
 
-kubectl create -f $LVM_ROOT/config/kube/lvm_sci_pwi-sim.yaml
-kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_pwi-sim.yaml
-kubectl create -f $LVM_ROOT/config/kube/lvm_skye_pwi-sim.yaml
-kubectl create -f $LVM_ROOT/config/kube/lvm_spec_pwi-sim.yaml
+     kubectl create -f $LVM_ROOT/config/kube/lvm_sci_agcam-sim.yaml
+     kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_agcam-sim.yaml
+     kubectl create -f $LVM_ROOT/config/kube/lvm_skye_agcam-sim.yaml
+     kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agcam-sim.yaml
 
-vncviewer $(minikube ip):1
-vncviewer $(minikube ip):2
-vncviewer $(minikube ip):3
-vncviewer $(minikube ip):4
+     kubectl create -f $LVM_ROOT/config/kube/lvm_sci_agp.yaml
+     kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_agp.yaml
+     kubectl create -f $LVM_ROOT/config/kube/lvm_skye_agp.yaml
+     kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agp.yaml
 
-kubectl create -f $LVM_ROOT/config/kube/lvm_sci_agcam-sim.yaml
-kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_agcam-sim.yaml
-kubectl create -f $LVM_ROOT/config/kube/lvm_skye_agcam-sim.yaml
-kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agcam-sim.yaml
+## Test UIs
 
-kubectl create -f $LVM_ROOT/config/kube/lvm_sci_agp.yaml
-kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_agp.yaml
-kubectl create -f $LVM_ROOT/config/kube/lvm_skye_agp.yaml
-kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agp.yaml
+     vncviewer $(minikube ip):1
+     vncviewer $(minikube ip):2
+     vncviewer $(minikube ip):3
+     vncviewer $(minikube ip):4
+     niceQUI --MOE.CONFIG:Endpoint=[NAME=lvm.moe-sim,HOST=$(minikube ip),PORT=40000]+UI=$LVM_ROOT/lvmtan/config/lvm/lvm.all.ui 
+     python3.9 $LVM_ROOT/wasndas/lvmcam/utils/simple_camui.py -c lvm.sci.agcam -k lvm.sci.km -t lvm.sci.pwi -H $(minikube ip)
 
-kubectl create -f $LVM_ROOT/config/kube/lvm_jupyter.yaml
+## Stopping containers
 
-niceQUI --MOE.CONFIG:Endpoint=[NAME=lvm.moe-sim,HOST=$(minikube ip),PORT=40000]+UI=$LVM_ROOT/lvmtan/config/lvm/lvm.all.ui 
-python3.9 $LVM_ROOT/wasndas/lvmcam/utils/simple_camui.py -c lvm.sci.agcam -k lvm.sci.km -t lvm.sci.pwi -H $(minikube ip)
+     kubectl delete pod lvm_moe-sim
 
-# rabbitmq: http://192.168.49.2:8081
-# jupyter: http://192.168.49.2:8082
-# lvmscraper: http://192.168.49.2:8085/
+     kubectl delete pod lvm-sci-pwi-sim # optional --grace-period=0  --force
 
-kubectl delete -n default pod lvm_moe-sim&
+     kubectl delete -n default pod lvm-skyw-pwi-sim
 
-# https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-terminating-with-grace
-# https://kubernetes.io/docs/tasks/run-application/force-delete-stateful-set-pod/#force-deletion
+## Exec commands in pod
 
-kubectl delete -n default pod lvm-sci-pwi-sim # optional --grace-period=0  --force
-kubectl delete -n default pod lvm-skyw-pwi-sim
-kubectl delete -n default pod lvm-skye-pwi-sim
-kubectl delete -n default pod lvm-spec-pwi-sim
-kubectl delete pod lvm-scraper
+     kubectl exec -ti lvm-sci-pwi-sim -- bash -l
 
+## Access minikube container
 
-
-kubectl exec -ti lvm-sci-pwi-sim -- bash -l
-
-
-
-apt update
-apt install -y iputils-ping iproute2
-
-
-
-ip route add 10.96.0.0/12 via $(minikube ip) # svc
-ip route add 172.17.0.0/16 via $(minikube ip) # pods
-
-kubectl create -f config/kube/kube-flannel.yml
-kubectl apply -f /usr/share/k8s-yaml/multus/multus.yaml
-
-# https://jamesdefabia.github.io/docs/user-guide/kubectl-cheatsheet/
-# https://minikube.sigs.k8s.io/docs/handbook/pushing/
-
-# access minikube container
-minikube ssh -- sudo podman images
-# or
-sudo podman exec -ti minikube podman images
-
-
-
-
-# external 
-# minikube addons enable registry
-# minikube image push 192.168.49.2:5000/lvm_actor
-
-
-
-kubectl get pod,svc -n default
-kubectl create -f config/kube/lvm_sci_pwi-sim.yaml
-kubectl exec lvm-sci-pwi-sim -- capsh --print
-
-kubectl exec -ti lvm-nps-sim -- bash -l
+    minikube ssh -- bash -l 
+    minikube ssh -- sudo podman images
+    # or
+    sudo podman exec -ti minikube podman images
 
 
 # TODO
+* https://kubernetes.io/docs/concepts/configuration/configmap/
 
-https://kubernetes.io/docs/concepts/configuration/configmap/
-
-
-# https://github.com/flannel-io/flannel/blob/master/Documentation/kube-flannel.yml
-kubectl get psp
-kubectl create -f config/kube/lvm_sci_pwi-sim.yaml
-
-https://github.com/kvaps/bridget/
-
-kubectl apply -f https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset-thick-plugin.yml
+# NOTES
+* https://jamesdefabia.github.io/docs/user-guide/kubectl-cheatsheet/
+* https://minikube.sigs.k8s.io/docs/handbook/pushing/
+* https://github.com/flannel-io/flannel/blob/master/Documentation/kube-flannel.yml
+* https://github.com/kvaps/bridget/
