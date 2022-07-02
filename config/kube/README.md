@@ -1,76 +1,89 @@
+# Install Minikube & kubectl
 
-Step 1:
+This chapter is only for installation on linux, Minikube can also be used on Mac & Windows with docker or a virtual machine (eg: vmware),
+see details [here](https://minikube.sigs.k8s.io/docs/start/). The deployment of the lvm containers should then also work.
 
-git clone https://github.com/sdss/lvm.git
-cd lvm
-mkdir wasndas
-(cd wasndas && git clone https://github.com/wasndas/lvmjupyter)
-(cd wasndas && git clone https://github.com/wasndas/lvmcam)
-(cd wasndas && git clone https://github.com/wasndas/lvmagp)
+# Quickstart Linux
 
-mkdir -p var/data && chmod 777 var/data
-mkdir -p var/jupyter && chmod 777 var/jupyter
-mkdir -p var/rabbitmq && chmod 777 var/rabbitmq
+## Install minikube
 
-Step 2: Installing Minikube
+    curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    sudo install minikube-linux-amd64 /usr/local/bin/minikube
+    minikube version
 
-# https://minikube.sigs.k8s.io/docs/start/
+## Installing Kubectl
 
-1. Install minikube
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+    sudo install kubectl /usr/local/bin/
+## Choose podman or docker
+For minikube a container or virtual machine has to be select, in the following sub chapters choose one of them. Podman or Docker has to be installed beforehand.
 
-wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-chmod +x minikube-linux-amd64
-minikube-linux-amd64 ~/.local/bin/minikube # or: sudo mv minikube-linux-amd64 /usr/local/bin/minikube
-minikube version
+### Add passwordless sudo for podman
 
-Step 3: Installing Kubectl
+    USER_SUDO_FILE=/etc/sudoers.d/$USER;  echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/podman" | sudo tee -a $USER_SUDO_FILE > /dev/null
 
-1. Install kubectl
-curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-chmod +x kubectl
-mv kubectl ~/.local/bin/ # or: sudo mv kubectl  /usr/local/bin/
-kubectl version --client -o json
+###  Add  docker group
 
-2a. Add passwordless sudo for podman
+    sudo usermod -aG docker $USER && newgrp docker
+    
 
-USER_SUDO_FILE=/etc/sudoers.d/$USER;  echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/podman" | sudo tee -a $USER_SUDO_FILE > /dev/null
+# Download all the necessary files for lvm from github:
 
-2a. Add  docker group
-sudo usermod -aG docker $USER && newgrp docker
+    git clone https://github.com/sdss/lvm.git
+    cd lvm
 
-export LVM_ROOT=$PWD
+    # for now we do store persistent data here:
+    mkdir -p var/data && chmod 777 var/data
+    mkdir -p var/jupyter && chmod 777 var/jupyter
+    mkdir -p var/rabbitmq && chmod 777 var/rabbitmq
 
-minikube config set driver podman
-minikube config set container-runtime cri-o
 
-minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s  --memory 32768 --cpus=8 
+# Start minikube
+
+## Define LVM root
+    export LVM_ROOT=$PWD
+
+### Setting podman as minikube container
+
+    minikube config set driver podman
+    minikube config set container-runtime cri-o
+
+## Configure minikube
+
+    # check memory and cpu numbers
+    minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s --memory 16384 --cpus=2 
  
-# minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s --network-plugin=cni --cni=flannel
-#--memory 4096 --cpus 2 --network=host
+    minikube status 
 
-minikube status 
+    minikube addons enable metrics-server
+    minikube addons enable dashboard
+    minikube addons list
 
-#https://robotics.stackexchange.com/questions/15745/how-can-i-receive-genicam-packets-from-a-device-in-a-docker-container
+    minikube ip
+    
+    # optional dashboard
+    minikube dashboard --url&
+    kubectl proxy&
 
-minikube addons list
-minikube addons enable metrics-server
-minikube addons enable dashboard
-minikube addons list
+### The dashboard can be accessed with this link:
+    http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
 
-minikube ip
 
-minikube dashboard --url&
 
-kubectl proxy&
-kubectl proxy --address='0.0.0.0'&
+## Start rabbitmq
 
-# http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
+     kubectl create -f $LVM_ROOT/config/kube/rabbitmq.yaml
 
-kubectl create -f $LVM_ROOT/config/kube/rabbitmq.yaml
+### Access rabbitmq dasboard
 
-kubectl create -f $LVM_ROOT/config/kube/lvm_moe-sim.yaml 
+     http://192.168.49.2:8081
 
-# access minkube images
+
+
+## Start lvm actor & services
+Before starting please check that rabbitmq dashboard is reachable.
+
+     kubectl create -f $LVM_ROOT/config/kube/lvm_moe-sim.yaml 
 
 # minikube image build --tag localhost/lvm_actor:$(date +"%y%m%d") ${LVM_ROOT}/config/container/actor/
 minikube image build --tag localhost/lvm_actor ${LVM_ROOT}/config/container/actor/
