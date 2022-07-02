@@ -15,17 +15,18 @@ The deployment of the lvm containers should then also work.
     curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
     sudo install kubectl /usr/local/bin/
 
-## Choose podman or docker
-For minikube a container or virtual machine has to be selected, before proceeding choose podman or docker, it has to be installed beforehand.
+## Choose podman or docker for minikube
+For minikube a container or virtual machine has to be selected, before proceeding choose podman or docker, one of them has to be installed beforehand.
 
 ### Podman only: add passwordless sudo
 
     USER_SUDO_FILE=/etc/sudoers.d/$USER;  echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/podman" | sudo tee -a $USER_SUDO_FILE > /dev/null
+    minikube config set driver podman
+    minikube config set container-runtime cri-o
 
 ### Docker only: add docker group
 
     sudo usermod -aG docker $USER && newgrp docker
-
 
 # Deployment 
 
@@ -42,16 +43,7 @@ For minikube a container or virtual machine has to be selected, before proceedin
     mkdir -p ${LVM_ROOT}/var/jupyter && chmod 777 ${LVM_ROOT}/var/jupyter
     mkdir -p ${LVM_ROOT}/var/rabbitmq && chmod 777 ${LVM_ROOT}/var/rabbitmq
 
-
-# Start minikube
-
-## Configure minikube
-
-### Setting only for podman as minikube container (optional)
-
-    minikube config set driver podman
-    minikube config set container-runtime cri-o
-
+## Start minikube
 
     # check memory and cpu numbers
     minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s --memory 16384 --cpus=2 
@@ -67,9 +59,7 @@ For minikube a container or virtual machine has to be selected, before proceedin
     # optional dashboard
     minikube dashboard --url&
     kubectl proxy&
-
-### The dashboard can be accessed with this link:
-    http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
+    # http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
 
 ## Start rabbitmq
 
@@ -128,7 +118,7 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
 
 ## Stopping containers
 
-     kubectl delete pod lvm_moe-sim
+     kubectl delete pod lvm-moe-sim
 
      kubectl delete pod lvm-sci-pwi-sim # optional --grace-period=0  --force
 
