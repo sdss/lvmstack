@@ -16,13 +16,13 @@ see details [here](https://minikube.sigs.k8s.io/docs/start/). The deployment of 
     curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
     sudo install kubectl /usr/local/bin/
 ## Choose podman or docker
-For minikube a container or virtual machine has to be select, in the following sub chapters choose one of them. Podman or Docker has to be installed beforehand.
+For minikube a container or virtual machine has to be selected, before proceeding choose podman or docker, it has to be installed beforehand.
 
-### Add passwordless sudo for podman
+### Podman only: add passwordless sudo
 
     USER_SUDO_FILE=/etc/sudoers.d/$USER;  echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/podman" | sudo tee -a $USER_SUDO_FILE > /dev/null
 
-###  Add  docker group
+### Docker only: add docker group
 
     sudo usermod -aG docker $USER && newgrp docker
     
