@@ -121,6 +121,12 @@ kubectl delete -n default pod lvm-skye-pwi-sim
 kubectl delete -n default pod lvm-spec-pwi-sim
 kubectl delete pod lvm-scraper
 
+
+
+kubectl exec -ti lvm-sci-pwi-sim -- bash -l
+
+
+
 apt update
 apt install -y iputils-ping iproute2
 

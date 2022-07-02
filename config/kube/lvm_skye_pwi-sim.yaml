@@ -38,7 +38,7 @@ spec:
       value: "800x600"
     - name: PWI_SIMULATOR
       value: "true"
-    - name: LVMT_RMQ
+    - name: LVM_RMQ_HOST
       value: "192.168.49.2"
   volumes:
   - hostPath:
