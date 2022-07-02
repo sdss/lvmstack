@@ -1,10 +1,9 @@
-# Install Minikube & kubectl
+# Quickstart
+The following chapter "Install minikube & kubectl" describes only the installation on linux.
+Minikube can also be used on Mac & Windows with docker or a virtual machine (eg: vmware), see details [here](https://minikube.sigs.k8s.io/docs/start/). 
+The deployment of the lvm containers should then also work.
 
-This chapter is only for installation on linux, Minikube can also be used on Mac & Windows with docker or a virtual machine (eg: vmware),
-see details [here](https://minikube.sigs.k8s.io/docs/start/). The deployment of the lvm containers should then also work.
-
-# Quickstart Linux
-
+# Install minikube & kubectl
 ## Install minikube
 
     curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
@@ -15,6 +14,7 @@ see details [here](https://minikube.sigs.k8s.io/docs/start/). The deployment of 
 
     curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
     sudo install kubectl /usr/local/bin/
+
 ## Choose podman or docker
 For minikube a container or virtual machine has to be selected, before proceeding choose podman or docker, it has to be installed beforehand.
 
@@ -25,7 +25,10 @@ For minikube a container or virtual machine has to be selected, before proceedin
 ### Docker only: add docker group
 
     sudo usermod -aG docker $USER && newgrp docker
-    
+
+
+# Deployment 
+
 ## Download all the necessary files for lvm from github:
 
     git clone https://github.com/sdss/lvm.git
