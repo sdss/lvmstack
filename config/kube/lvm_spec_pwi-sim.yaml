@@ -2,13 +2,14 @@
 # it into Kubernetes.
 #
 # Created with podman-3.4.4
+
 # NOTE: If you generated this yaml from an unprivileged and rootless podman container on an SELinux
 # enabled system, check the podman generate kube man page for steps to follow to ensure that your pod/container
 # has the right permissions to access the volumes added.
 ---
 apiVersion: v1
 kind: Pod
-# metadata:
+metadata:
 #  annotations:
 #    bind-mount-options:/home/briegel/workspace/lvmt/lvm/lvmpwi: Z
   creationTimestamp: "2022-06-08T14:35:32Z"
@@ -16,8 +17,8 @@ kind: Pod
     app: lvm-spec-pwi-sim
   name: lvm-spec-pwi-sim
 spec:
-  containers:
   terminationGracePeriodSeconds: 0
+  containers:
   - image: ghcr.io/sdss/lvmpwi:latest
     name: lvm-spec-pwi
     ports:
