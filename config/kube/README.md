@@ -122,7 +122,7 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
     vncviewer $(minikube ip):2
     vncviewer $(minikube ip):3
     vncviewer $(minikube ip):4
-    python3.9 $LVM_ROOT/wasndas/lvmcam/utils/simple_camui.py -c lvm.sci.agcam -k lvm.sci.km -t lvm.sci.pwi -H $(minikube ip)
+    python3.9 $LVM_ROOT/lvmcam/utils/simple_camui.py -c lvm.sci.agcam -k lvm.sci.km -t lvm.sci.pwi -H $(minikube ip)
     # TwiceAsNice has to be installed.
     niceQUI --MOE.CONFIG:Endpoint=[NAME=lvm.moe-sim,HOST=$(minikube ip),PORT=40000]+UI=$LVM_ROOT/lvmtan/config/lvm/lvm.all.ui 
 
