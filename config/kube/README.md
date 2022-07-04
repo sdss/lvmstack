@@ -74,6 +74,9 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
 
 ## Build containers into minikube
 
+    # https://minikube.sigs.k8s.io/docs/commands/image/#minikube-image-build
+    # https://minikube.sigs.k8s.io/docs/handbook/pushing/
+
     minikube image build --tag localhost/lvm_actor ${LVM_ROOT}/config/container/actor/
     minikube image build --tag localhost/lvm_jupyter ${LVM_ROOT}/config/container/jupyter/
     minikube image ls | grep localhost

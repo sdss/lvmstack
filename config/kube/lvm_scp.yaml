@@ -23,8 +23,6 @@ spec:
     env:
     - name: LVM_ACTOR
       value: "lvmscp"
-    - name: LVM_ACTOR_ARGS
-      value: "--verbose"
     - name: LVM_DEBUG
       value: "yes"
     - name: LVM_RMQ_HOST
