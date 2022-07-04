@@ -9,7 +9,7 @@
 ---
 apiVersion: v1
 kind: Pod
-metadata:
+#metadata:
 #  annotations:
 #    bind-mount-options:/home/briegel/workspace/lvmt/lvm/lvmpwi: Z
   creationTimestamp: "2022-06-08T14:35:32Z"

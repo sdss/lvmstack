@@ -5,7 +5,8 @@ MAINTAINER Florian Briegel, briegel@mpia.de
 
 # podman  build --tag lvm_actor --rm .
 
-# podman run -ti --rm --name lvm_actor -v .:/root/lvm:Z -P localhost/lvm_actor
+# self contained mode
+# podman run -ti --rm --name lvm_actor localhost/lvm_actor
 
 RUN apt update -y
 
@@ -21,7 +22,7 @@ RUN pip3 install sdss-lvmscraper \
                  sdss-lvmagp \
                  sdss-lvmieb \
                  sdss-lvmscp 
-                 #sdss-lvmecp not available for 3.10 only works in debug mode
+                 #sdss-lvmecp not available for python 3.10 only works in debug mode
                  
 
 WORKDIR /root

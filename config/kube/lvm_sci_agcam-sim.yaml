@@ -13,7 +13,7 @@ spec:
     securityContext:
       capabilities: {}
     volumeMounts:
-    - mountPath: /root/lvmcam
+    - mountPath: /root/lvm
       name: data-lvm-host-1
     - mountPath: /data
       name: data-lvm-host-2
@@ -30,7 +30,7 @@ spec:
       value: "192.168.49.2"
   volumes:
   - hostPath:
-      path: /lvm/lvmcam
+      path: /lvm
       type: Directory
     name: data-lvm-host-1
   - hostPath:
