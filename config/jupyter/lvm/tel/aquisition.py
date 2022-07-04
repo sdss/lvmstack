@@ -27,6 +27,7 @@ async def aquisition(telsubsys, ra, dec, exptime, fine_focus=False, logger = get
         await invoke(
             telsubsys.km.slewStart(ra, dec), 
             telsubsys.pwi.gotoRaDecJ2000(ra, dec),
+            telsubsys.
             focus.nominal(focus_temperature)
         )
 
@@ -48,25 +49,26 @@ async def aquisition(telsubsys, ra, dec, exptime, fine_focus=False, logger = get
         raise ex
 
 
+
 @click.command()
 @click.option('-v', '--verbose', count=True, help='Debug mode. Use additional v for more details.')
 @click.option('-t', '--telsubsys', default='sci', help='Telescope subsystem: sci, skye, skyw or spec.')
 @click.option('-e', '--exptime', default=5.0, help='Expose for for exptime seconds.')
 @click.option('-r', '--ra', type=float, help='RA J2000 in hours.')
 @click.option('-d', '--dec', type=float, help='DEC J2000 in degrees.')
-async def main(verbose, telsubsys, exptime, ra, dec):
+def main(verbose, telsubsys, exptime, ra, dec):
+    import asyncio
 
-    telsubsys = await lvm.from_string(telsubsys)
+    async def call(verbose, telsubsys, exptime, ra, dec):
+        telsubsys = await lvm.from_string(telsubsys)
+        await aquisition(telsubsys, ra, dec, exptime, level = DEBUG if args.verbose else INFO)
 
-    await aquisition(telsubsys, ra, dec, exptime, level = DEBUG if args.verbose else INFO)
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(call())
 
             
 if __name__ == '__main__':
 
-    import asyncio
-
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
-
+    main()
 
 

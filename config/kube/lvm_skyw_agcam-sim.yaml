@@ -6,30 +6,31 @@ metadata:
     app: lvm-skyw-agcam-sim
   name: lvm-skyw-agcam-sim
 spec:
+  terminationGracePeriodSeconds: 0
   containers:
-  - image: ghcr.io/wasndas/lvmcam:latest
+  - image: localhost/lvm_actor:latest
     name: lvm-skyw-agcam
     securityContext:
       capabilities: {}
     volumeMounts:
-    - mountPath: /root/lvmcam
+    - mountPath: /root/lvm
       name: data-lvm-host-1
     - mountPath: /data
       name: data-lvm-host-2
     env:
-    - name: LVMT_CAM
+    - name: LVM_ACTOR
+      value: "lvmcam"
+    - name: LVM_ACTOR_CONFIG
       value: "lvm.skyw.agcam"
-    - name: LVMT_DEBUG
-      value: "true"
-    - name: LVMT_CAM_TYPE
-      value: "skymakercam"
-    - name: LVMT_RMQ
+    - name: LVM_ACTOR_ARGS
+      value: "--verbose --simulate"
+    - name: LVM_DEBUG
+      value: "yes"
+    - name: LVM_RMQ_HOST
       value: "192.168.49.2"
-    - name: LVM_DATA_ROOT
-      value: "/data"
   volumes:
   - hostPath:
-      path: /lvm/wasndas/lvmcam
+      path: /lvm
       type: Directory
     name: data-lvm-host-1
   - hostPath:

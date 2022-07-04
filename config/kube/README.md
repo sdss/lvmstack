@@ -32,7 +32,7 @@ For minikube a container or virtual machine has to be selected, before proceedin
 
 ## Download all the necessary files for lvm from github:
 
-    git clone https://github.com/sdss/lvm.git
+    git clone --recurse-submodules -j8 --remote-submodules https://github.com/sdss/lvm.git
     cd lvm
     
     # Define LVM root
@@ -50,6 +50,10 @@ For minikube a container or virtual machine has to be selected, before proceedin
  
     minikube status 
 
+    # check that /lvm is mounted correctly !
+    minikube ssh -- ls -l /lvm
+
+    
     minikube addons enable metrics-server
     minikube addons enable dashboard
     minikube addons list
@@ -72,10 +76,11 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
 
     minikube image build --tag localhost/lvm_actor ${LVM_ROOT}/config/container/actor/
     minikube image build --tag localhost/lvm_jupyter ${LVM_ROOT}/config/container/jupyter/
-    minikube image ls
-    minikube image rm localhost/lvm_actor:latest
+    minikube image ls | grep localhost
 
     # minikube image build --tag localhost/lvm_actor:$(date +"%y%m%d") ${LVM_ROOT}/config/container/actor/
+
+    # minikube image rm localhost/lvm_actor:latest
 
 ## Start lvm containers   
 
@@ -114,8 +119,9 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
     vncviewer $(minikube ip):2
     vncviewer $(minikube ip):3
     vncviewer $(minikube ip):4
-    niceQUI --MOE.CONFIG:Endpoint=[NAME=lvm.moe-sim,HOST=$(minikube ip),PORT=40000]+UI=$LVM_ROOT/lvmtan/config/lvm/lvm.all.ui 
     python3.9 $LVM_ROOT/wasndas/lvmcam/utils/simple_camui.py -c lvm.sci.agcam -k lvm.sci.km -t lvm.sci.pwi -H $(minikube ip)
+    # TwiceAsNice has to be installed.
+    niceQUI --MOE.CONFIG:Endpoint=[NAME=lvm.moe-sim,HOST=$(minikube ip),PORT=40000]+UI=$LVM_ROOT/lvmtan/config/lvm/lvm.all.ui 
 
 ## Stopping containers
 
@@ -124,6 +130,9 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
     kubectl delete pod lvm-sci-pwi-sim # optional --grace-period=0  --force
 
     kubectl delete -n default pod lvm-skyw-pwi-sim
+    
+    kubectl delete all --all -n default
+
 
 ## Exec commands in pod
 
@@ -133,15 +142,15 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
 
     minikube ssh -- bash -l 
     minikube ssh -- sudo podman images
-    # or
-    sudo podman exec -ti minikube podman images
+    # or sudo podman exec -ti minikube podman images
 
 
 # TODO
-* https://kubernetes.io/docs/concepts/configuration/configmap/
+- https://kubernetes.io/docs/concepts/configuration/configmap/
+- https://stackoverflow.com/questions/47128586/how-to-delete-all-resources-from-kubernetes-one-time
 
 # NOTES
-* https://jamesdefabia.github.io/docs/user-guide/kubectl-cheatsheet/
-* https://minikube.sigs.k8s.io/docs/handbook/pushing/
-* https://github.com/flannel-io/flannel/blob/master/Documentation/kube-flannel.yml
-* https://github.com/kvaps/bridget/
+- https://jamesdefabia.github.io/docs/user-guide/kubectl-cheatsheet/
+- https://minikube.sigs.k8s.io/docs/handbook/pushing/
+- https://github.com/flannel-io/flannel/blob/master/Documentation/kube-flannel.yml
+- https://github.com/kvaps/bridget/
