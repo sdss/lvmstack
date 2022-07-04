@@ -23,7 +23,8 @@ Name the config file (without '.yml'), if it is not named as the actor python mo
 Add some options to actor startup, eg --verbose or --simulate
 
 ### LVM_DEBUG=yes
-
+In debug mode the local file system with the python modules and config has to be mapped into the container on runtime.
+Either only the actor module or a directory lvm with several python modules.
 
 # TODO
 
