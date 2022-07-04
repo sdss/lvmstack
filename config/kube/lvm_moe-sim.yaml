@@ -6,6 +6,7 @@ metadata:
     app: lvm-moe-sim
   name: lvm-moe-sim
 spec:
+  terminationGracePeriodSeconds: 0
   containers:
   - image: ghcr.io/sdss/lvmtan:0.0.15
     name: lvm-moe

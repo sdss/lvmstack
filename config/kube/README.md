@@ -63,70 +63,71 @@ For minikube a container or virtual machine has to be selected, before proceedin
 
 ## Start rabbitmq
 
-     # rabbitmq: http://192.168.49.2:8081
-     kubectl create -f $LVM_ROOT/config/kube/rabbitmq.yaml
+    # rabbitmq: http://192.168.49.2:8081
+    kubectl create -f $LVM_ROOT/config/kube/rabbitmq.yaml
 
 Check address 192.168.49.2 with 'minikube ip', before proceeding, please check that rabbitmq dashboard is reachable.
 
 ## Build containers into minikube
 
-     minikube image build --tag localhost/lvm_actor ${LVM_ROOT}/config/container/actor/
-     minikube image build --tag localhost/lvm_jupyter ${LVM_ROOT}/config/container/jupyter/
-     minikube image ls
+    minikube image build --tag localhost/lvm_actor ${LVM_ROOT}/config/container/actor/
+    minikube image build --tag localhost/lvm_jupyter ${LVM_ROOT}/config/container/jupyter/
+    minikube image ls
+    minikube image rm localhost/lvm_actor:latest
 
-     # minikube image build --tag localhost/lvm_actor:$(date +"%y%m%d") ${LVM_ROOT}/config/container/actor/
+    # minikube image build --tag localhost/lvm_actor:$(date +"%y%m%d") ${LVM_ROOT}/config/container/actor/
 
 ## Start lvm containers   
 
-     # jupyter: http://192.168.49.2:8082
-     kubectl create -f $LVM_ROOT/config/kube/lvm_jupyter.yaml
+    # jupyter: http://192.168.49.2:8082
+    kubectl create -f $LVM_ROOT/config/kube/lvm_jupyter.yaml
 
-     kubectl create -f $LVM_ROOT/config/kube/lvm_moe-sim.yaml 
+    kubectl create -f $LVM_ROOT/config/kube/lvm_moe-sim.yaml 
 
-     # lvmscraper: http://192.168.49.2:8085/
-     kubectl create -f $LVM_ROOT/config/kube/lvm_scraper.yaml
+    # lvmscraper: http://192.168.49.2:8085/
+    kubectl create -f $LVM_ROOT/config/kube/lvm_scraper.yaml
 
-     kubectl create -f $LVM_ROOT/config/kube/lvm_nps-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_nps-sim.yaml
      
-     kubectl create -f $LVM_ROOT/config/kube/lvm_ieb.yaml
-     kubectl create -f $LVM_ROOT/config/kube/lvm_ecp.yaml
-     kubectl create -f $LVM_ROOT/config/kube/lvm_scp.yaml # fails
+    kubectl create -f $LVM_ROOT/config/kube/lvm_ieb.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_ecp.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_scp.yaml # fails
 
-     kubectl create -f $LVM_ROOT/config/kube/lvm_sci_pwi-sim.yaml
-     kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_pwi-sim.yaml
-     kubectl create -f $LVM_ROOT/config/kube/lvm_skye_pwi-sim.yaml
-     kubectl create -f $LVM_ROOT/config/kube/lvm_spec_pwi-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_sci_pwi-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_pwi-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_skye_pwi-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_spec_pwi-sim.yaml
 
-     kubectl create -f $LVM_ROOT/config/kube/lvm_sci_agcam-sim.yaml
-     kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_agcam-sim.yaml
-     kubectl create -f $LVM_ROOT/config/kube/lvm_skye_agcam-sim.yaml
-     kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agcam-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_sci_agcam-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_agcam-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_skye_agcam-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agcam-sim.yaml
 
-     kubectl create -f $LVM_ROOT/config/kube/lvm_sci_agp.yaml
-     kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_agp.yaml
-     kubectl create -f $LVM_ROOT/config/kube/lvm_skye_agp.yaml
-     kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agp.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_sci_agp.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_agp.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_skye_agp.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agp.yaml
 
 ## Test UIs
 
-     vncviewer $(minikube ip):1
-     vncviewer $(minikube ip):2
-     vncviewer $(minikube ip):3
-     vncviewer $(minikube ip):4
-     niceQUI --MOE.CONFIG:Endpoint=[NAME=lvm.moe-sim,HOST=$(minikube ip),PORT=40000]+UI=$LVM_ROOT/lvmtan/config/lvm/lvm.all.ui 
-     python3.9 $LVM_ROOT/wasndas/lvmcam/utils/simple_camui.py -c lvm.sci.agcam -k lvm.sci.km -t lvm.sci.pwi -H $(minikube ip)
+    vncviewer $(minikube ip):1
+    vncviewer $(minikube ip):2
+    vncviewer $(minikube ip):3
+    vncviewer $(minikube ip):4
+    niceQUI --MOE.CONFIG:Endpoint=[NAME=lvm.moe-sim,HOST=$(minikube ip),PORT=40000]+UI=$LVM_ROOT/lvmtan/config/lvm/lvm.all.ui 
+    python3.9 $LVM_ROOT/wasndas/lvmcam/utils/simple_camui.py -c lvm.sci.agcam -k lvm.sci.km -t lvm.sci.pwi -H $(minikube ip)
 
 ## Stopping containers
 
-     kubectl delete pod lvm-moe-sim
+    kubectl delete pod lvm-moe-sim
 
-     kubectl delete pod lvm-sci-pwi-sim # optional --grace-period=0  --force
+    kubectl delete pod lvm-sci-pwi-sim # optional --grace-period=0  --force
 
-     kubectl delete -n default pod lvm-skyw-pwi-sim
+    kubectl delete -n default pod lvm-skyw-pwi-sim
 
 ## Exec commands in pod
 
-     kubectl exec -ti lvm-sci-pwi-sim -- bash -l
+    kubectl exec -ti lvm-sci-pwi-sim -- bash -l
 
 ## Access minikube container
 
