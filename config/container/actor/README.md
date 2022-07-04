@@ -5,9 +5,10 @@
   - running only with pypi installed packages (code & config) from container build.
   - in debug mode with mounted host file system develop directories.
 
-### LVM_ACTOR - name your actor (MANDATORY)
+### LVM_ACTOR - name your actor
+Its mandatory to provide the actor python module name
 
-### LVM_RMQ_HOST: hostname for rabbitmq (Mandatory for kubernetes)
+### LVM_RMQ_HOST: hostname for rabbitmq
 Replaces the rmq host address with $LVM_RMQ_HOST
 
     actor:
