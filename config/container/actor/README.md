@@ -1,12 +1,13 @@
 # LVM container for actors
 
-A container that rules all.
+A container that rules all. It needs some enviroment 
 
-* LVM_ACTOR # (Mandatory)
+### LVM_ACTOR - name your container (MANDATORY)
 
-* LVM_RMQ_HOST #(Mandatory for kubernetes)
-* LVM_ACTOR_ARGS # (Optional)
-* LVM_DEBUG=true # (Optional)
+### LVM_RMQ_HOST: hostname for rabbitmq (Mandatory for kubernetes)
+ This will
+### LVM_ACTOR_ARGS # (Optional)
+### LVM_DEBUG=yes # (Optional)
 
 
 # Quickstart
@@ -15,10 +16,7 @@ A container that rules all.
 ## Install minikube
 
 # TODO
-* https://kubernetes.io/docs/concepts/configuration/configmap/
+
 
 # NOTES
-* https://jamesdefabia.github.io/docs/user-guide/kubectl-cheatsheet/
-* https://minikube.sigs.k8s.io/docs/handbook/pushing/
-* https://github.com/flannel-io/flannel/blob/master/Documentation/kube-flannel.yml
-* https://github.com/kvaps/bridget/
+
