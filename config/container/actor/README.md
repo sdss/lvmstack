@@ -6,7 +6,7 @@
   - in debug mode with mounted host file system develop directories.
 
 ### LVM_ACTOR - name your actor
-Its mandatory to provide the actor python module name, it will start with default config of the same name from python/YOUR_ACTOR/etc/YOUR_ACTOR.yml
+Its mandatory to provide the actor python module name, it will start with default config of the same name from YOUR_ACTOR/etc/YOUR_ACTOR.yml or in debug mode from python/YOUR_ACTOR/etc/YOUR_ACTOR.yml.
 
 ### LVM_RMQ_HOST: hostname for rabbitmq
 Replaces the usual rmq localhost host address with $LVM_RMQ_HOST
