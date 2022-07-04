@@ -35,7 +35,7 @@ For minikube a container or virtual machine has to be selected, before proceedin
     git clone --recurse-submodules -j8 --remote-submodules https://github.com/sdss/lvm.git
     cd lvm
     
-    # Define LVM root
+    # Define LVM root - IMPORTANT: this will bemounted into the container !
     export LVM_ROOT=$PWD
 
     # for now we do store persistent data here:
@@ -147,7 +147,11 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
     minikube ssh -- sudo podman images
     # or sudo podman exec -ti minikube podman images
 
+## Got lost ?
 
+    minikube delete
+    
+    
 # TODO
 - https://kubernetes.io/docs/concepts/configuration/configmap/
 - https://stackoverflow.com/questions/47128586/how-to-delete-all-resources-from-kubernetes-one-time
