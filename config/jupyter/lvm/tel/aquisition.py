@@ -5,19 +5,23 @@
 # @Filename: lvm/tel/aquisition.py
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
+from cluplus.proxy import invoke, unpack, flatten
 from lvmtipo.actors import lvm
 from logging import DEBUG, INFO
 from sdsstools import get_logger
 
 
-from lvm.tel.focus import Focus
-from lvm.tel.astrometry import Astrometry
+from .focus import Focus
+from .astrometry import Astrometry
 
 import click
 
 
-async def aquisition(telsubsys, ra, dec, exptime, fine_focus=False, logger = get_logger("lvm_tel_focus"), level = INFO):
+async def aquisition(telsubsys, ra, dec, exptime, fine_focus=False, level = INFO):
     try:
+        logger = get_logger("lvm_tel_focus")
+        logger.setLevel(level)
+   
         focus_temperature = 42 # get from somewhere a temperature.
         
         focus = Focus(telsubsys)
@@ -27,7 +31,6 @@ async def aquisition(telsubsys, ra, dec, exptime, fine_focus=False, logger = get
         await invoke(
             telsubsys.km.slewStart(ra, dec), 
             telsubsys.pwi.gotoRaDecJ2000(ra, dec),
-            telsubsys.
             focus.nominal(focus_temperature)
         )
 
