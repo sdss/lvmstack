@@ -65,11 +65,24 @@ For minikube a container or virtual machine has to be selected, before proceedin
     kubectl proxy&
     # http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
 
+    
+## Creating namespaces
+
+    kubectl apply -f config/kube/namespace/lvm_sys-ns.yaml
+    kubectl apply -f config/kube/namespace/lvm_ics-ns.yaml
+    kubectl get namespaces
+    
+    # define default namespace   
+    kubectl config set-context $(kubectl config current-context) --namespace=lvm-ics
+    
 ## Start rabbitmq
 
     # rabbitmq: http://192.168.49.2:8081
-    kubectl create -f $LVM_ROOT/config/kube/rabbitmq.yaml
+    kubectl create -n lvm-sys -f $LVM_ROOT/config/kube/rabbitmq.yaml
 
+    # jupyter: http://192.168.49.2:8082
+    kubectl create -n lvm-sys -f $LVM_ROOT/config/kube/lvm_jupyter.yaml
+    
 Check address 192.168.49.2 with 'minikube ip', before proceeding, please check that rabbitmq dashboard is reachable.
 
 ## Build containers into minikube
@@ -87,13 +100,11 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
 
 ## Start lvm containers   
 
-    # jupyter: http://192.168.49.2:8082
-    kubectl create -f $LVM_ROOT/config/kube/lvm_jupyter.yaml
-
-    kubectl create -f $LVM_ROOT/config/kube/lvm_moe-sim.yaml 
 
     # lvmscraper: http://192.168.49.2:8085/
     kubectl create -f $LVM_ROOT/config/kube/lvm_scraper.yaml
+
+    kubectl create -f $LVM_ROOT/config/kube/lvm_moe-sim.yaml 
 
     kubectl create -f $LVM_ROOT/config/kube/lvm_nps-sim.yaml
      
@@ -106,15 +117,21 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
     kubectl create -f $LVM_ROOT/config/kube/lvm_skye_pwi-sim.yaml
     kubectl create -f $LVM_ROOT/config/kube/lvm_spec_pwi-sim.yaml
 
-    kubectl create -f $LVM_ROOT/config/kube/lvm_sci_agcam-sim.yaml
-    kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_agcam-sim.yaml
-    kubectl create -f $LVM_ROOT/config/kube/lvm_skye_agcam-sim.yaml
-    kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agcam-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_sci_ag-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_ag-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_skye_ag-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm_spec_ag-sim.yaml
+    
+    # lvmagp & lvmcam as seperate pods
+    # kubectl create -f $LVM_ROOT/config/kube/lvm_sci_agcam-sim.yaml
+    # kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_agcam-sim.yaml
+    # kubectl create -f $LVM_ROOT/config/kube/lvm_skye_agcam-sim.yaml
+    # kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agcam-sim.yaml
 
-    kubectl create -f $LVM_ROOT/config/kube/lvm_sci_agp.yaml
-    kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_agp.yaml
-    kubectl create -f $LVM_ROOT/config/kube/lvm_skye_agp.yaml
-    kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agp.yaml
+    # kubectl create -f $LVM_ROOT/config/kube/lvm_sci_agp.yaml
+    # kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_agp.yaml
+    # kubectl create -f $LVM_ROOT/config/kube/lvm_skye_agp.yaml
+    # kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agp.yaml
 
 ## Test UIs
 
@@ -140,12 +157,17 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
 ## Exec commands in pod
 
     kubectl exec -ti lvm-sci-pwi-sim -- bash -l
+    
+    # pod with multiple containers
+    kubectl exec -ti lvm-sci-ag-sim -c lvm-sci-agp -- bash -l
+
 
 ## Access minikube container
 
     minikube ssh -- bash -l 
     minikube ssh -- sudo podman images
     # or sudo podman exec -ti minikube podman images
+    
 
 ## Got lost ?
 
