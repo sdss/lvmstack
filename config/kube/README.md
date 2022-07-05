@@ -46,7 +46,11 @@ For minikube a container or virtual machine has to be selected, before proceedin
 ## Start minikube
 
     # check memory and cpu numbers
-    minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s --memory 16384 --cpus=2 
+    minikube config set memory 16384
+    minikube config set cpus 2
+    minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s 
+    
+    # minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s --memory 16384 --cpus=2 
  
     minikube status 
 
@@ -68,8 +72,8 @@ For minikube a container or virtual machine has to be selected, before proceedin
     
 ## Creating namespaces
 
-    kubectl apply -f config/kube/namespace/lvm_sys-ns.yaml
-    # kubectl apply -f config/kube/namespace/lvm_ics-ns.yaml
+    kubectl apply -f $LVM_ROOT/config/kube/namespace/lvm_sys-ns.yaml
+    # kubectl apply -f $LVM_ROOT/config/kube/namespace/lvm_ics-ns.yaml
     kubectl get namespaces
     
     # define default namespace   
@@ -80,8 +84,6 @@ For minikube a container or virtual machine has to be selected, before proceedin
     # rabbitmq: http://192.168.49.2:8081
     kubectl create -n lvm-sys -f $LVM_ROOT/config/kube/rabbitmq.yaml
 
-   
-Check address 192.168.49.2 with 'minikube ip', before proceeding, please check that rabbitmq dashboard is reachable.
 
 ## Build containers into minikube
 
@@ -103,6 +105,7 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
 
 ## Start lvm containers   
 
+    # Check address 192.168.49.2 with 'minikube ip', before proceeding, please check that rabbitmq dashboard is reachable.
 
     # jupyter: http://192.168.49.2:8082
     kubectl create -n lvm-sys -f $LVM_ROOT/config/kube/lvm_jupyter.yaml
