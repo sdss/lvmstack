@@ -6,6 +6,8 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
 from lvmtipo.actors import lvm
+
+# TODO: should go somewhere in a subclass
 from logging import DEBUG, INFO
 from sdsstools import get_logger
 
@@ -18,7 +20,12 @@ from astropy.io import fits
 class Astrometry:
 
     @staticmethod
-    async def calc(telsubsys, ra, dec, exptime=5, logger = get_logger("lvm_tel_astrometry"), level = INFO):
+    async def calc(telsubsys, ra, dec, exptime, level = INFO):
+        
+        # TODO: should go somewhere in a subclass
+        logger = get_logger("lvm_tel_astrometry")
+        logger.setLevel(level)
+        
         try:
             rc = await telsubsys.agc.expose(exptime)
             file_east = rc["east"]["filename"]

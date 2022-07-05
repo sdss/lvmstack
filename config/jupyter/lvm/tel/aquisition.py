@@ -7,9 +7,10 @@
 
 from cluplus.proxy import invoke, unpack, flatten
 from lvmtipo.actors import lvm
+
+# TODO: should go somewhere in a subclass
 from logging import DEBUG, INFO
 from sdsstools import get_logger
-
 
 from .focus import Focus
 from .astrometry import Astrometry
@@ -17,12 +18,13 @@ from .astrometry import Astrometry
 import click
 
 
-async def aquisition(telsubsys, ra, dec, exptime, fine_focus=False, level = INFO):
+async def aquisition(telsubsys, ra, dec, exptime, level = INFO):
     try:
-        logger = get_logger("lvm_tel_focus")
+        # TODO: should go somewhere in a subclass
+        logger = get_logger("lvm_tel_aquisition")
         logger.setLevel(level)
-   
-        focus_temperature = 42 # get from somewhere a temperature.
+        
+        focus_temperature = 42 # TODO: get temperature from somewhere.
         
         focus = Focus(telsubsys)
 

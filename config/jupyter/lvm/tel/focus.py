@@ -6,6 +6,8 @@
 # @License: BSD 3-clause (http://www.opensource.org/licenses/BSD-3-Clause)
 
 from lvmtipo.actors import lvm
+
+# TODO: should go somewhere in a subclass
 from logging import DEBUG, INFO
 from sdsstools import get_logger
 
@@ -14,12 +16,12 @@ from astropy.io import fits
 
 
 class Focus():
-    def __init__(self, telsubsys, logger = get_logger("lvm_tel_focus"), level = INFO):
+    def __init__(self, telsubsys, level = INFO):
         self.telsubsys = telsubsys
         
-        #TODO: should go somewhere in a subclass
-        self.logger=logger
-        self.logger.sh.setLevel(level)
+        # TODO: should go somewhere in a subclass
+        self.logger =  = get_logger("lvm_tel_focus")
+        self.logger.setLevel(level)
 
     async def offset(self, offset):
         try:
@@ -32,7 +34,7 @@ class Focus():
 
     async def nominal(self, temp):
         try:
-           temp2focus_pos = temp #TODO: put here a function gathering focus based on temperature.
+           temp2focus_pos = temp # TODO: put here a function gathering focus based on temperature.
            await self.telsubsys.foc.moveAbsolute(temp2focus_pos)
         
         except Exception as ex:
@@ -42,7 +44,7 @@ class Focus():
     async def fine(self, exptime):
         try:
             files = {}
-            for p in [400, 200, 100, 0, -100]: #TODO: implement some focusing that makes sense.
+            for p in [400, 200, 100, 0, -100]: # TODO: implement some focusing that makes sense.
                 
                 self.logger.debug(f"foc move to {p}")
                 await self.telsubsys.foc.moveAbsolute(p)
