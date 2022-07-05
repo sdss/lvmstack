@@ -154,7 +154,7 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
     kubectl delete all --all -n default
 
 
-## Exec commands in pod
+## Exec commands into container
 
     kubectl exec -ti lvm-sci-pwi-sim -- bash -l
     
@@ -168,6 +168,11 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
     minikube ssh -- sudo podman images
     # or sudo podman exec -ti minikube podman images
     
+## Accesing logs of containers
+
+    kubectl logs lvm-moe-sim
+    # continuously watching
+    kubectl logs -f lvm-sci-ag-sim -c lvm-sci-agp
 
 ## Got lost ?
 
