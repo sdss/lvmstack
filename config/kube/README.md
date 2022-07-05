@@ -69,20 +69,18 @@ For minikube a container or virtual machine has to be selected, before proceedin
 ## Creating namespaces
 
     kubectl apply -f config/kube/namespace/lvm_sys-ns.yaml
-    kubectl apply -f config/kube/namespace/lvm_ics-ns.yaml
+    # kubectl apply -f config/kube/namespace/lvm_ics-ns.yaml
     kubectl get namespaces
     
     # define default namespace   
-    kubectl config set-context $(kubectl config current-context) --namespace=lvm-ics
+    # kubectl config set-context $(kubectl config current-context) --namespace=lvm-ics
     
 ## Start rabbitmq
 
     # rabbitmq: http://192.168.49.2:8081
     kubectl create -n lvm-sys -f $LVM_ROOT/config/kube/rabbitmq.yaml
 
-    # jupyter: http://192.168.49.2:8082
-    kubectl create -n lvm-sys -f $LVM_ROOT/config/kube/lvm_jupyter.yaml
-    
+   
 Check address 192.168.49.2 with 'minikube ip', before proceeding, please check that rabbitmq dashboard is reachable.
 
 ## Build containers into minikube
@@ -91,6 +89,11 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
     # https://minikube.sigs.k8s.io/docs/handbook/pushing/
 
     minikube image build --tag localhost/lvm_actor ${LVM_ROOT}/config/container/actor/
+    # alternative build & push
+    # podman build --tag localhost/lvm_actor ${LVM_ROOT}/config/container/actor/
+    # podman save localhost/lvm_actor:latest -o localhost_lvm_actor_latest.img
+    # minikube image load localhost_lvm_actor_latest.img
+    
     minikube image build --tag localhost/lvm_jupyter ${LVM_ROOT}/config/container/jupyter/
     minikube image ls | grep localhost
 
@@ -101,8 +104,11 @@ Check address 192.168.49.2 with 'minikube ip', before proceeding, please check t
 ## Start lvm containers   
 
 
+    # jupyter: http://192.168.49.2:8082
+    kubectl create -n lvm-sys -f $LVM_ROOT/config/kube/lvm_jupyter.yaml
+
     # lvmscraper: http://192.168.49.2:8085/
-    kubectl create -f $LVM_ROOT/config/kube/lvm_scraper.yaml
+    kubectl create -n lvm-sys -f $LVM_ROOT/config/kube/lvm_scraper.yaml
 
     kubectl create -f $LVM_ROOT/config/kube/lvm_moe-sim.yaml 
 
