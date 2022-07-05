@@ -50,7 +50,7 @@ For minikube a container or virtual machine has to be selected, before proceedin
     minikube config set cpus 2
     minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s 
     
-    # minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s --memory 16384 --cpus=2 
+    # minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s --memory=16384 --cpus=2 
  
     minikube status 
 

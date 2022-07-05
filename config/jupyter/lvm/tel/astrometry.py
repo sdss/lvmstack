@@ -16,6 +16,7 @@ from astropy.io import fits
 # TODO: put some real astronomy in here.
 
 class Astrometry:
+
     @staticmethod
     async def calc(telsubsys, ra, dec, exptime=5, logger = get_logger("lvm_tel_astrometry"), level = INFO):
         try:
@@ -36,20 +37,13 @@ class Astrometry:
 
 
 async def main():
+
     import argparse
-    
     parser = argparse.ArgumentParser()
-    parser.add_argument("-v", '--verbose', action='store_true',
-                        help="print some notes to stdout")
-
-    parser.add_argument("-t", '--telsubsys', type=str, default="sci",
-                        help="Telescope subsystem: sci, skye, skyw or spec")
-
-    parser.add_argument("-e", '--exptime', type=float, default=5.0,
-                        help="Expose for for exptime seconds")
-
+    parser.add_argument("-v", '--verbose', action='store_true', help="print some notes to stdout")
+    parser.add_argument("-t", '--telsubsys', type=str, default="sci", help="Telescope subsystem: sci, skye, skyw or spec")
+    parser.add_argument("-e", '--exptime', type=float, default=5.0, help="Expose for for exptime seconds")
     parser.add_argument("-r", '--ra', help="RA J2000 in hours")
-
     parser.add_argument("-d", '--dec', help="DEC J2000 in degrees")
 
     args = parser.parse_args()
