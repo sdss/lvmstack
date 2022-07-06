@@ -35,8 +35,8 @@ spec:
       value: ""
     - name: GRANT_SUDO
       value: "yes"
-    - name: RMQ_HOST
-      value: "192.168.49.2"
+    - name: RMQ_URL
+      value: "amqp://guest:guest@192.168.49.2:5672/"
     volumeMounts:
     - mountPath: /home/jovyan/work
       name: data-lvm-host-0

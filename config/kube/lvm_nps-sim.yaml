@@ -26,11 +26,9 @@ spec:
     - name: LVM_ACTOR_CONFIG
       value: "lvmnps_dummy"
     - name: LVM_ACTOR_ARGS
-      value: "--verbose"
+      value: "--verbose --rmq_url=amqp://guest:guest@192.168.49.2:5672/"
     - name: LVM_DEBUG
       value: "yes"
-    - name: LVM_RMQ_HOST
-      value: "192.168.49.2"
     #command: ["/bin/sh"]
     #args: ["-c", "echo $LVMT_NPS_CONFIG; \
                   #NPS_CONF=${LVMT_NPS_CONFIG%.*}_${LVMT_RMQ}.yml; \

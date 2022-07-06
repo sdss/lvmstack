@@ -25,8 +25,9 @@ spec:
       value: "lvmscp"
     - name: LVM_DEBUG
       value: "yes"
-    - name: LVM_RMQ_HOST
-      value: "192.168.49.2"
+    - name: LVM_ACTOR_ARGS
+      value: "--rmq_url=amqp://guest:guest@192.168.49.2:5672/"
+
   volumes:
   - name: data-lvm-host-1
     hostPath:

@@ -8,7 +8,6 @@ PYTHON=/usr/bin/python3
 # LVM_ACTOR_ARGS # (Optional)
 # LVM_DEBUG=true # (Optional)
 
-LVM_ACTOR_CONFIG=${LVM_ACTOR_CONFIG:-${LVM_ACTOR}}
 LVM_ROOT=$HOME
 
 if [ $LVM_DEBUG ]; then 
@@ -22,19 +21,21 @@ fi
 
 export LVMT_DATA_ROOT="${LVM_DATA_ROOT:=/data}"
 
-if [ $LVM_RMQ_HOST ]; then 
-  LVM_ACTOR_CONFIG_ABS=$LVM_ACTOR_PATH/etc/${LVM_ACTOR_CONFIG}_${LVM_RMQ_HOST}
+if [ $LVM_RMQ_HOST ]; then
+  LVM_ACTOR_CONFIG_ABS=$LVM_ACTOR_PATH/etc/${LVM_ACTOR_CONFIG:-${LVM_ACTOR}}_${LVM_RMQ_HOST}
   sed "s/host: .*$/host: $LVM_RMQ_HOST/" < $LVM_ACTOR_PATH/etc/$LVM_ACTOR_CONFIG.yml \
             > ${LVM_ACTOR_CONFIG_ABS}.yml
-  
-else
-  LVM_ACTOR_CONFIG_ABS=$LVM_ACTOR_PATH/etc/${LVM_ACTOR_CONFIG}
+  LVM_ACTOR_CONFIG_ARG="-c ${LVM_ACTOR_CONFIG_ABS}.yml"
+elif  [ $LVM_ACTOR_CONFIG ]; then 
+  LVM_ACTOR_CONFIG_ARG="-c $LVM_ACTOR_PATH/etc/${LVM_ACTOR_CONFIG}.yml"
 fi
 
-echo "Using config: $LVM_ACTOR_CONFIG_ABS"
-${PYTHON} $LVM_ACTOR_PATH/__main__.py -c ${LVM_ACTOR_CONFIG_ABS}.yml ${LVM_ACTOR_ARGS} start --debug
 
-#trap : TERM INT; ${PYTHON} $LVM_ACTOR_PATH/__main__.py -c ${LVM_ACTOR_CONFIG_ABS}.yml ${LVM_ACTOR_ARGS} start --debug  & wait"]
+echo "Using config: $LVM_ACTOR_CONFIG_ARG"
+
+${PYTHON} $LVM_ACTOR_PATH/__main__.py ${LVM_ACTOR_CONFIG_ARG} ${LVM_ACTOR_ARGS} start --debug
+
+#trap : TERM INT; ${PYTHON} $LVM_ACTOR_PATH/__main__.py ${LVM_ACTOR_CONFIG_ARG} ${LVM_ACTOR_ARGS} start --debug  & wait"]
 
 if [ $LVM_DEBUG ]; then 
    sleep INFINITY
