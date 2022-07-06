@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+#  annotations:
+#    bind-mount-options:/home/briegel/workspace/lvmt/lvm/lvmpwi: Z
+  creationTimestamp: "2022-06-08T14:35:32Z"
+  labels:
+    app: lvm-test
+  name: lvm-test
+spec:
+  terminationGracePeriodSeconds: 0
+  containers:
+  - name: lvm-test
+    image: docker.io/library/ubuntu:22.04
+    securityContext:
+      privileged: true
+#      capabilities: {"MKNOD"}
+#      capabilities: 
+#        add: ["MKNOD"]
+    volumeMounts:
+    - mountPath: /dev
+      name: dev-host-0
+    command: ["/bin/bash"]
+    args: ["-c", "echo 'Hello World'; trap : TERM INT; sleep INFINITY & wait"]
+  volumes:
+  - name: dev-host-0
+    hostPath:
+      path: /dev
+      type: Directory
+
+    
