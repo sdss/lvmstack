@@ -25,8 +25,6 @@ spec:
       value: "--verbose --rmq_url=amqp://guest:guest@192.168.49.2:5672/"
     - name: LVM_DEBUG
       value: "yes"
-    - name: LVM_RMQ_HOST
-      value: "192.168.49.2"
   volumes:
   - name: data-lvm-host-1
     hostPath:
