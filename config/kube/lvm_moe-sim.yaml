@@ -8,7 +8,7 @@ metadata:
 spec:
   terminationGracePeriodSeconds: 0
   containers:
-  - image: ghcr.io/sdss/lvmtan:0.0.15
+  - image: ghcr.io/sdss/lvmtan:latest
     name: lvm-moe
     ports:
     - containerPort: 40000
@@ -16,15 +16,17 @@ spec:
     securityContext:
       capabilities: {}
     volumeMounts:
-    - mountPath: /root/lvmt
+    - mountPath: /root/lvmtan
       name: data-lvm-host-1
     env:
     - name: BASDARD_PORT
       value: "40000"
     - name: BASDARD_CONFIG
       value: "lvm/lvm.moe-sim.conf"
-    - name: LVMT_RMQ
+    - name: LVM_RMQ
       value: "192.168.49.2"
+    - name: LVM_DEBUG
+      value: "yes"
   volumes:
   - hostPath:
       path: /lvm/lvmtan
