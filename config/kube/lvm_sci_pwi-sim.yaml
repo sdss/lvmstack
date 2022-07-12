@@ -19,7 +19,7 @@ metadata:
 spec:
   terminationGracePeriodSeconds: 0
   containers:
-  - image: ghcr.io/sdss/lvmpwi:0.0.10
+  - image: ghcr.io/sdss/lvmpwi:0.0.12
     name: lvm-sci-pwi
     ports:
     - containerPort: 5900
@@ -32,7 +32,7 @@ spec:
     volumeMounts:
     - mountPath: /dev
       name: dev-host-0
-    - mountPath: /root/lvmt
+    - mountPath: /root/lvm
       name: data-lvm-host-1
     env:
     - name: PWI_NAME
@@ -41,8 +41,10 @@ spec:
       value: "800x600"
     - name: PWI_SIMULATOR
       value: "true"
-    - name: LVM_RMQ_HOST
-      value: "192.168.49.2"
+    - name: LVM_ACTOR_ARGS
+      value: "--verbose --rmq_url=amqp://guest:guest@192.168.49.2:5672/"
+    - name: LVM_DEBUG
+      value: "yes"
   volumes:
   - name: dev-host-0
     hostPath:
@@ -50,7 +52,7 @@ spec:
       type: Directory
   - name: data-lvm-host-1
     hostPath:
-      path: /lvm/lvmpwi
+      path: /lvm
       type: Directory
 
     

@@ -35,8 +35,6 @@ spec:
       value: "--rmq_url=amqp://guest:guest@192.168.49.2:5672/ --verbose --simulate"
     - name: LVM_DEBUG
       value: "yes"
-    - name: RMQ_URL
-      value: "amqp://guest:guest@192.168.49.2:5672/"
 
   - name: lvm-sci-agp
     image: localhost/lvm_actor:latest
@@ -54,5 +52,3 @@ spec:
       value: "--rmq_url=amqp://guest:guest@192.168.49.2:5672/ --verbose"
     - name: LVM_DEBUG
       value: "yes"
-    - name: RMQ_URL
-      value: "amqp://guest:guest@192.168.49.2:5672/"
