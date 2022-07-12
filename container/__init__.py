@@ -22,10 +22,10 @@ import pexpect
 
 
 container_bin = "podman"
-lvmt_root = os.environ["PWD"]
-lvmt_image_source_local = "localhost"
-lvmt_image_source_remote = "ghcr.io/sdss"
-lvmt_image_name = "lvmtan"
+lvm_root = os.environ["PWD"]
+lvm_image_source_local = "localhost"
+lvm_image_source_remote = "ghcr.io/sdss"
+lvm_image_name = "lvmtan"
 
 default_basdard_test = "test.first.focus_stage"
 
@@ -48,32 +48,33 @@ def getXauthority():
 
 
 @click.command()
-@click.option("--lvmt_root", default=lvmt_root, type=str)
+@click.option("--lvm_root", default=lvm_root, type=str)
 @click.option("--use-cache/--no-cache", default=True)
-def build(lvmt_root: str, use_cache: bool):
-    tan_dockerfile = f"{lvmt_root}/container"
-    lvmt_image_fullbuild = "" if use_cache else " --no-cache"
+def build(lvm_root: str, use_cache: bool):
+    tan_dockerfile = f"{lvm_root}/container"
+    lvm_image_fullbuild = "" if use_cache else " --no-cache"
     print(
-        f"{container_bin} build --tag {lvmt_image_name}{lvmt_image_fullbuild} --rm {tan_dockerfile}"
+        f"{container_bin} build --tag {lvm_image_name}{lvm_image_fullbuild} --rm {tan_dockerfile}"
     )
-    build = f"{container_bin} build --tag {lvmt_image_name}{lvmt_image_fullbuild} --rm {tan_dockerfile}"
+    build = f"{container_bin} build --tag {lvm_image_name}{lvm_image_fullbuild} --rm {tan_dockerfile}"
     command = subprocess.run(shlex.split(build))
 
 
 @click.command()
-@click.option("--lvmt_root", default=lvmt_root, type=str)
+@click.option("--lvm_root", default=lvm_root, type=str)
+@click.option("--lvm_rmq", default=None, type=str)
 @click.option("--with-ui/--without-ui", default=True)
 @click.option("--with-hw/--without-hw", default=False)
 @click.option("--debug/--no-debug", "-d", default=False)
 @click.option("--kill/--no-kill", default=False)
 @click.option("--name", "-n", default=default_basdard_test, type=str)
-def start(name: str, with_ui: bool, with_hw: bool, lvmt_root: str, debug:bool, kill:bool):
-    if not subprocess.run(shlex.split(f"podman image exists {lvmt_image_source_local}/{lvmt_image_name}")).returncode:
-       lvmt_image = f"{lvmt_image_source_local}/{lvmt_image_name}"
+def start(name: str, with_ui: bool, with_hw: bool, lvm_root: str, lvm_rmq:str, debug:bool, kill:bool):
+    if not subprocess.run(shlex.split(f"podman image exists {lvm_image_source_local}/{lvm_image_name}")).returncode:
+       lvm_image = f"{lvm_image_source_local}/{lvm_image_name}"
     else:
-       if subprocess.run(shlex.split(f"podman image exists {lvmt_image_source_remote}/{lvmt_image_name}")).returncode:
-           subprocess.run(shlex.split(f"podman pull {lvmt_image_source_remote}/{lvmt_image_name}:latest"))
-       lvmt_image = f"{lvmt_image_source_remote}/{lvmt_image_name}"
+       if subprocess.run(shlex.split(f"podman image exists {lvm_image_source_remote}/{lvm_image_name}")).returncode:
+           subprocess.run(shlex.split(f"podman pull {lvm_image_source_remote}/{lvm_image_name}:latest"))
+       lvm_image = f"{lvm_image_source_remote}/{lvm_image_name}"
     
     if kill:
         subprocess.run(shlex.split(f"{container_bin} kill {name}"))
@@ -87,16 +88,19 @@ def start(name: str, with_ui: bool, with_hw: bool, lvmt_root: str, debug:bool, k
         if os.path.exists("/dev/dri"):
             run_base += " --device /dev/dri"
         name_ui = config(name, pstfx=".ui")
-        if os.path.exists(f"{lvmt_root}/config/{name_ui}"):
+        if os.path.exists(f"{lvm_root}/config/{name_ui}"):
             run_base += f" -e BASDARD_UI={name_ui}"
 
     print(debug)
     if debug:
-        run_base +=  f" -e TAN_DEBUG=true"
+        run_base +=  f" -e LVM_DEBUG=true"
+
+    if lvm_rmq:
+        run_base +=  f" -e LVM_RMQ={lvm_rmq}"
 
     run_with_hw = "-svr.conf" if with_hw else "-sim.conf"
-    run_tan = f"-v {lvmt_root}:/root/lvmt:Z -e BASDARD_CONFIG={config(name, pstfx = run_with_hw)}"
-    run = f"{container_bin} run {run_base} {run_tan} {lvmt_image}"
+    run_tan = f"-v {lvm_root}:/root/lvm:Z -e BASDARD_CONFIG={config(name, pstfx = run_with_hw)}"
+    run = f"{container_bin} run {run_base} {run_tan} {lvm_image}"
     print(run)
     child = pexpect.spawn(run)
     child.expect("Connected to")

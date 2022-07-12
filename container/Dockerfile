@@ -3,9 +3,9 @@ FROM ubuntu:20.04
 ## Get some karma ##
 MAINTAINER Florian Briegel, briegel@mpia.de
 
-# podman  build --tag ubuntu_lvmt_tan --rm lvmt_tan
+# podman  build --tag ubuntu_lvm_tan --rm lvm_tan
 
-# podman run -ti --rm --name lvmt_tan -e DISPLAY --network=host --ipc=host --device /dev/dri -v ~/.Xauthority:/root/.Xauthority:Z -v .:/root/lvmt:Z -P localhost/ubuntu_lvmt_tan
+# podman run -ti --rm --name lvm_tan -e DISPLAY --network=host --ipc=host --device /dev/dri -v ~/.Xauthority:/root/.Xauthority:Z -v .:/root/lvmt:Z -P localhost/ubuntu_lvm_tan
 
 RUN apt update -y && \
     apt install -y wget && \
@@ -29,10 +29,6 @@ RUN cd /root && \
     cp lvmtan/container/run-basdard.sh . && \
     rm -rf lvmtan
 
-
-
-WORKDIR /root/lvmt
-
-#COPY run-basdard.sh /root
+WORKDIR /root/lvm
 
 CMD ["/root/run-basdard.sh"]
