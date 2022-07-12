@@ -99,7 +99,7 @@ def start(name: str, with_ui: bool, with_hw: bool, lvm_root: str, lvm_rmq:str, d
         run_base +=  f" -e LVM_RMQ={lvm_rmq}"
 
     run_with_hw = "-svr.conf" if with_hw else "-sim.conf"
-    run_tan = f"-v {lvm_root}:/root/lvm:Z -e BASDARD_CONFIG={config(name, pstfx = run_with_hw)}"
+    run_tan = f"-v {lvm_root}:/root/{os.path.basename(lvm_root)}:Z -e BASDARD_CONFIG={config(name, pstfx = run_with_hw)}"
     run = f"{container_bin} run {run_base} {run_tan} {lvm_image}"
     print(run)
     child = pexpect.spawn(run)

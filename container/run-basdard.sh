@@ -6,7 +6,7 @@ BASDARD_ADAPTER="[NAME=$BASDARD_NAME,PORT=$BASDARD_PORT]"
 
 
 LVM_ROOT=$HOME
-LVM_TAN_PATH=$(ls -1 -d ${LVM_ROOT}/lvm/lvmtan ${LVM_ROOT}/lvm 2> /dev/null)
+LVM_TAN_PATH=$(ls -1 -d ${LVM_ROOT}/lvm/lvmtan ${LVM_ROOT}/lvmtan 2> /dev/null)
 
 echo $LVM_TAN_PATH
 
@@ -21,7 +21,7 @@ fi
 INSROOT_ETC_PATH=$LVM_TAN_PATH/config:$INSROOT_ETC_PATH
 echo $LVM_DEBUG
 if [ $LVM_DEBUG ]; then 
-    PYTHONPATH=$(ls -1 -d ${LVM_ROOT}/lvm/*/python ${LVM_ROOT}/lvmtan/python 2>/dev/null | tr "\n" ":")
+    PYTHONPATH=$(ls -1 -d ${LVM_ROOT}/lvm/*/python ${LVM_ROOT}/lvmtan/python 2>/dev/null | tr "\n" ":"):$PYTHONPATH
 fi
 QT_PLUGIN_PATH=$LVM_TAN_PATH/config:$QT_PLUGIN_PATH
 

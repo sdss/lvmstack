@@ -29,6 +29,6 @@ RUN cd /root && \
     cp lvmtan/container/run-basdard.sh . && \
     rm -rf lvmtan
 
-WORKDIR /root/lvm
+#WORKDIR /root/lvm
 
 CMD ["/root/run-basdard.sh"]
