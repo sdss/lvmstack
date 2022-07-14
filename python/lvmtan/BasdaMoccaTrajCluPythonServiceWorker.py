@@ -44,14 +44,25 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
     def _status(self, reachable=True):
         return {**BasdaMoccaXCluPythonServiceWorker._status(self), **{"CurrentTime": self.service.getCurrentTime() if reachable else "Unknown"}}
 
-    async def slewTick(self, delta_time):
+    async def slewTick(self, command, delta_time):
         while True:
             try:
-               position = math.degrees(self.sid.fieldAngle(self.geoloc, self.point, None))
-#               U9_LOG(f"field angle {position} deg")
-               self.service.moveAbsolute(position, "DEG")
+                position = math.degrees(self.sid.fieldAngle(self.geoloc, self.point, None))
+                U9_LOG(f"field angle {position} deg")
+                self.service.moveAbsolute(position, "DEG")
+                command.actor.write(
+                     "i", 
+                     { 
+                        "Position": self.service.getPosition(),
+                        "DeviceEncoder": {"Position": self.service.getDeviceEncoderPosition("STEPS"), "Unit": "STEPS"},
+                        "Velocity": self.service.getVelocity(),
+                        "AtHome": self.service.isAtHome(),
+                        "AtLimit": self.service.isAtLimit(),
+                     }
+                )
+                     
             except Exception as e:
-                command.fail(error=e)
+                 command.fail(error=e)
 
             await asyncio.sleep(delta_time)
 
@@ -104,7 +115,7 @@ class BasdaMoccaTrajCluPythonServiceWorker(BasdaMoccaXCluPythonServiceWorker):
             loop = asyncio.get_event_loop()
             if self.task:
                 self.task.cancel()
-            self.task = loop.create_task(self.slewTick(delta_time))
+            self.task = loop.create_task(self.slewTick(command, delta_time))
         except Exception as e:
             command.fail(error=e)
 
