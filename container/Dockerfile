@@ -31,4 +31,6 @@ RUN cd /root && \
 
 #WORKDIR /root/lvm
 
+COPY ./container/run-basdard.sh .
+
 CMD ["/root/run-basdard.sh"]

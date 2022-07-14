@@ -53,10 +53,8 @@ def getXauthority():
 def build(lvm_root: str, use_cache: bool):
     tan_dockerfile = f"{lvm_root}/container"
     lvm_image_fullbuild = "" if use_cache else " --no-cache"
-    print(
-        f"{container_bin} build --tag {lvm_image_name}{lvm_image_fullbuild} --rm {tan_dockerfile}"
-    )
-    build = f"{container_bin} build --tag {lvm_image_name}{lvm_image_fullbuild} --rm {tan_dockerfile}"
+    build = f"{container_bin} build --tag {lvm_image_name}{lvm_image_fullbuild} --rm --file {tan_dockerfile}/Dockerfile ."
+    print(build)
     command = subprocess.run(shlex.split(build))
 
 
