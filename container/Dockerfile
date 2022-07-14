@@ -29,7 +29,9 @@ RUN cd /root && \
     cp lvmtan/container/run-basdard.sh . && \
     rm -rf lvmtan
 
-#WORKDIR /root/lvm
+EXPOSE 40000/tcp
+
+WORKDIR /root
 
 COPY ./container/run-basdard.sh .
 
