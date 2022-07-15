@@ -20,7 +20,7 @@ class Focus():
         self.telsubsys = telsubsys
         
         # TODO: should go somewhere in a subclass
-        self.logger =  = get_logger("lvm_tel_focus")
+        self.logger = get_logger("lvm_tel_focus")
         self.logger.setLevel(level)
 
     async def offset(self, offset):
