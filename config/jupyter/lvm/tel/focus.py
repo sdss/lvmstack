@@ -21,7 +21,7 @@ class Focus():
         
         # TODO: should go somewhere in a subclass
         self.logger = get_logger("lvm_tel_focus")
-        self.logger.setLevel(level)
+        self.logger.sh.setLevel(level)
 
     async def offset(self, offset):
         try:
