@@ -97,6 +97,10 @@ For minikube a container or virtual machine has to be selected, before proceedin
     # minikube image load localhost_lvm_actor_latest.img
     
     minikube image build --tag localhost/lvm_jupyter ${LVM_ROOT}/config/container/jupyter/
+    # podman build --tag localhost/lvm_jupyter ${LVM_ROOT}/config/container/jupyter/
+    # podman save localhost/lvm_jupyter:latest -o localhost_lvm_jupyter_latest.img
+    # minikube image load localhost_lvm_jupyter_latest.img
+
     minikube image ls | grep localhost
 
     # minikube image build --tag localhost/lvm_actor:$(date +"%y%m%d") ${LVM_ROOT}/config/container/actor/
