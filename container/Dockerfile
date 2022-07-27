@@ -20,7 +20,9 @@ RUN apt update -y
 RUN apt install -y sudo subversion git lsof
 
 RUN apt update -y
-RUN apt install -y python3-setuptools python3-pip python3-toml git
+RUN apt install -y python3-setuptools python3-pip python3-toml \
+        git tightvncserver fluxbox
+
 RUN pip3 install numpy astropy sdss-clu
 RUN apt install -y packagekit-gtk3-module python3-opencv tan-basda-mocca
 RUN cd /root && \

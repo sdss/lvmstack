@@ -30,7 +30,19 @@ test -n "$BASDARD_UI" && BASDARD_UI=+UI=$BASDARD_UI
 echo $BASDARD_NAME
 echo $BASDARD_UI
 
-test -n "${DISPLAY}" && (sleep 0.3 && niceQUI --XXX.CONFIG:Endpoint=${BASDARD_ADAPTER}${BASDARD_UI} --LOGGER.LEVEL=INFO) &
+
+start_niceui() {
+   (sleep 0.3 && niceQUI --XXX.CONFIG:Endpoint=${BASDARD_ADAPTER}${BASDARD_UI} --LOGGER.LEVEL=INFO) &
+}
+
+if [ $VNC_GEOM ]; then
+    Xvnc :0 -geometry $VNC_GEOM &
+    export DISPLAY=:0
+    fluxbox &
+    start_niceui
+elif [ ${DISPLAY} ]; then
+    start_niceui
+fi
 
 basdard --CONFIG=${BASDARD_CONFIG} --ADAPTER=${BASDARD_ADAPTER} --CLU.RABBITMQ.CONN:MapStringString=${RMQ_CONNECTION} --LOGGER.LEVEL=INFO
 
