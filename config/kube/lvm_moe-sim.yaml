@@ -13,6 +13,8 @@ spec:
     ports:
     - containerPort: 40000
       hostPort: 40000
+    - containerPort: 5900
+      hostPort: 5905
     securityContext:
       capabilities: {}
     volumeMounts:
@@ -23,6 +25,10 @@ spec:
       value: "40000"
     - name: BASDARD_CONFIG
       value: "lvm/lvm.moe-sim.conf"
+    - name: BASDARD_UI
+      value: "lvm/lvm.all.ui"
+    - name: VNC_GEOM
+      value: "860x900"
     - name: LVM_RMQ
       value: "192.168.49.2"
     - name: LVM_DEBUG

@@ -120,7 +120,7 @@ For minikube a container or virtual machine has to be selected, before proceedin
     kubectl create -f $LVM_ROOT/config/kube/lvm_moe-sim.yaml 
 
     kubectl create -f $LVM_ROOT/config/kube/lvm_nps-sim.yaml
-     
+
     kubectl create -f $LVM_ROOT/config/kube/lvm_ieb.yaml
     kubectl create -f $LVM_ROOT/config/kube/lvm_ecp.yaml
     kubectl create -f $LVM_ROOT/config/kube/lvm_scp.yaml # fails
