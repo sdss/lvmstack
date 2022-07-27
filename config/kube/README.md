@@ -148,13 +148,19 @@ For minikube a container or virtual machine has to be selected, before proceedin
 
 ## Test UIs
 
+    # PWI4 UI
     vncviewer $(minikube ip):1
     vncviewer $(minikube ip):2
     vncviewer $(minikube ip):3
     vncviewer $(minikube ip):4
+
+    # Simple lvmcam UI sci
     python3.9 $LVM_ROOT/lvmcam/utils/simple_camui.py -c lvm.sci.agcam -k lvm.sci.km -t lvm.sci.pwi -H $(minikube ip)
+
+    # TwiceAsNice motor UI
+    vncviewer $(minikube ip):4
     # TwiceAsNice has to be installed.
-    niceQUI --MOE.CONFIG:Endpoint=[NAME=lvm.moe-sim,HOST=$(minikube ip),PORT=40000]+UI=$LVM_ROOT/lvmtan/config/lvm/lvm.all.ui 
+    # niceQUI --MOE.CONFIG:Endpoint=[NAME=lvm.moe-sim,HOST=$(minikube ip),PORT=40000]+UI=$LVM_ROOT/lvmtan/config/lvm/lvm.all.ui
 
 ## Stopping containers
 
