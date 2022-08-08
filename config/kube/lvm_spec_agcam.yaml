@@ -6,7 +6,7 @@ metadata:
     app: lvm-spec-agcam
   name: lvm-spec-agcam
   annotations:
-    k8s.v1.cni.cncf.io/networks: host-device
+    k8s.v1.cni.cncf.io/networks: ipvlan-def
 spec:
   terminationGracePeriodSeconds: 0
   containers:
