@@ -3,36 +3,34 @@ kind: Pod
 metadata:
   creationTimestamp: "2022-06-08T14:35:32Z"
   labels:
-    app: lvm-spec-agp
-  name: lvm-spec-agp
-  annotations:
-    k8s.v1.cni.cncf.io/networks: ipvlan-def
+    app: lvm-spec-agcam
+  name: lvm-spec-agcam
+annotations:
+    k8s.v1.cni.cncf.io/networks: host-device
 spec:
   terminationGracePeriodSeconds: 0
   containers:
   - image: localhost/lvm_actor:latest
-    name: lvm-spec-agp
+    name: lvm-spec-agcam
     securityContext:
       capabilities: {}
     volumeMounts:
-    - mountPath: /root/lvmagp
+    - mountPath: /root/lvm
       name: data-lvm-host-1
     - mountPath: /data
       name: data-lvm-host-2
     env:
     - name: LVM_ACTOR
-      value: "lvmagp"
+      value: "lvmcam"
     - name: LVM_ACTOR_CONFIG
-      value: "lvm.spec.agp"
-    - name: LVM_ACTOR_ARGS
-      value: "--verbose"
+      value: "lvm.spec.agcam"
     - name: LVM_DEBUG
       value: "yes"
     - name: LVM_RMQ_HOST
       value: "192.168.49.2"
   volumes:
   - hostPath:
-      path: /lvm/lvmagp
+      path: /lvm
       type: Directory
     name: data-lvm-host-1
   - hostPath:

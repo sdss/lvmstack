@@ -107,7 +107,7 @@ For minikube a container or virtual machine has to be selected, before proceedin
 
     # minikube image rm localhost/lvm_actor:latest
 
-## Start lvm containers   
+## Start lvm containers in simulation
 
     # Check address 192.168.49.2 with 'minikube ip', before proceeding, please check that rabbitmq dashboard is reachable.
 
@@ -145,6 +145,12 @@ For minikube a container or virtual machine has to be selected, before proceedin
     # kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_agp.yaml
     # kubectl create -f $LVM_ROOT/config/kube/lvm_skye_agp.yaml
     # kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agp.yaml
+
+    
+## Start lvm containers with real hardware
+
+    kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agcam.yaml
+
 
 ## Test UIs
 
