@@ -1,8 +1,7 @@
-# 
+# Create bridge to ethernet if
 [Four ways to connect a docker](http://blog.oddbit.com/post/2014-08-11-four-ways-to-connect-a-docker/)
 
 ## CentOS
-
 ### /etc/sysconfig/network-scripts/ifcfg-br0DEVICE=br0
     NM_CONTROLLED="no"
     TYPE=Bridge
@@ -11,7 +10,6 @@
     BOOTPROTO=none
     ONBOOT=yes
     DELAY=0
-
 ### /etc/sysconfig/network-scripts/ifcfg-eno2
     DEVICE=eno2
     NM_CONTROLLED="no"
