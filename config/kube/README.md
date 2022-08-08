@@ -70,6 +70,10 @@ For minikube a container or virtual machine has to be selected, before proceedin
     # http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
 
     
+## prerequisits for ag cameras:
+
+    $LVM_ROOT/config/config/kube/network/multus.sh
+
 ## Creating namespaces
 
     kubectl apply -f $LVM_ROOT/config/kube/namespace/lvm_sys-ns.yaml
@@ -115,7 +119,7 @@ For minikube a container or virtual machine has to be selected, before proceedin
     kubectl create -n lvm-sys -f $LVM_ROOT/config/kube/lvm_jupyter.yaml
 
     # lvmscraper: http://192.168.49.2:8085/
-    kubectl create -n lvm-sys -f $LVM_ROOT/config/kube/lvm_scraper.yaml
+    # kubectl create -n lvm-sys -f $LVM_ROOT/config/kube/lvm_scraper.yaml
 
     kubectl create -f $LVM_ROOT/config/kube/lvm_moe-sim.yaml 
 
@@ -149,7 +153,10 @@ For minikube a container or virtual machine has to be selected, before proceedin
     
 ## Start lvm containers with real hardware
 
-    kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agcam.yaml
+    kubectl delete pod lvm-spec-ag
+    kubectl create -f $LVM_ROOT/config/kube/lvm_spec_ag.yaml
+
+    # kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agcam.yaml
 
 
 ## Test UIs
