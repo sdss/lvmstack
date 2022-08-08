@@ -5,7 +5,7 @@ metadata:
   labels:
     app: lvm-spec-agcam
   name: lvm-spec-agcam
-annotations:
+  annotations:
     k8s.v1.cni.cncf.io/networks: host-device
 spec:
   terminationGracePeriodSeconds: 0
