@@ -5,6 +5,8 @@ metadata:
   labels:
     app: lvm-spec-ag
   name: lvm-spec-ag
+  annotations:
+    k8s.v1.cni.cncf.io/networks: ipvlan-def
 spec:
   terminationGracePeriodSeconds: 0
 
