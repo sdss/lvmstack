@@ -11,8 +11,8 @@ PYTHON=/usr/bin/python3
 LVM_ROOT=$HOME
 
 if [ ${LVM_DEBUG} ]; then 
-  LVM_ACTOR_PATH=$(ls -1 -d ${LVM_ROOT}/lvm/${LVM_ACTOR} ${LVM_ROOT}/${LVM_ACTOR} 2> /dev/null)/python/${LVM_ACTOR}
-  export PYTHONPATH=$(ls -1 -d ${LVM_ROOT}/lvm/*/python ${LVM_ROOT}/${LVM_ACTOR}/python 2>/dev/null | tr "\n" ":")
+  LVM_ACTOR_PATH=$(ls -1 -d ${LVM_ROOT}/lvm/${LVM_ACTOR} ${LVM_ROOT}/${LVM_ACTOR}2> /dev/null)/python/${LVM_ACTOR}
+  export PYTHONPATH=$(ls -1 -d ${LVM_ROOT}/lvm/*/python ${LVM_ROOT}/lvm/basecam ${LVM_ROOT}/lvm/araviscam ${LVM_ROOT}/${LVM_ACTOR}/python 2>/dev/null | tr "\n" ":")
 else
   LVM_ACTOR_PATH=$(${PYTHON} -c "import ${LVM_ACTOR} as _; print(_.__path__[0])")
 fi
