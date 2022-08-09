@@ -11,7 +11,7 @@
 	url = https://github.com/sdss/basecam
 	branch = main
 [submodule "araviscam"]
-	path = aravsicam
+	path = araviscam
 	url = https://github.com/sdss/araviscam
 	branch = main
 [submodule "skymakercam"]
