@@ -19,7 +19,7 @@ metadata:
 spec:
   terminationGracePeriodSeconds: 0
   containers:
-  - image: ghcr.io/sdss/lvmpwi:0.0.12
+  - image: ghcr.io/sdss/lvmpwi:latest
     name: lvm-skye-pwi
     ports:
     - containerPort: 5900
