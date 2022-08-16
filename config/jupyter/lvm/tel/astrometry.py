@@ -35,7 +35,7 @@ class Astrometry:
             
             # do some astrometry :-]
             ra_offset, dec_offset = 0.2, 0.3
-            refocus_offset = -42
+            refocus_offset = -0.2
             km_offset = 0.0
             
             return ra_offset, dec_offset, refocus_offset, km_offset
