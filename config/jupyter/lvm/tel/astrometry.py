@@ -24,7 +24,7 @@ class Astrometry:
         
         # TODO: should go somewhere in a subclass
         logger = get_logger("lvm_tel_astrometry")
-        logger.setLevel(level)
+        logger.sh.setLevel(level)
         
         try:
             rc = await telsubsys.agc.expose(exptime)

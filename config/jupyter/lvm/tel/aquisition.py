@@ -25,13 +25,13 @@ async def aquisition(telsubsys, ra:Angle, dec:Angle, exptime:float, level = INFO
     try:
         # TODO: should go somewhere in a subclass
         logger = get_logger("lvm_tel_aquisition")
-        logger.setLevel(level)
+        logger.sh.setLevel(level)
         
         focus_temperature = 42 # TODO: get temperature from somewhere.
         
         focus = Focus(telsubsys)
 
-        logger.debug(f"move tel/km {ra}:{dec} & temp2foc {focus_temperature}")
+        logger.debug(f"move tel/km {ra.hour}h:{dec.deg}d & temp2foc {focus_temperature}")
 
         await invoke(
             telsubsys.km.slewStart(ra.hour, dec.deg), 
@@ -39,7 +39,7 @@ async def aquisition(telsubsys, ra:Angle, dec:Angle, exptime:float, level = INFO
             focus.nominal()
         )
 
-        logger.debug(f"fake astrometry at radec {ra}:{dec}")
+        logger.debug(f"fake astrometry at radec {ra.hour}h:{dec.deg}d")
 
         ra_offset, dec_offset, focus_offset, km_offset = await Astrometry.calc(telsubsys, ra, dec, exptime)
 
