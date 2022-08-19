@@ -115,7 +115,7 @@ def main():
 
     args = parser.parse_args()
     
-    telsubsys = lvm.execute(lvm.from_string(args.telsubsys))
+    telsubsys = lvm.execute(lvm.from_string(args.telsubsys).start())
 
     lvm.execute(calibrate(telsubsys, args.exptime, args.offset, args.axis_error), verbose=args.verbose)
 

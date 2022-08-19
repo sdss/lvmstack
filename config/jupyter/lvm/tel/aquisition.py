@@ -65,7 +65,7 @@ def main(verbose, telsubsys, exptime, ra, dec):
     import asyncio
 
     async def call(verbose, telsubsys, exptime, ra, dec):
-        telsubsys = await lvm.from_string(telsubsys)
+        telsubsys = await lvm.from_string(telsubsys).start()
         await aquisition(telsubsys, ra, dec, exptime, level = DEBUG if args.verbose else INFO)
 
     loop = asyncio.get_event_loop()

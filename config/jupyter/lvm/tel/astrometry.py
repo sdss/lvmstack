@@ -55,7 +55,7 @@ async def main():
 
     args = parser.parse_args()
     
-    telsubsys = await lvm.from_string(args.telsubsys)
+    telsubsys = await lvm.from_string(args.telsubsys).start()
 
     await Astrometry.calc(telsubsys, args.ra, args.dec, args.exptime, level = DEBUG if args.verbose else INFO)
 
