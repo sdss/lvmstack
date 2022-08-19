@@ -14,6 +14,8 @@ from sdsstools import get_logger
 from math import nan
 from astropy.io import fits
 
+from astropy import units as u
+from astropy.coordinates import SkyCoord, Angle
 
 # TODO: put some real astronomy in here.
 
@@ -24,7 +26,7 @@ class Astrometry:
         
         # TODO: should go somewhere in a subclass
         logger = get_logger("lvm_tel_astrometry")
-        logger.setLevel(level)
+        logger.sh.setLevel(level)
         
         try:
             rc = await telsubsys.agc.expose(exptime)
@@ -33,7 +35,7 @@ class Astrometry:
             
             # do some astrometry :-]
             ra_offset, dec_offset = 0.2, 0.3
-            refocus_offset = -42
+            refocus_offset = -0.2
             km_offset = 0.0
             
             return ra_offset, dec_offset, refocus_offset, km_offset
@@ -50,14 +52,14 @@ async def main():
     parser.add_argument("-v", '--verbose', action='store_true', help="print some notes to stdout")
     parser.add_argument("-t", '--telsubsys', type=str, default="sci", help="Telescope subsystem: sci, skye, skyw or spec")
     parser.add_argument("-e", '--exptime', type=float, default=5.0, help="Expose for for exptime seconds")
-    parser.add_argument("-r", '--ra', help="RA J2000 in hours")
-    parser.add_argument("-d", '--dec', help="DEC J2000 in degrees")
+    parser.add_argument("-r", '--ra', help="RA J2000")
+    parser.add_argument("-d", '--dec', help="DEC J2000")
 
     args = parser.parse_args()
     
     telsubsys = await lvm.from_string(args.telsubsys).start()
 
-    await Astrometry.calc(telsubsys, args.ra, args.dec, args.exptime, level = DEBUG if args.verbose else INFO)
+    await Astrometry.calc(telsubsys, Angle(args.ra), Angle(args.dec), args.exptime, level = DEBUG if args.verbose else INFO)
 
 
 if __name__ == '__main__':

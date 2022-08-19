@@ -12,31 +12,34 @@ from lvmtipo.actors import lvm
 from logging import DEBUG, INFO
 from sdsstools import get_logger
 
-from .focus import Focus
+from astropy import units as u
+from astropy.coordinates import SkyCoord, Angle
+
+from lvmagp.focus import Focus
 from .astrometry import Astrometry
 
 import click
 
 
-async def aquisition(telsubsys, ra, dec, exptime, level = INFO):
+async def aquisition(telsubsys, ra:Angle, dec:Angle, exptime:float, level = INFO):
     try:
         # TODO: should go somewhere in a subclass
         logger = get_logger("lvm_tel_aquisition")
-        logger.setLevel(level)
+        logger.sh.setLevel(level)
         
         focus_temperature = 42 # TODO: get temperature from somewhere.
         
         focus = Focus(telsubsys)
 
-        logger.debug(f"move tel/km {ra}:{dec} & temp2foc {focus_temperature}")
+        logger.debug(f"move tel/km {ra.hour}h:{dec.deg}d & temp2foc {focus_temperature}")
 
         await invoke(
-            telsubsys.km.slewStart(ra, dec), 
-            telsubsys.pwi.gotoRaDecJ2000(ra, dec),
-            focus.nominal(focus_temperature)
+            telsubsys.km.slewStart(ra.hour, dec.deg), 
+            telsubsys.pwi.gotoRaDecJ2000(ra.hour, dec.deg),
+            focus.nominal()
         )
 
-        logger.debug(f"fake astrometry at radec {ra}:{dec}")
+        logger.debug(f"fake astrometry at radec {ra.hour}h:{dec.deg}d")
 
         ra_offset, dec_offset, focus_offset, km_offset = await Astrometry.calc(telsubsys, ra, dec, exptime)
 
@@ -59,14 +62,14 @@ async def aquisition(telsubsys, ra, dec, exptime, level = INFO):
 @click.option('-v', '--verbose', count=True, help='Debug mode. Use additional v for more details.')
 @click.option('-t', '--telsubsys', default='sci', help='Telescope subsystem: sci, skye, skyw or spec.')
 @click.option('-e', '--exptime', default=5.0, help='Expose for for exptime seconds.')
-@click.option('-r', '--ra', type=float, help='RA J2000 in hours.')
-@click.option('-d', '--dec', type=float, help='DEC J2000 in degrees.')
+@click.option('-r', '--ra', help='RA J2000.')
+@click.option('-d', '--dec', help='DEC J2000.')
 def main(verbose, telsubsys, exptime, ra, dec):
     import asyncio
 
     async def call(verbose, telsubsys, exptime, ra, dec):
         telsubsys = await lvm.from_string(telsubsys).start()
-        await aquisition(telsubsys, ra, dec, exptime, level = DEBUG if args.verbose else INFO)
+        await aquisition(telsubsys, Angle(ra), Angle(dec), exptime, level = DEBUG if args.verbose else INFO)
 
     loop = asyncio.get_event_loop()
     loop.run_until_complete(call())

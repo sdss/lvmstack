@@ -35,12 +35,13 @@ For minikube a container or virtual machine has to be selected, before proceedin
     git clone --recurse-submodules -j8 --remote-submodules https://github.com/sdss/lvm.git
     cd lvm
     
-    # Define LVM root - IMPORTANT: this will bemounted into the container !
+    # Define LVM root - IMPORTANT: this will be mounted into the container !
     export LVM_ROOT=$PWD
 
     # for now we do store persistent data here:
     mkdir -p ${LVM_ROOT}/var/data && chmod 777 ${LVM_ROOT}/var/data
-    mkdir -p ${LVM_ROOT}/var/jupyter && chmod 777 ${LVM_ROOT}/var/jupyter
+    mkdir -p ${LVM_ROOT}/var/jupyter/work && chmod 777 ${LVM_ROOT}/var/jupyter/work
+    mkdir -p ${LVM_ROOT}/var/jupyter/python && chmod 777 ${LVM_ROOT}/var/jupyter/python
     mkdir -p ${LVM_ROOT}/var/rabbitmq && chmod 777 ${LVM_ROOT}/var/rabbitmq
 
 ## Start minikube
@@ -194,6 +195,8 @@ For minikube a container or virtual machine has to be selected, before proceedin
     
     # pod with multiple containers
     kubectl exec -ti lvm-sci-ag-sim -c lvm-sci-agp -- bash -l
+    
+    kubectl exec -ti -n lvm-sys lvm-jupyter -- bash -l
 
 
 ## Access minikube container
