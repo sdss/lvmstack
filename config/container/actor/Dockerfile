@@ -27,7 +27,7 @@ RUN pip3 install sdss-lvmscraper \
 
 WORKDIR /root
 
-COPY ./config/container/run-actor.sh .
+COPY ./config/container/actor/run-actor.sh .
 
 CMD ["/root/run-actor.sh"]
 
