@@ -58,15 +58,16 @@ For minikube a container or virtual machine has to be selected, before proceedin
     # check that /lvm is mounted correctly !
     minikube ssh -- ls -l /lvm
 
-    
     minikube addons enable metrics-server
     minikube addons enable dashboard
     minikube addons list
 
     minikube ip
     
-    # optional dashboard
-    minikube dashboard --url&
+    ## optional dashboard
+    # minikube dashboard --url&
+    kubectl create -f /home/briegel/workspace/lvm/config/kube/misc/minikube-dashboard.yaml
+
     kubectl proxy&
     # http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
 
