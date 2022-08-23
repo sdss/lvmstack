@@ -19,8 +19,8 @@ metadata:
 spec:
   terminationGracePeriodSeconds: 0
   containers:
-  - image: ghcr.io/sdss/lvmpwi:latest
-    name: lvm-skyw-pwi
+  - name: lvm-skyw-pwi
+    image: ghcr.io/sdss/lvmpwi:latest
     ports:
     - containerPort: 5900
       hostPort: 5903

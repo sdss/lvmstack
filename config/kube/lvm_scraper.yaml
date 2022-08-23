@@ -8,8 +8,8 @@ metadata:
 spec:
   terminationGracePeriodSeconds: 0
   containers:
-  - image: localhost/lvm_actor:latest
-    name: lvm-scraper
+  - name: lvm-scraper
+    image: ghcr.io/sdss/lvm_actor:latest
     ports:
     - containerPort: 8085
       hostPort: 8085

@@ -10,8 +10,8 @@ metadata:
 spec:
   terminationGracePeriodSeconds: 0
   containers:
-  - image: localhost/lvm_actor:latest
-    name: lvm-spec-agcam
+  - name: lvm-spec-agcam
+    image: ghcr.io/sdss/lvm_actor:latest
     securityContext:
       capabilities: {}
     volumeMounts:

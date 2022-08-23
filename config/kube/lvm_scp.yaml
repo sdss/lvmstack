@@ -10,9 +10,8 @@ metadata:
 spec:
   terminationGracePeriodSeconds: 3
   containers:
-  - image: localhost/lvm_actor:latest
-    name: lvm-scp
-    imagePullPolicy: Never
+  - name: lvm-scp
+    image: ghcr.io/sdss/lvm_actor:latest
     securityContext:
       capabilities: {}
     volumeMounts:

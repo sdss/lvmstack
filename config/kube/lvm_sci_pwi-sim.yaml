@@ -1,4 +1,3 @@
-
 # Save the output of this file and use kubectl create -f to import
 # it into Kubernetes.
 #
@@ -20,8 +19,8 @@ metadata:
 spec:
   terminationGracePeriodSeconds: 0
   containers:
-  - image: ghcr.io/sdss/lvmpwi:latest
-    name: lvm-sci-pwi
+  - name: lvm-sci-pwi
+    image: ghcr.io/sdss/lvmpwi:latest
     ports:
     - containerPort: 5900
       hostPort: 5901

@@ -22,7 +22,7 @@ spec:
   
   containers:
   - name: lvm-spec-agcam
-    image: localhost/lvm_actor:latest
+    image: ghcr.io/sdss/lvm_actor:latest
     volumeMounts:
     - mountPath: /root/lvm
       name: data-lvm-host-1
@@ -39,7 +39,7 @@ spec:
       value: "yes"
 
   - name: lvm-spec-agp
-    image: localhost/lvm_actor:latest
+    image: ghcr.io/sdss/lvm_actor:latest
     volumeMounts:
     - mountPath: /root/lvm
       name: data-lvm-host-1
