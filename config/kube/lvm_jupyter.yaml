@@ -19,7 +19,8 @@ spec:
   - args:
     - start-notebook.sh
     - --LabApp.token=''
-    image: localhost/lvm_jupyter:latest
+#    image: localhost/lvm_jupyter:latest
+    image: ghcr.io/sdss/lvm_jupyter:latest
     name: lvm-jupyter
     ports:
     - containerPort: 8888
