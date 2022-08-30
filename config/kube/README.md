@@ -49,6 +49,7 @@ For minikube a container or virtual machine has to be selected, before proceedin
     # check memory and cpu numbers
     minikube config set memory 16384
     minikube config set cpus 2
+    
     minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s 
     
     # minikube start --mount --mount-string="$LVM_ROOT:/lvm" --extra-config=kubelet.housekeeping-interval=10s --memory=16384 --cpus=2 
@@ -66,12 +67,13 @@ For minikube a container or virtual machine has to be selected, before proceedin
     
     ## optional dashboard
     # minikube dashboard --url&
-    kubectl create -f /home/briegel/workspace/lvm/config/kube/misc/minikube-dashboard.yaml
+    kubectl create -f $LVM_ROOT/config/kube/extra/minikube-dashboard.yaml
 
     kubectl proxy&
     # http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
 
-    
+   
+
 ## prerequisits for GigE ag cameras (Optional)
 
     # check script if the network interface and ip net is correct
