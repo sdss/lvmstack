@@ -97,6 +97,8 @@ For minikube a container or virtual machine has to be selected, before proceedin
 
 ## Build containers into minikube (optional)
 
+    # containers for lvm_jupyter and lvm_actor are on github
+
     # https://minikube.sigs.k8s.io/docs/commands/image/#minikube-image-build
     # https://minikube.sigs.k8s.io/docs/handbook/pushing/
 
@@ -111,7 +113,7 @@ For minikube a container or virtual machine has to be selected, before proceedin
     # podman save localhost/lvm_jupyter:latest -o localhost_lvm_jupyter_latest.img
     # minikube image load localhost_lvm_jupyter_latest.img
 
-    minikube image ls | grep localhost
+    # minikube image ls | grep localhost
 
     # minikube image build --tag localhost/lvm_actor:$(date +"%y%m%d") ${LVM_ROOT}/config/container/actor/
 
@@ -122,47 +124,36 @@ For minikube a container or virtual machine has to be selected, before proceedin
     # Check address 192.168.49.2 with 'minikube ip', before proceeding, please check that rabbitmq dashboard is reachable.
 
     # jupyter: http://192.168.49.2:8082
-    kubectl create -n lvm-sys -f $LVM_ROOT/config/kube/lvm_jupyter.yaml
+    kubectl create -n lvm-sys -f $LVM_ROOT/config/kube/lvm-jupyter.yaml
 
     # lvmscraper: http://192.168.49.2:8085/
-    # kubectl create -n lvm-sys -f $LVM_ROOT/config/kube/lvm_scraper.yaml
+    # kubectl create -n lvm-sys -f $LVM_ROOT/config/kube/lvm-scraper.yaml
 
-    kubectl create -f $LVM_ROOT/config/kube/lvm_moe-sim.yaml 
+    kubectl create -f $LVM_ROOT/config/kube/lvm-moe-sim.yaml 
 
-    kubectl create -f $LVM_ROOT/config/kube/lvm_nps-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm-nps-sim.yaml
 
-    kubectl create -f $LVM_ROOT/config/kube/lvm_ieb.yaml
-    kubectl create -f $LVM_ROOT/config/kube/lvm_ecp.yaml
-    kubectl create -f $LVM_ROOT/config/kube/lvm_scp.yaml # fails
+    kubectl create -f $LVM_ROOT/config/kube/lvm-ieb.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm-ecp.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm-scp.yaml # fails
 
-    kubectl create -f $LVM_ROOT/config/kube/lvm_sci_pwi-sim.yaml
-    kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_pwi-sim.yaml
-    kubectl create -f $LVM_ROOT/config/kube/lvm_skye_pwi-sim.yaml
-    kubectl create -f $LVM_ROOT/config/kube/lvm_spec_pwi-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm-sci-pwi-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm-skyw-pwi-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm-skye-pwi-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm-spec-pwi-sim.yaml
 
-    kubectl create -f $LVM_ROOT/config/kube/lvm_sci_ag-sim.yaml
-    kubectl create -f $LVM_ROOT/config/kube/lvm_skyw_ag-sim.yaml
-    kubectl create -f $LVM_ROOT/config/kube/lvm_skye_ag-sim.yaml
-    kubectl create -f $LVM_ROOT/config/kube/lvm_spec_ag-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm-sci-ag-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm-skyw-ag-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm-skye-ag-sim.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm-spec-ag-sim.yaml
     
-    # lvmagp & lvmcam as seperate pods (optional)
-    # kubectl create -f $LVM_ROOT/config/kube/ag_seperated/lvm_sci_agcam-sim.yaml
-    # kubectl create -f $LVM_ROOT/config/kube/ag_seperated/lvm_skyw_agcam-sim.yaml
-    # kubectl create -f $LVM_ROOT/config/kube/ag_seperated/lvm_skye_agcam-sim.yaml
-    # kubectl create -f $LVM_ROOT/config/kube/ag_seperated/lvm_spec_agcam-sim.yaml
-
-    # kubectl create -f $LVM_ROOT/config/kube/ag_seperated/lvm_sci_agp.yaml
-    # kubectl create -f $LVM_ROOT/config/kube/ag_seperated/lvm_skyw_agp.yaml
-    # kubectl create -f $LVM_ROOT/config/kube/ag_seperated/lvm_skye_agp.yaml
-    # kubectl create -f $LVM_ROOT/config/kube/ag_seperated/lvm_spec_agp.yaml
-
     
 ## Start lvm containers with real hardware (Optional)
 
     kubectl delete pod lvm-spec-ag-sim
-    kubectl create -f $LVM_ROOT/config/kube/lvm_spec_ag.yaml
+    kubectl create -f $LVM_ROOT/config/kube/lvm-spec-ag.yaml
 
-    # kubectl create -f $LVM_ROOT/config/kube/lvm_spec_agcam.yaml
+    # kubectl create -f $LVM_ROOT/config/kube/lvm-spec-agcam.yaml
 
 
 ## Test UIs
