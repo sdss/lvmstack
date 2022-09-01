@@ -1,6 +1,10 @@
 #!/bin/bash
 
-kubectl apply -f https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset-thick-plugin.yml
+kubectl create -f $LVM_ROOT/config/kube/network/multus-daemonset-thick.yml
+#kubectl apply -f https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset-thick.yml
+
+
+. $LVM_ROOT/config/kube/network/multus-config.sh
 
 cat <<EOF | kubectl create -f -
 apiVersion: "k8s.cni.cncf.io/v1"

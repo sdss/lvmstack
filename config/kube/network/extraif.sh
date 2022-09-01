@@ -1,9 +1,6 @@
 #!/bin/bash
 
-NET_DEV=eno2
-NET_BRIDGE=br-${NET_DEV}
-NET_ADDR=192.168.80
-NET_MASK=24
+. $LVM_ROOT/config/kube/network/multus-config.sh
 
 brctl addbr ${NET_BRIDGE}
 ip link set ${NET_BRIDGE} up
