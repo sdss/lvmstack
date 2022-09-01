@@ -6,10 +6,6 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 #from astropy.visualization import astropy_mpl_style
 #plt.style.use(astropy_mpl_style)
 
-def plot_images(data_east, data_west):
-    mean, sigma, min, max = np.mean(data_east), np.std(data_east), np.min(data_east), np.max(data_east)
-    lperc, uperc = np.percentile(data_east, 5), np.percentile(data_east, 99.95)
-
 def plot_image(data_east):
     mean, sigma, min, max = np.mean(data_east), np.std(data_east), np.min(data_east), np.max(data_east)
     lperc, uperc = np.percentile(data_east, 5), np.percentile(data_east, 99.95)
