@@ -16,6 +16,7 @@ from astropy import units as u
 from astropy.coordinates import SkyCoord, Angle
 
 from lvmagp.focus import Focus
+#from lvmtan.exceptions import *
 from .astrometry import Astrometry
 
 import click
