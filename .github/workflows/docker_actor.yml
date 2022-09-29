@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       USER: sdss
-      APP: lvm_actor
+      APP: lvmactor
     steps:
       - name: Set docker tags
         id: set-tags

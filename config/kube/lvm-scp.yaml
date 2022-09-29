@@ -11,7 +11,7 @@ spec:
   terminationGracePeriodSeconds: 3
   containers:
   - name: lvm-scp
-    image: ghcr.io/sdss/lvm_actor:latest
+    image: ghcr.io/sdss/lvmactor:latest
     securityContext:
       capabilities: {}
     volumeMounts:

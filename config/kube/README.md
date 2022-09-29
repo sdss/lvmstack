@@ -97,27 +97,27 @@ For minikube a container or virtual machine has to be selected, before proceedin
 
 ## Build containers into minikube (optional)
 
-    # containers for lvm_jupyter and lvm_actor are on github
+    # containers for lvmjupyter and lvmactor are on github
 
     # https://minikube.sigs.k8s.io/docs/commands/image/#minikube-image-build
     # https://minikube.sigs.k8s.io/docs/handbook/pushing/
 
-    # minikube image build --tag localhost/lvm_actor ${LVM_ROOT}/config/container/actor/
+    # minikube image build --tag localhost/lvmactor ${LVM_ROOT}/config/container/actor/
     # alternative build & push
-    # podman build --tag localhost/lvm_actor ${LVM_ROOT}/config/container/actor/
-    # podman save localhost/lvm_actor:latest -o localhost_lvm_actor_latest.img
-    # minikube image load localhost_lvm_actor_latest.img
+    # podman build --tag localhost/lvmactor ${LVM_ROOT}/config/container/actor/
+    # podman save localhost/lvmactor:latest -o localhost_lvmactor_latest.img
+    # minikube image load localhost_lvmactor_latest.img
     
-    # minikube image build --tag localhost/lvm_jupyter ${LVM_ROOT}/config/container/jupyter/
-    # podman build --tag localhost/lvm_jupyter ${LVM_ROOT}/config/container/jupyter/
-    # podman save localhost/lvm_jupyter:latest -o localhost_lvm_jupyter_latest.img
-    # minikube image load localhost_lvm_jupyter_latest.img
+    # minikube image build --tag localhost/lvmjupyter ${LVM_ROOT}/config/container/jupyter/
+    # podman build --tag localhost/lvmjupyter ${LVM_ROOT}/config/container/jupyter/
+    # podman save localhost/lvmjupyter:latest -o localhost_lvmjupyter_latest.img
+    # minikube image load localhost_lvmjupyter_latest.img
 
     # minikube image ls | grep localhost
 
-    # minikube image build --tag localhost/lvm_actor:$(date +"%y%m%d") ${LVM_ROOT}/config/container/actor/
+    # minikube image build --tag localhost/lvmactor:$(date +"%y%m%d") ${LVM_ROOT}/config/container/actor/
 
-    # minikube image rm localhost/lvm_actor:latest
+    # minikube image rm localhost/lvmactor:latest
 
 ## Start lvm containers in simulation
 
@@ -161,6 +161,7 @@ For minikube a container or virtual machine has to be selected, before proceedin
     # PWI4 UI
     vncviewer $(minikube ip):1 &
     vncviewer $(minikube ip):2 &
+
     vncviewer $(minikube ip):3 &
     vncviewer $(minikube ip):4 &
 

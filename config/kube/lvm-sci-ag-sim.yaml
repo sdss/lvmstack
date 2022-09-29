@@ -20,7 +20,7 @@ spec:
   
   containers:
   - name: lvm-sci-agcam
-    image: ghcr.io/sdss/lvm_actor:latest
+    image: ghcr.io/sdss/lvmactor:latest
 #    image: localhost/lvm_actor:latest
     volumeMounts:
     - mountPath: /root/lvm
