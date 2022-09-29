@@ -3,10 +3,8 @@ kind: Pod
 metadata:
   creationTimestamp: "2022-06-08T14:35:32Z"
   labels:
-    app: lvm-spec-ag
-  name: lvm-spec-ag
-  annotations:
-    k8s.v1.cni.cncf.io/networks: ipvlan-def
+    app: lvm-sci-ag-sim
+  name: lvm-sci-ag-sim
 spec:
   terminationGracePeriodSeconds: 0
 
@@ -21,8 +19,9 @@ spec:
     name: data-lvm-host-2
   
   containers:
-  - name: lvm-spec-agcam
+  - name: lvm-sci-agcam
     image: ghcr.io/sdss/lvm_actor:latest
+#    image: localhost/lvm_actor:latest
     volumeMounts:
     - mountPath: /root/lvm
       name: data-lvm-host-1
@@ -34,14 +33,16 @@ spec:
     - name: LVM_CAM_TYPE
       value: "araviscam"
     - name: LVM_ACTOR_CONFIG
-      value: "lvm.spec.agcam"
+      value: "lvm.sci.agcam"
     - name: LVM_ACTOR_ARGS
-      value: "--rmq_url=amqp://guest:guest@192.168.49.2:5672/ --verbose"
+      value: "--rmq_url=amqp://guest:guest@192.168.49.2:5672/ --verbose --simulate"
     - name: LVM_DEBUG
       value: "yes"
 
-  - name: lvm-spec-agp
+
+  - name: lvm-sci-agp
     image: ghcr.io/sdss/lvm_actor:latest
+#    image: localhost/lvm_actor:latest
     volumeMounts:
     - mountPath: /root/lvm
       name: data-lvm-host-1
@@ -51,7 +52,7 @@ spec:
     - name: LVM_ACTOR
       value: "lvmagp"
     - name: LVM_ACTOR_CONFIG
-      value: "lvm.spec.agp"
+      value: "lvm.sci.agp"
     - name: LVM_ACTOR_ARGS
       value: "--rmq_url=amqp://guest:guest@192.168.49.2:5672/ --verbose"
     - name: LVM_DEBUG
