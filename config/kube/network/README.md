@@ -3,8 +3,8 @@
 
 ## CentOS
 
-### /etc/sysconfig/network-scripts/ifcfg-br0
-    DEVICE=br0
+### /etc/sysconfig/network-scripts/ifcfg-br-eno2
+    DEVICE=br-eno2
     NM_CONTROLLED="no"
     TYPE=Bridge
     IPADDR=192.168.80.1
@@ -18,7 +18,7 @@
     NM_CONTROLLED="no"
     HWADDR=b8:ca:3a:5f:1e:15
     TYPE=Ethernet
-    BRIDGE=br0
+    BRIDGE=br-eno2
     BOOTPROTO=none
     ONBOOT=yes
     DELAY=10
