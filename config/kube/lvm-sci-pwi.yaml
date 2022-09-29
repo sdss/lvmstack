@@ -1,0 +1,56 @@
+# Save the output of this file and use kubectl create -f to import
+# it into Kubernetes.
+#
+# Created with podman-3.4.4
+
+# NOTE: If you generated this yaml from an unprivileged and rootless podman container on an SELinux
+# enabled system, check the podman generate kube man page for steps to follow to ensure that your pod/container
+# has the right permissions to access the volumes added.
+---
+apiVersion: v1
+kind: Pod
+metadata:
+#  annotations:
+#    bind-mount-options:/home/briegel/workspace/lvmt/lvm/lvmpwi: Z
+  creationTimestamp: "2022-06-08T14:35:32Z"
+  labels:
+    app: lvm-sci-pwi-sim
+  name: lvm-sci-pwi-sim
+spec:
+  terminationGracePeriodSeconds: 0
+  containers:
+  - name: lvm-sci-pwi
+    image: ghcr.io/sdss/lvmpwi:latest
+    ports:
+    - containerPort: 5900
+      hostPort: 5901
+    securityContext:
+      privileged: true
+#      capabilities: {"MKNOD"}
+#      capabilities: 
+#        add: ["MKNOD"]
+    volumeMounts:
+    - mountPath: /dev
+      name: dev-host-0
+    - mountPath: /root/lvm
+      name: data-lvm-host-1
+    env:
+    - name: PWI_NAME
+      value: "lvm.sci.pwi"
+    - name: PWI_GEOM
+      value: "800x600"
+    - name: LVM_ACTOR_ARGS
+      value: "--verbose --rmq_url=amqp://guest:guest@192.168.49.2:5672/"
+    - name: LVM_DEBUG
+      value: "yes"
+  volumes:
+  - name: dev-host-0
+    hostPath:
+      path: /dev
+      type: Directory
+  - name: data-lvm-host-1
+    hostPath:
+      path: /lvm
+      type: Directory
+
+    
