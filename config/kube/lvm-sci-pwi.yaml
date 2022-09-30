@@ -14,8 +14,8 @@ metadata:
 #    bind-mount-options:/home/briegel/workspace/lvmt/lvm/lvmpwi: Z
   creationTimestamp: "2022-06-08T14:35:32Z"
   labels:
-    app: lvm-sci-pwi-sim
-  name: lvm-sci-pwi-sim
+    app: lvm-sci-pwi
+  name: lvm-sci-pwi
 spec:
   terminationGracePeriodSeconds: 0
   containers:
