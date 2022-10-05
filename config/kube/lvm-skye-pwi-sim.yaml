@@ -24,6 +24,8 @@ spec:
     ports:
     - containerPort: 5900
       hostPort: 5902
+    - containerPort: 6080
+      hostPort: 8092
     securityContext:
       privileged: true
     volumeMounts:

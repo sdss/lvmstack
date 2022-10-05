@@ -11,7 +11,7 @@ spec:
   terminationGracePeriodSeconds: 0
   containers:
   - name: lvm-spec-agcam
-    image: ghcr.io/sdss/lvm_actor:latest
+    image: ghcr.io/sdss/lvmactor:latest
     securityContext:
       capabilities: {}
     volumeMounts:
