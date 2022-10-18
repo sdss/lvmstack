@@ -6,26 +6,20 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 #from astropy.visualization import astropy_mpl_style
 #plt.style.use(astropy_mpl_style)
 
-def plot_image(data_east):
-    mean, sigma, min, max = np.mean(data_east), np.std(data_east), np.min(data_east), np.max(data_east)
-    lperc, uperc = np.percentile(data_east, 5), np.percentile(data_east, 99.95)
+def plot_images(images):
+    data = images[0].data
+    mean, sigma, min, max = np.mean(data), np.std(data), np.min(data), np.max(data)
+    lperc, uperc = np.percentile(data, 5), np.percentile(data, 99.95)
 
-    fig, (ax1) = plt.subplots(1, figsize=(16,20))
-    ax1.set_title("east")
-    ax1_im = ax1.imshow(data_east, vmin=mean-sigma, vmax=uperc)
-    fig.colorbar(ax1_im, cax=make_axes_locatable(ax1).append_axes('right', size='3%', pad=0.05), orientation='vertical')
+    fig, ax = plt.subplots(1, ncols=(len(images)), figsize=(16,20))
 
-def plot_images(data_east, data_west):
-    mean, sigma, min, max = np.mean(data_east), np.std(data_east), np.min(data_east), np.max(data_east)
-    lperc, uperc = np.percentile(data_east, 5), np.percentile(data_east, 99.95)
+    is_single_image = len(images) > 1
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16,20))
-    ax1.set_title("east")
-    ax1_im = ax1.imshow(data_east, vmin=mean-sigma, vmax=uperc)
-    fig.colorbar(ax1_im, cax=make_axes_locatable(ax1).append_axes('right', size='3%', pad=0.05), orientation='vertical')
+    for idx, img in enumerate(images):
+        ax_idx = ax[idx] if is_single_image else ax
+        ax_idx.set_title(img.header["CAMNAME"])
+        ax_im = ax_idx.imshow(images[idx].data, vmin=mean-sigma, vmax=uperc)
+        fig.colorbar(ax_im, cax=make_axes_locatable(ax_idx).append_axes('right', size='3%', pad=0.05), orientation='vertical')
 
-    ax2.set_title("west")
-    ax2_im = ax2.imshow(data_west, vmin=mean-sigma, vmax=uperc)
-    fig.colorbar(ax2_im, cax=make_axes_locatable(ax2).append_axes('right', size='3%', pad=0.05), orientation='vertical')
     plt.show()
 
