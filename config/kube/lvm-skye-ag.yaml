@@ -5,6 +5,8 @@ metadata:
   labels:
     app: lvm-skye-ag
   name: lvm-skye-ag
+  annotations:
+    k8s.v1.cni.cncf.io/networks: ipvlan-def
 spec:
   terminationGracePeriodSeconds: 0
 
@@ -21,6 +23,7 @@ spec:
   containers:
   - name: lvm-skye-agcam
     image: ghcr.io/sdss/lvmactor:latest
+#    image: localhost/lvm_actor:latest
     volumeMounts:
     - mountPath: /root/lvm
       name: data-lvm-host-1
@@ -40,6 +43,7 @@ spec:
 
   - name: lvm-skye-agp
     image: ghcr.io/sdss/lvmactor:latest
+#    image: localhost/lvm_actor:latest
     volumeMounts:
     - mountPath: /root/lvm
       name: data-lvm-host-1
