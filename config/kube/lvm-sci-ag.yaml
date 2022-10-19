@@ -41,7 +41,6 @@ spec:
     - name: LVM_DEBUG
       value: "yes"
 
-
   - name: lvm-sci-agp
     image: ghcr.io/sdss/lvmactor:latest
 #    image: localhost/lvm_actor:latest

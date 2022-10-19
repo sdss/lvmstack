@@ -37,7 +37,7 @@ spec:
     - name: LVM_ACTOR_CONFIG
       value: "lvm.skye.agcam"
     - name: LVM_ACTOR_ARGS
-      value: "--rmq_url=amqp://guest:guest@192.168.49.2:5672/ --verbose --simulate"
+      value: "--rmq_url=amqp://guest:guest@192.168.49.2:5672/ --verbose"
     - name: LVM_DEBUG
       value: "yes"
 
