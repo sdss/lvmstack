@@ -40,7 +40,7 @@ spec:
     - name: PWI_NAME
       value: "lvm.sci.pwi"
     - name: PWI_GEOM
-      value: "800x600"
+      value: "1200x1000"
     - name: LVM_ACTOR_ARGS
       value: "--verbose --rmq_url=amqp://guest:guest@192.168.49.2:5672/"
     - name: LVM_DEBUG

@@ -37,7 +37,7 @@ spec:
     - name: PWI_NAME
       value: "lvm.skye.pwi"
     - name: PWI_GEOM
-      value: "800x600"
+      value: "1200x1000"
     - name: PWI_SIMULATOR
       value: "true"
     - name: LVM_ACTOR_ARGS
