@@ -77,7 +77,7 @@ RUN git clone https://github.com/PAIR-code/facets.git && \
     fix-permissions "/home/${NB_USER}"
 
 RUN pip3 install sdss-lvmtipo sdss-cluplus sdss-lvmagp
-RUN pip3 astrometry
+RUN pip3 install astrometry
 
 # Import matplotlib the first time to build the font cache.
 ENV XDG_CACHE_HOME="/home/${NB_USER}/.cache/"
