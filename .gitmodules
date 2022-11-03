@@ -63,4 +63,4 @@
 	url = https://github.com/wasndas/lvmagp
 [submodule "lvmcam"]
 	path = lvmcam
-	url = https://github.com/wasndas/lvmcam
+	url = https://github.com/sdss/lvmcam

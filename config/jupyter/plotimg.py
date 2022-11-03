@@ -9,7 +9,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 #from astropy.visualization import astropy_mpl_style
 #plt.style.use(astropy_mpl_style)
 
-def plot_catalog(ax, catalog, color="red", cat_max=8):
+def plot_catalog(ax, catalog, color="red", cat_max=8, cat_rest=None):
      for c in catalog[:cat_max]:
          e = Ellipse(xy=(c['x'], c['y']),
              width=8*c['a'],
@@ -18,9 +18,18 @@ def plot_catalog(ax, catalog, color="red", cat_max=8):
          e.set_facecolor('none')
          e.set_edgecolor(color)
          ax.add_artist(e)
+     if cat_rest:
+         for c in catalog[cat_max+1:]:
+             e = Ellipse(xy=(c['x'], c['y']),
+                 width=8*c['a'],
+                 height=8*c['b'],
+                 angle=c['theta'] * -180. / np.pi)
+             e.set_facecolor('none')
+             e.set_edgecolor("white")
+             ax.add_artist(e)
 
 
-def plot_images(images, vmin=None, vmax=None, cat_max = 8, cat_extra=None):
+def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest = None, cat_extra=None):
     data = images[0].data
     mean, sigma, min, max = np.mean(data), np.std(data), np.min(data), np.max(data)
     lperc, uperc = np.percentile(data, 5), np.percentile(data, 99.95)
@@ -36,20 +45,26 @@ def plot_images(images, vmin=None, vmax=None, cat_max = 8, cat_extra=None):
     is_single_image = len(images) > 1
 
     for idx, img in enumerate(images):
+        if rotate and rotate[idx]:
+            data = np.copy(img.data).transpose()
+        else:
+            data = img.data
+        
         ax_idx = ax[idx] if is_single_image else ax
         ax_idx.set_title(img.header["CAMNAME"])
-        ax_im = ax_idx.imshow(images[idx].data, vmin=vmin if vmin else mean-sigma, vmax=vmax if vmax else uperc)
+        ax_im = ax_idx.imshow(data, vmin=vmin if vmin else mean-sigma, vmax=vmax if vmax else uperc)
         ax_idx.invert_yaxis()
         fig.colorbar(ax_im, cax=make_axes_locatable(ax_idx).append_axes('right', size='3%', pad=0.05), orientation='vertical')
       
         if cat_extra:
-            plot_catalog(ax_idx, cat_extra, "blue", cat_max)
+            plot_catalog(ax_idx, cat_extra, "blue")
 
         if img.catalog:
-            plot_catalog(ax_idx, img.catalog, "red", cat_max)
+            plot_catalog(ax_idx, img.catalog, "red", cat_max, cat_rest)
 
 
     fig.tight_layout()
     plt.show()
 
 
+# a = np.array([[1, 2, 3], [4, 5, 6]])
