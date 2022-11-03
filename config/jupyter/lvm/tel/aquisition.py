@@ -46,10 +46,10 @@ async def aquisition(telsubsys, ra:Angle, dec:Angle, exptime:float, level = INFO
 
         logger.debug(f"correct tel/km {ra_offset}:{dec_offset}/{km_offset} & focus offset {focus_offset}")
 
-        await invoke( # there is no offsetting km
-            telsubsys.pwi.offset(ra_add_arcsec = ra_offset, dec_add_arcsec = dec_offset),
-            focus.offset(focus_offset)
-        )
+#        await invoke( # there is no offsetting km
+#            telsubsys.pwi.offset(ra_add_arcsec = ra_offset, dec_add_arcsec = dec_offset),
+#            focus.offset(focus_offset)
+#        )
 
         logger.debug(f"done ")
         
