@@ -60,7 +60,7 @@
 	branch = main
 [submodule "lvmagp"]
 	path = lvmagp
-	url = https://github.com/wasndas/lvmagp
+	url = https://github.com/sdss/lvmagp
 [submodule "lvmcam"]
 	path = lvmcam
 	url = https://github.com/sdss/lvmcam
