@@ -20,7 +20,7 @@ spec:
     securityContext:
       capabilities: {}
     volumeMounts:
-    - mountPath: /root/lvmtan
+    - mountPath: /root/lvm
       name: data-lvm-host-1
     env:
     - name: BASDARD_PORT
@@ -37,7 +37,7 @@ spec:
       value: "yes"
   volumes:
   - hostPath:
-      path: /lvm/lvmtan
+      path: /lvm
       type: Directory
     name: data-lvm-host-1
 
