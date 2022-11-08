@@ -28,15 +28,25 @@ def plot_catalog(ax, catalog, color="red", cat_max=8, cat_rest=None):
              e.set_edgecolor("white")
              ax.add_artist(e)
 
+def plot_centroid(ax, catalog, color="white"):
+     catalog = catalog.transpose()
+#     print(catalog)
+     for c in catalog:
+         e = Ellipse(xy=(c[0], c[1]),
+             width=40,
+             height=40)
+         e.set_facecolor('none')
+         e.set_edgecolor(color)
+         ax.add_artist(e)
 
-def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest = None, cat_extra=None):
+def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest = None, cat_extra=None, figsize=None):
     data = images[0].data
     mean, sigma, min, max = np.mean(data), np.std(data), np.min(data), np.max(data)
     lperc, uperc = np.percentile(data, 5), np.percentile(data, 99.95)
     
 #    fig, ax = plt.subplots(1, ncols=(len(images)))
 #    fig, ax = plt.subplots(1, ncols=(len(images)), dpi=100)
-    fig, ax = plt.subplots(1, ncols=(len(images)), figsize=(8, 5/len(images)))
+    fig, ax = plt.subplots(1, ncols=(len(images)), figsize=figsize if figsize else (8, 5/len(images)))
     
     fig.canvas.toolbar_visible = 'fade-in-fade-out'
 #    fig.canvas.footer_visible = False
@@ -57,7 +67,10 @@ def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest
         fig.colorbar(ax_im, cax=make_axes_locatable(ax_idx).append_axes('right', size='3%', pad=0.05), orientation='vertical')
       
         if cat_extra:
-            plot_catalog(ax_idx, cat_extra, "blue")
+            plot_catalog(ax_idx, cat_extra[idx], "yellow")
+
+        if hasattr(img, "centroid"):
+            plot_centroid(ax_idx, img.centroid, "white")
 
         if img.catalog:
             plot_catalog(ax_idx, img.catalog, "red", cat_max, cat_rest)
@@ -65,6 +78,8 @@ def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest
 
     fig.tight_layout()
     plt.show()
-
-
+#    display(fig)
+    
+  
+                
 # a = np.array([[1, 2, 3], [4, 5, 6]])
