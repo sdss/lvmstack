@@ -1,8 +1,10 @@
 import numpy as np
 from astropy.io import fits
 import matplotlib.pyplot as plt
-from matplotlib.colors import LogNorm
+from matplotlib.colors import LogNorm, PowerNorm, SymLogNorm
 from matplotlib.patches import Ellipse, Rectangle
+from matplotlib import colors
+
 
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
@@ -40,8 +42,9 @@ def plot_centroid(ax, catalog, color="white"):
 def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest = None, cat_extra=None, figsize=None):
     data = images[0].data
     mean, sigma, min, max = np.mean(data), np.std(data), np.min(data), np.max(data)
-    lperc, uperc = np.percentile(data, 5), np.percentile(data, 99.95)
-    
+    lperc, uperc = np.percentile(data, 5), np.percentile(data, 99.5)
+    median = np.median(data)
+
 #    fig, ax = plt.subplots(1, ncols=(len(images)))
 #    fig, ax = plt.subplots(1, ncols=(len(images)), dpi=100)
     fig, ax = plt.subplots(1, ncols=(len(images)), figsize=figsize if figsize else (8, 5/len(images)))
@@ -60,7 +63,18 @@ def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest
         
         ax_idx = ax[idx] if is_single_image else ax
         ax_idx.set_title(img.header["CAMNAME"])
-        ax_im = ax_idx.imshow(data, vmin=vmin if vmin else mean-sigma, vmax=vmax if vmax else uperc)
+        ax_im = ax_idx.imshow(data,
+                              vmin=vmin if vmin else median,
+                              vmax=vmax if vmax else uperc)
+
+        ax_im = ax_idx.imshow(data,
+                              norm=PowerNorm(1.4,
+                                             vmin=vmin if vmin else median,
+                                             vmax=vmax if vmax else uperc,
+                                             clip=True,
+                                            )
+                             )
+
         ax_idx.invert_yaxis()
         fig.colorbar(ax_im, cax=make_axes_locatable(ax_idx).append_axes('right', size='3%', pad=0.05), orientation='vertical')
       
