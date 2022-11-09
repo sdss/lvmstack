@@ -6,35 +6,33 @@ from matplotlib.patches import Ellipse, Rectangle
 
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
+
 #from astropy.visualization import astropy_mpl_style
 #plt.style.use(astropy_mpl_style)
 
+
+ellipse = lambda c: Ellipse(xy=(c['x'], c['y']),
+                            width=8*c['a'],
+                            height=8*c['b'],
+                            angle=c['theta'] * -180. / np.pi)
+
 def plot_catalog(ax, catalog, color="red", cat_max=8, cat_rest=None):
      for c in catalog[:cat_max]:
-         e = Ellipse(xy=(c['x'], c['y']),
-             width=8*c['a'],
-             height=8*c['b'],
-             angle=c['theta'] * -180. / np.pi)
+         e = ellipse(c)
          e.set_facecolor('none')
          e.set_edgecolor(color)
          ax.add_artist(e)
      if cat_rest:
          for c in catalog[cat_max+1:]:
-             e = Ellipse(xy=(c['x'], c['y']),
-                 width=8*c['a'],
-                 height=8*c['b'],
-                 angle=c['theta'] * -180. / np.pi)
+             e = ellipse(c)
              e.set_facecolor('none')
              e.set_edgecolor("white")
              ax.add_artist(e)
 
 def plot_centroid(ax, catalog, color="white"):
      catalog = catalog.transpose()
-#     print(catalog)
      for c in catalog:
-         e = Ellipse(xy=(c[0], c[1]),
-             width=40,
-             height=40)
+         e = ellipse({'x': c[0], 'y': c[1], 'a': 8, 'b': 8, 'theta': 0})
          e.set_facecolor('none')
          e.set_edgecolor(color)
          ax.add_artist(e)
@@ -66,14 +64,15 @@ def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest
         ax_idx.invert_yaxis()
         fig.colorbar(ax_im, cax=make_axes_locatable(ax_idx).append_axes('right', size='3%', pad=0.05), orientation='vertical')
       
+        if img.catalog:
+            plot_catalog(ax_idx, img.catalog, "red", cat_max, cat_rest)
+
         if cat_extra:
             plot_catalog(ax_idx, cat_extra[idx], "yellow")
 
         if hasattr(img, "centroid"):
             plot_centroid(ax_idx, img.centroid, "white")
 
-        if img.catalog:
-            plot_catalog(ax_idx, img.catalog, "red", cat_max, cat_rest)
 
 
     fig.tight_layout()
