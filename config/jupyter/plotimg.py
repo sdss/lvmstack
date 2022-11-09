@@ -9,7 +9,7 @@ from matplotlib import colors
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 
-#from astropy.visualization import astropy_mpl_style
+from astropy.visualization import astropy_mpl_style
 #plt.style.use(astropy_mpl_style)
 
 
@@ -55,17 +55,19 @@ def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest
     fig.canvas.toolbar_position = 'left'
     is_single_image = len(images) > 1
 
+
     for idx, img in enumerate(images):
         if rotate and rotate[idx]:
             data = np.copy(img.data).transpose()
         else:
             data = img.data
-        
+
         ax_idx = ax[idx] if is_single_image else ax
         ax_idx.set_title(img.header["CAMNAME"])
-        ax_im = ax_idx.imshow(data,
-                              vmin=vmin if vmin else median,
-                              vmax=vmax if vmax else uperc)
+        ax_idx.scatter([img.data.shape[1]/2], [img.data.shape[0]/2], marker='+', s=40, color='red')
+#        ax_im = ax_idx.imshow(data,
+#                              vmin=vmin if vmin else median,
+#                              vmax=vmax if vmax else uperc)
 
         ax_im = ax_idx.imshow(data,
                               norm=PowerNorm(1.4,
@@ -74,6 +76,8 @@ def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest
                                              clip=True,
                                             )
                              )
+
+        
 
         ax_idx.invert_yaxis()
         fig.colorbar(ax_im, cax=make_axes_locatable(ax_idx).append_axes('right', size='3%', pad=0.05), orientation='vertical')
@@ -87,7 +91,7 @@ def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest
         if hasattr(img, "centroid"):
             plot_centroid(ax_idx, img.centroid, "white")
 
-
+    # plt.scatter(x, y, marker='+', s=40, color='red')
 
     fig.tight_layout()
     plt.show()
