@@ -39,15 +39,17 @@ def plot_centroid(ax, catalog, color="white"):
          e.set_edgecolor(color)
          ax.add_artist(e)
 
-def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest = None, cat_extra=None, figsize=None):
+def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest = None, cat_extra=None, figsize=None, wcs=None):
     data = images[0].data
     mean, sigma, min, max = np.mean(data), np.std(data), np.min(data), np.max(data)
     lperc, uperc = np.percentile(data, 5), np.percentile(data, 99.5)
     median = np.median(data)
 
+    
+    args={}
 #    fig, ax = plt.subplots(1, ncols=(len(images)))
 #    fig, ax = plt.subplots(1, ncols=(len(images)), dpi=100)
-    fig, ax = plt.subplots(1, ncols=(len(images)), figsize=figsize if figsize else (8, 5/len(images)))
+    fig, ax = plt.subplots(1, ncols=(len(images)), figsize=figsize if figsize else (8, 5/len(images)), *args)
     
     fig.canvas.toolbar_visible = 'fade-in-fade-out'
 #    fig.canvas.footer_visible = False
@@ -68,6 +70,9 @@ def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest
 #        ax_im = ax_idx.imshow(data,
 #                              vmin=vmin if vmin else median,
 #                              vmax=vmax if vmax else uperc)
+        if wcs: 
+            # wcs = WCS(hdu.header)
+            print(wcs)
 
         ax_im = ax_idx.imshow(data,
                               norm=PowerNorm(1.4,
