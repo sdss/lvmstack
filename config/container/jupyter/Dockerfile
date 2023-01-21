@@ -1,94 +1,32 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 ARG OWNER=jupyter
-ARG BASE_CONTAINER=$OWNER/minimal-notebook
+ARG BASE_CONTAINER=$OWNER/scipy-notebook
 FROM $BASE_CONTAINER
 
 #LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 ## Get some karma ##
 MAINTAINER Florian Briegel, briegel@mpia.de
 
-# Fix: https://github.com/hadolint/hadolint/wiki/DL4006
-# Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-USER root
-
-RUN apt-get update --yes && \
-    apt-get install --yes --no-install-recommends \
-    # for cython: https://cython.readthedocs.io/en/latest/src/quickstart/install.html
-    build-essential \
-    # for latex labels
-    cm-super \
-    dvipng \
-    # for matplotlib anim
-    ffmpeg && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-USER ${NB_UID}
-
-# Install Python 3 packages
-RUN arch=$(uname -m) && \
-    if [ "${arch}" == "aarch64" ]; then \
-        # Prevent libmamba from sporadically hanging on arm64 under QEMU
-        # <https://github.com/mamba-org/mamba/issues/1611>
-        export G_SLICE=always-malloc; \
-    fi && \
-    mamba install --quiet --yes \
-    'altair' \
-    'beautifulsoup4' \
-    'bokeh' \
-    'bottleneck' \
-    'cloudpickle' \
-    'conda-forge::blas=*=openblas' \
-    'cython' \
-    'dask' \
-    'dill' \
-    'h5py' \
-    'ipympl'\
-    'ipywidgets' \
-    'matplotlib-base' \
-    'numba' \
-    'numexpr' \
-    'pandas' \
-    'patsy' \
-    'protobuf' \
-    'pytables' \
-    'scikit-image' \
-    'scikit-learn' \
-    'scipy' \
-    'seaborn' \
-    'sqlalchemy' \
-    'statsmodels' \
-    'sympy' \
-    'widgetsnbextension'\
-    'xlrd' && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
-
-# Install facets which does not have a pip or conda package at the moment
-WORKDIR /tmp
-RUN git clone https://github.com/PAIR-code/facets.git && \
-    jupyter nbextension install facets/facets-dist/ --sys-prefix && \
-    rm -rf /tmp/facets && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
 RUN pip3 install sdss-lvmtipo sdss-cluplus sdss-lvmagp
 RUN pip3 install astrometry reproject astroquery
 
-# Import matplotlib the first time to build the font cache.
-ENV XDG_CACHE_HOME="/home/${NB_USER}/.cache/"
+USER root
 
-RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
-    fix-permissions "/home/${NB_USER}"
+RUN mkdir /usr/local/bin/start-notebook.d
+RUN printf '\n\
+LVM_ROOT=$HOME\n\
+if [ ${LVM_DEBUG} ]; then\n\
+  export PYTHONPATH=$(ls -1 -d ${LVM_ROOT}/lvm/*/python ${LVM_ROOT}/lvm/basecam ${LVM_ROOT}/lvm/araviscam 2>/dev/null | tr "\n" ":")\n\
+fi\n\
+#export JUPYTER_PATH=$PYTHONPATH:$JUPYTER_PATH\n\
+' > /usr/local/bin/start-notebook.d/debug_env.sh
+RUN chmod 755 /usr/local/bin/start-notebook.d/debug_env.sh
+
 
 USER ${NB_UID}
 
-WORKDIR "${HOME}"
+RUN printf '\n\
+. /usr/local/bin/start-notebook.d/debug_env.sh\n\
+' >> /home/${NB_USER}/.bashrc
 
-# Configure container startup
-ENTRYPOINT ["tini", "-g", "--"]
-CMD ["start-notebook.sh", "--LabApp.token=''"]
