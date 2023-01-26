@@ -20,8 +20,8 @@ spec:
       "ipam": {
         "type": "host-local",
         "subnet": "${NET_ADDR}.0/${NET_MASK}",
-        "rangeStart": "${NET_ADDR}.201",
-        "rangeEnd": "${NET_ADDR}.225"
+        "rangeStart": "${NET_ADDR}.126",
+        "rangeEnd": "${NET_ADDR}.130"
       }
     }'
 EOF
