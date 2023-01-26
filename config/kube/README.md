@@ -69,7 +69,7 @@ For minikube a container or virtual machine has to be selected, before proceedin
     # minikube dashboard --url&
     kubectl create -f $LVM_ROOT/config/kube/extra/minikube-dashboard.yaml
 
-    kubectl proxy&
+    kubectl proxy --address 0.0.0.0 --accept-hosts '.*' &
     # http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default
 
    
