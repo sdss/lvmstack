@@ -1,3 +1,4 @@
+# /etc/sysconfig/network-scripts/ifcfg-eno1
 
 DEVICE=eno1
 NM_CONTROLLED="no"
