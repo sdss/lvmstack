@@ -1,0 +1,8 @@
+# /etc/sysconfig/network-scripts/ifcfg-br0
+
+DEVICE=br0
+NM_CONTROLLED="no"
+TYPE=Bridge
+BOOTPROTO=dhcp
+ONBOOT=yes
+DELAY=0

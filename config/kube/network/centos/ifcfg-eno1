@@ -1,0 +1,9 @@
+
+DEVICE=eno1
+NM_CONTROLLED="no"
+HWADDR=a0:36:9f:3e:dd:96
+TYPE=Ethernet
+BRIDGE=br0
+BOOTPROTO=none
+ONBOOT=yes
+DELAY=10
