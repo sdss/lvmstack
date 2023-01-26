@@ -1,0 +1,43 @@
+# kubectl create -f to import
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2022-06-08T14:35:32Z"
+  labels:
+    app: lvm-nps-sim
+  name: lvm-nps-sim
+spec:
+  terminationGracePeriodSeconds: 0
+  containers:
+  - name: lvm-nps
+    image: ghcr.io/sdss/lvmactor:latest
+#    image: localhost/lvm_actor:latest
+#    imagePullPolicy: Never
+    securityContext:
+      capabilities: {}
+    volumeMounts:
+    - mountPath: /root/lvm
+      name: data-lvm-host-1
+    - mountPath: /data
+      name: data-lvm-host-2
+    env:
+    - name: LVM_ACTOR
+      value: "lvmnps"
+    - name: LVM_ACTOR_CONFIG
+      value: "lvmnps_telescope"
+    - name: LVM_ACTOR_ARGS
+      value: "--verbose --rmq_url=amqp://guest:guest@192.168.49.2:5672/ --simulate"
+    - name: LVM_DEBUG
+      value: "yes"
+  volumes:
+  - name: data-lvm-host-1
+    hostPath:
+      path: /lvm
+      type: Directory
+  - name: data-lvm-host-2
+    hostPath:
+      path: /lvm/var/data
+      type: Directory
+
+    
