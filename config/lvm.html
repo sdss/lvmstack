@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.container_p {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding-top: 130%;
+}
+
+.container_l {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding-top: 85%;
+}
+
+.responsive-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+</style>
+</head>
+<body>
+
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'Kube')">Kube</button>
+  <button class="tablinks" onclick="openCity(event, 'RabbitMQ')">RabbitMQ</button>
+  <button class="tablinks" onclick="openCity(event, 'PwiSci')">PwiSci</button>
+  <button class="tablinks" onclick="openCity(event, 'PwiSkye')">PwiSkye</button>
+  <button class="tablinks" onclick="openCity(event, 'PwiSkyw')">PwiSkyw</button>
+  <button class="tablinks" onclick="openCity(event, 'PwiSpec')">PwiSpec</button>
+  <button class="tablinks" onclick="openCity(event, 'MoTan')">MoTan</button>
+  <button class="tablinks" onclick="openCity(event, 'Jupyter')">Jupyter</button>
+</div>
+
+<div id="Kube" class="tabcontent">
+   <div class="container_p">
+     <iframe class="responsive-iframe" src="http://192.168.178.70:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default" ></iframe>
+   </div>
+</div>
+
+<div id="RabbitMQ" class="tabcontent">
+   <div class="container_p">
+     <iframe class="responsive-iframe" src="http://192.168.49.2:8081/#/queues" ></iframe>
+   </div>
+</div>
+
+<div id="PwiSci" class="tabcontent">
+   <div class="container_l">
+     <iframe class="responsive-iframe" src="http://192.168.49.2:8091/vnc_lite.html?scale=true"></iframe>
+   </div>
+</div>
+
+<div id="PwiSkye" class="tabcontent">
+   <div class="container_l">
+     <iframe class="responsive-iframe" src="http://192.168.49.2:8092/vnc_lite.html?scale=true"></iframe>
+   </div>
+</div>
+
+<div id="PwiSkyw" class="tabcontent">
+   <div class="container_l">
+     <iframe class="responsive-iframe" src="http://192.168.49.2:8093/vnc_lite.html?scale=true"></iframe>
+   </div>
+</div>
+
+<div id="PwiSpec" class="tabcontent">
+   <div class="container_l">
+     <iframe class="responsive-iframe" src="http://192.168.49.2:8094/vnc_lite.html?scale=true"></iframe>
+   </div>
+</div>
+
+<div id="MoTan" class="tabcontent">
+   <div class="container_l">
+     <iframe class="responsive-iframe" src="http://192.168.49.2:8095/vnc_lite.html?scale=true"></iframe>
+   </div>
+</div>
+
+      <a href="http://192.168.49.2:8082/lab" target="_blank"> Sorry Jupyter can on be opend in a new tab from here - click me </a>
+
+<script>
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+openCity(event, 'Kube')
+
+</script>
+
+</body>
+</html>
