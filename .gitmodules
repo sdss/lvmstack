@@ -1,6 +1,6 @@
 [submodule "clu"]
 	path = clu
-	url = https://github.com/sdss/clu
+	url = https://github.com/sdss/clu.git
 	branch = main
 [submodule "cluplus"]
 	path = cluplus
@@ -63,4 +63,7 @@
 	url = https://github.com/sdss/lvmagp
 [submodule "lvmcam"]
 	path = lvmcam
-	url = https://github.com/sdss/lvmcam
+	url = https://github.com/sdss/lvmcam.git
+[submodule "sdsstools"]
+	path = sdsstools
+	url = https://github.com/sdss/sdsstools.git
