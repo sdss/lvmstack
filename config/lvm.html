@@ -124,7 +124,18 @@ body {font-family: Arial;}
    </div>
 </div>
 
-      <a href="http://192.168.49.2:8082/lab" target="_blank"> Sorry Jupyter can on be opend in a new tab from here - click me </a>
+<div id="Jupyter" class="tabcontent">
+<h1>
+    <a href="http://192.168.49.2:8082/lab" target="_blank"> Open Jupyter in new tab </a>
+    <br>
+    <a href="print.html"
+       onclick="window.open('http://192.168.49.2:8082/lab',
+                            'newwindow',
+                            'width=1200,height=1000'); return false;"> Open Jupyter in new window </a>
+
+</h1>
+</div>
+
 
 <script>
 function openCity(evt, cityName) {
