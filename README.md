@@ -1,4 +1,4 @@
-# lvm superproject
+# lvm superproject v0.0.37
 
 
 ![lvm package overview](docs/uml/overview/lvm_packages.png)
