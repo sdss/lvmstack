@@ -10,7 +10,7 @@ MAINTAINER Florian Briegel, briegel@mpia.de
 
 RUN pip3 install sdss-lvmtipo sdss-cluplus sdss-lvmagp
 RUN pip3 install astrometry reproject astroquery
-RUN pip3 ipydatagrid
+RUN pip3 install ipydatagrid
 
 USER root
 
