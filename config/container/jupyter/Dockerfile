@@ -11,6 +11,13 @@ MAINTAINER Florian Briegel, briegel@mpia.de
 RUN pip3 install sdss-lvmtipo sdss-cluplus sdss-lvmagp
 RUN pip3 install astrometry reproject astroquery
 RUN pip3 install ipydatagrid
+RUN pip3 install jupyter-app-launcher
+
+RUN pip3 install pywwt
+RUN pip install wwt-kernel-data-relay && \
+    jupyter labextension install --no-build @jupyter-widgets/jupyterlab-manager && \
+    jupyter labextension install --no-build @wwtelescope/jupyterlab && \
+    jupyter lab build
 
 USER root
 
