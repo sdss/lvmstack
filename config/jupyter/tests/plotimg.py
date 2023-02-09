@@ -49,7 +49,8 @@ def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest
     args={}
 #    fig, ax = plt.subplots(1, ncols=(len(images)))
 #    fig, ax = plt.subplots(1, ncols=(len(images)), dpi=100)
-    fig, ax = plt.subplots(1, ncols=(len(images)), figsize=figsize if figsize else (8, 5/len(images)), *args)
+#    fig, ax = plt.subplots(1, ncols=(len(images)), figsize=figsize if figsize else (8, 5/len(images)), *args)
+    fig, ax = plt.subplots(nrows=(len(images)), figsize=(16,9))
     
     fig.canvas.toolbar_visible = 'fade-in-fade-out'
 #    fig.canvas.footer_visible = False
