@@ -146,8 +146,8 @@ For minikube a container or virtual machine has to be selected, before proceedin
     kubectl create -f $LVM_ROOT/config/kube/lvm-skyw-ag-sim.yaml
     kubectl create -f $LVM_ROOT/config/kube/lvm-skye-ag-sim.yaml
     kubectl create -f $LVM_ROOT/config/kube/lvm-spec-ag-sim.yaml
-    
-    
+
+
 ## Start lvm containers with real hardware (Optional)
 
     kubectl delete pod lvm-spec-ag-sim
