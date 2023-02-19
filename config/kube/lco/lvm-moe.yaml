@@ -3,8 +3,8 @@ kind: Pod
 metadata:
   creationTimestamp: "2022-06-08T14:35:32Z"
   labels:
-    app: lvm-moe-mpia
-  name: lvm-moe-mpia
+    app: lvm-moe
+  name: lvm-moe
 spec:
   terminationGracePeriodSeconds: 0
   containers:
