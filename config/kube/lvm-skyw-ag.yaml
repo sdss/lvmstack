@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2022-06-08T14:35:32Z"
+  labels:
+    app: lvm-skyw-ag
+  name: lvm-skyw-ag
+spec:
+  terminationGracePeriodSeconds: 0
+
+  volumes:
+  - hostPath:
+      path: /lvm
+      type: Directory
+    name: data-lvm-host-1
+  - hostPath:
+      path: /lvm/var/data
+      type: Directory
+    name: data-lvm-host-2
+  
+  containers:
+  - name: lvm-skyw-agcam
+    image: ghcr.io/sdss/lvmactor:latest
+    volumeMounts:
+    - mountPath: /root/lvm
+      name: data-lvm-host-1
+    - mountPath: /data
+      name: data-lvm-host-2
+    env:
+    - name: LVM_ACTOR
+      value: "lvmcam"
+    - name: LVM_ACTOR_CONFIG
+      value: "lvm.skyw.agcam"
+    - name: LVM_ACTOR_ARGS
+      value: "--rmq_url=amqp://guest:guest@192.168.49.2:5672/ --verbose"
+    - name: LVM_DEBUG
+      value: "yes"
+
+  - name: lvm-skyw-agp
+    image: ghcr.io/sdss/lvmactor:latest
+    volumeMounts:
+    - mountPath: /root/lvm
+      name: data-lvm-host-1
+    - mountPath: /data
+      name: data-lvm-host-2
+    env:
+    - name: LVM_ACTOR
+      value: "lvmagp"
+    - name: LVM_ACTOR_CONFIG
+      value: "lvm.skyw.agp"
+    - name: LVM_ACTOR_ARGS
+      value: "--rmq_url=amqp://guest:guest@192.168.49.2:5672/ --verbose"
+    - name: LVM_DEBUG
+      value: "yes"

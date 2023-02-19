@@ -1,0 +1,69 @@
+# Save the output of this file and use kubectl create -f to import
+# it into Kubernetes.
+#
+# Created with podman-3.4.4
+
+# NOTE: If you generated this yaml from an unprivileged and rootless podman container on an SELinux
+# enabled system, check the podman generate kube man page for steps to follow to ensure that your pod/container
+# has the right permissions to access the volumes added.
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2022-06-15T16:23:58Z"
+  labels:
+    app: lvm-jupyter
+  name: lvm-jupyter
+spec:
+  containers:
+  - args:
+    - start-notebook.sh
+    - --LabApp.token=''
+#    image: localhost/lvmjupyter:latest
+    image: ghcr.io/sdss/lvmjupyter:latest
+    name: lvm-jupyter
+    ports:
+    - containerPort: 8888
+      hostPort: 8082
+    securityContext:
+      capabilities: {}
+    stdin: true
+    tty: true
+    env:
+    - name: NB_USER
+      value: "lvm"
+    - name: NB_PASS
+      value: ""
+    - name: GRANT_SUDO
+      value: "yes"
+    - name: RMQ_URL
+      value: "amqp://guest:guest@10.8.38.21:5672/"
+    - name: LVM_DEBUG
+      value: "yes"
+    volumeMounts:
+    - mountPath: /home/jovyan/work
+      name: data-lvm-host-0
+    - mountPath: /home/jovyan/examples
+      name: data-lvm-host-1
+    - mountPath: /data
+      name: data-lvm-host-2
+    - mountPath: /home/jovyan/lvm
+      name: data-lvm-host-debug
+  volumes:
+  - hostPath:
+      path: /lvm/var/jupyter
+      type: Directory
+    name: data-lvm-host-0
+  - hostPath:
+      path: /lvm/config/jupyter
+      type: Directory
+    name: data-lvm-host-1
+  - hostPath:
+      path: /lvm/var/data
+      type: Directory
+    name: data-lvm-host-2
+  - hostPath:
+      path: /lvm
+      type: Directory
+    name: data-lvm-host-debug
+
