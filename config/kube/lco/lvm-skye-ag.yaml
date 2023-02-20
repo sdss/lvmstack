@@ -3,8 +3,8 @@ kind: Pod
 metadata:
   creationTimestamp: "2022-06-08T14:35:32Z"
   labels:
-    app: lvm-skyw-ag
-  name: lvm-skyw-ag
+    app: lvm-skye-ag
+  name: lvm-skye-ag
   annotations:
     k8s.v1.cni.cncf.io/networks: ipvlan-def
 spec:
@@ -21,7 +21,7 @@ spec:
     name: data-lvm-host-2
   
   containers:
-  - name: lvm-skyw-agcam
+  - name: lvm-skye-agcam
     image: ghcr.io/sdss/lvmactor:latest
     imagePullPolicy: IfNotPresent
 #    image: localhost/lvm_actor:latest
@@ -37,13 +37,13 @@ spec:
     - name: LVM_CAM_TYPE
       value: "araviscam"
     - name: LVM_ACTOR_CONFIG
-      value: "lvm.skyw.agcam"
+      value: "lvm.skye.agcam"
     - name: LVM_ACTOR_ARGS
       value: "--rmq_url=amqp://guest:guest@10.8.38.21:5672/ --verbose"
     - name: LVM_DEBUG
       value: "yes"
 
-  - name: lvm-skyw-agp
+  - name: lvm-skye-agp
     image: ghcr.io/sdss/lvmactor:latest
 #    image: localhost/lvm_actor:latest
     volumeMounts:
@@ -55,7 +55,7 @@ spec:
     - name: LVM_ACTOR
       value: "lvmagp"
     - name: LVM_ACTOR_CONFIG
-      value: "lvm.skyw.agp"
+      value: "lvm.skye.agp"
     - name: LVM_ACTOR_ARGS
       value: "--rmq_url=amqp://guest:guest@10.8.38.21:5672/ --verbose"
     - name: LVM_DEBUG
