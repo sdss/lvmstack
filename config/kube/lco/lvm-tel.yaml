@@ -1,0 +1,34 @@
+# kubectl create -f to import
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2022-06-08T14:35:32Z"
+  labels:
+    app: lvm-tel
+  name: lvm-tel
+spec:
+  terminationGracePeriodSeconds: 0
+  containers:
+  - name: lvm-nps
+    image: ghcr.io/sdss/lvmactor:latest
+#    image: localhost/lvm_actor:latest
+#    imagePullPolicy: Never
+    securityContext:
+      capabilities: {}
+    volumeMounts:
+    - mountPath: /root/lvm
+      name: data-lvm-host-1
+    command: ["/bin/sh"]
+    args: ["-c", "cd lvm/lvmcam/python; export PYTHONPATH=.; python3 lvmtel/__main__.py -c lvmtel/etc/lvm.sci.tel.yml --rmq_url=amqp://guest:guest@10.8.38.21:5672/ start --debug; sleep INFINITY"]
+    #args: ["-c", "echo $LVMT_NPS_CONFIG; \
+                  #NPS_CONF=${LVMT_NPS_CONFIG%.*}_${LVMT_RMQ}.yml; \
+                  #sed \"s/host: .*$/host: $LVMT_RMQ/\" < $LVMT_NPS_CONFIG > ${LVMT_NPS_CONFIG%.*}_${LVMT_RMQ}.yml; \
+                  #echo $NPS_CONF; \
+                  #trap : TERM INT; lvmnps -v -c $NPS_CONF start --debug  & wait"]
+  volumes:
+  - hostPath:
+      path: /lvm
+      type: Directory
+    name: data-lvm-host-1
+
