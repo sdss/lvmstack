@@ -39,7 +39,7 @@ def plot_centroid(ax, catalog, color="white"):
          e.set_edgecolor(color)
          ax.add_artist(e)
 
-def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest = None, cat_extra=None, figsize=None, wcs=None):
+def plot_images(images, vmin=None, vmax=None, rotate=None, figdisp="h", cat_max = 8, cat_rest = None, cat_extra=None, figsize=None, wcs=None):
     data = images[0].data
     mean, sigma, min, max = np.mean(data), np.std(data), np.min(data), np.max(data)
     lperc, uperc = np.percentile(data, 5), np.percentile(data, 99.5)
@@ -49,8 +49,10 @@ def plot_images(images, vmin=None, vmax=None, rotate=None, cat_max = 8, cat_rest
     args={}
 #    fig, ax = plt.subplots(1, ncols=(len(images)))
 #    fig, ax = plt.subplots(1, ncols=(len(images)), dpi=100)
-#    fig, ax = plt.subplots(1, ncols=(len(images)), figsize=figsize if figsize else (8, 5/len(images)), *args)
-    fig, ax = plt.subplots(nrows=(len(images)), figsize=(16,9))
+    if figdisp=="h":
+        fig, ax = plt.subplots(1, ncols=(len(images)), figsize=figsize if figsize else (8, 5/len(images)), *args)
+    else:
+        fig, ax = plt.subplots(nrows=(len(images)), figsize=(16,9 * len(images)))
     
     fig.canvas.toolbar_visible = 'fade-in-fade-out'
 #    fig.canvas.footer_visible = False
