@@ -73,69 +73,102 @@ body {font-family: Arial;}
 
 <div class="tab">
   <button class="tablinks" onclick="openCity(event, 'Kube')">Kube</button>
+  <button class="tablinks" onclick="openCity(event, 'Jupyter')">Jupyter</button>
   <button class="tablinks" onclick="openCity(event, 'RabbitMQ')">RabbitMQ</button>
   <button class="tablinks" onclick="openCity(event, 'PwiSci')">PwiSci</button>
   <button class="tablinks" onclick="openCity(event, 'PwiSkye')">PwiSkye</button>
   <button class="tablinks" onclick="openCity(event, 'PwiSkyw')">PwiSkyw</button>
   <button class="tablinks" onclick="openCity(event, 'PwiSpec')">PwiSpec</button>
   <button class="tablinks" onclick="openCity(event, 'MoTan')">MoTan</button>
-  <button class="tablinks" onclick="openCity(event, 'Jupyter')">Jupyter</button>
+  <button class="tablinks" onclick="openCity(event, 'PduSci')">PduSci</button>
+  <button class="tablinks" onclick="openCity(event, 'PduSkyE')">PduSkye</button>
+  <button class="tablinks" onclick="openCity(event, 'PduSkyW')">PduSkyw</button>
+  <button class="tablinks" onclick="openCity(event, 'PduSpec')">PduSpec</button>
+  <button class="tablinks" onclick="openCity(event, 'PduCab')">PduCab</button>
 </div>
 
 <div id="Kube" class="tabcontent">
    <div class="container_p">
-     <iframe class="responsive-iframe" src="http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default" ></iframe>
+     <iframe class="responsive-iframe" src="http://10.8.38.123:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/pod?namespace=default" ></iframe>
    </div>
 </div>
 
 <div id="RabbitMQ" class="tabcontent">
    <div class="container_p">
-     <iframe class="responsive-iframe" src="http://192.168.49.2:8081/#/queues" ></iframe>
+     <iframe class="responsive-iframe" src="http://10.8.38.21:15672/#/queues" ></iframe>
    </div>
 </div>
 
 <div id="PwiSci" class="tabcontent">
    <div class="container_l">
-     <iframe class="responsive-iframe" src="http://192.168.49.2:8091/vnc_lite.html?scale=true"></iframe>
+     <iframe class="responsive-iframe" src="http://10.8.38.101:8091/vnc_lite.html?scale=true"></iframe>
    </div>
 </div>
 
 <div id="PwiSkye" class="tabcontent">
    <div class="container_l">
-     <iframe class="responsive-iframe" src="http://192.168.49.2:8092/vnc_lite.html?scale=true"></iframe>
+     <iframe class="responsive-iframe" src="http://10.8.38.102:8091/vnc_lite.html?scale=true"></iframe>
    </div>
 </div>
 
 <div id="PwiSkyw" class="tabcontent">
    <div class="container_l">
-     <iframe class="responsive-iframe" src="http://192.168.49.2:8093/vnc_lite.html?scale=true"></iframe>
+     <iframe class="responsive-iframe" src="http://10.8.38.103:8091/vnc_lite.html?scale=true"></iframe>
    </div>
 </div>
 
 <div id="PwiSpec" class="tabcontent">
    <div class="container_l">
-     <iframe class="responsive-iframe" src="http://192.168.49.2:8094/vnc_lite.html?scale=true"></iframe>
+     <iframe class="responsive-iframe" src="http://10.8.38.104:8091/vnc_lite.html?scale=true"></iframe>
    </div>
 </div>
 
 <div id="MoTan" class="tabcontent">
    <div class="container_l">
-     <iframe class="responsive-iframe" src="http://192.168.49.2:8095/vnc_lite.html?scale=true"></iframe>
+     <iframe class="responsive-iframe" src="http://10.8.38.123:8095/vnc_lite.html?scale=true"></iframe>
    </div>
 </div>
 
 <div id="Jupyter" class="tabcontent">
 <h1>
-    <a href="http://192.168.49.2:8082/lab" target="_blank"> Open Jupyter in new tab </a>
+    <a href="http://10.8.38.123:8082/lab" target="_blank"> Open Jupyter in new tab </a>
     <br>
     <a href="print.html"
-       onclick="window.open('http://192.168.49.2:8082/lab',
+       onclick="window.open('http://10.8.38.123:8082/lab',
                             'newwindow',
                             'width=1200,height=1000'); return false;"> Open Jupyter in new window </a>
-
 </h1>
 </div>
 
+<div id="PduSci" class="tabcontent">
+   <div class="container_l">
+     <iframe class="responsive-iframe" src="http://10.8.38.106"></iframe>
+   </div>
+</div>
+
+<div id="PduSkyE" class="tabcontent">
+   <div class="container_l">
+     <iframe class="responsive-iframe" src="http://10.8.38.107"></iframe>
+   </div>
+</div>
+
+<div id="PduSkyW" class="tabcontent">
+   <div class="container_l">
+     <iframe class="responsive-iframe" src="http://10.8.38.108"></iframe>
+   </div>
+</div>
+
+<div id="PduSpec" class="tabcontent">
+   <div class="container_l">
+     <iframe class="responsive-iframe" src="http://10.8.38.109"></iframe>
+   </div>
+</div>
+
+<div id="PduCab" class="tabcontent">
+   <div class="container_l">
+     <iframe class="responsive-iframe" src="http://10.8.38.110"></iframe>
+   </div>
+</div>
 
 <script>
 function openCity(evt, cityName) {
