@@ -104,12 +104,12 @@ For minikube a container or virtual machine has to be selected, before proceedin
 
     # minikube image build --tag localhost/lvmactor ${LVM_ROOT}/config/container/actor/
     # alternative build & push
-    # podman build --tag localhost/lvmactor -f ${LVM_ROOT}/config/container/actor/Dockerfile ${LVM_ROOT}/config/container/actor/
+    # podman build --tag localhost/lvmactor -f ${LVM_ROOT}/config/container/actor/Dockerfile ${LVM_ROOT}
     # podman save localhost/lvmactor:latest -o localhost_lvmactor_latest.img
     # minikube image load localhost_lvmactor_latest.img
     
     # minikube image build --tag localhost/lvmjupyter ${LVM_ROOT}/config/container/jupyter/
-    # podman build --tag localhost/lvmjupyter -f ${LVM_ROOT}/config/container/jupyter/Dockerfile ${LVM_ROOT}/config/container/jupyter
+    # podman build --tag localhost/lvmjupyter -f ${LVM_ROOT}/config/container/jupyter/Dockerfile ${LVM_ROOT}/
     # podman save localhost/lvmjupyter:latest -o localhost_lvmjupyter_latest.img
     # minikube image load localhost_lvmjupyter_latest.img
 
