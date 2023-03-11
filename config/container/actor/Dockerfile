@@ -22,7 +22,9 @@ RUN pip3 install sdss-lvmnps \
                  sdss-lvmieb \
                  sdss-lvmscp 
                  #sdss-lvmecp not available for python 3.10 only works in debug mode
-                 
+
+# force installation until every sdss package is using clu > 2.0.0
+RUN pip3 install sdss-cluplus==0.5.2 sdss-basecam==0.7.1
 
 WORKDIR /root
 
