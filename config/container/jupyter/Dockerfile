@@ -14,9 +14,8 @@ RUN pip3 install jupyter-app-launcher
 
 RUN pip3 install pywwt
 RUN pip install wwt-kernel-data-relay && \
-    jupyter labextension install --no-build @jupyter-widgets/jupyterlab-manager && \
-    jupyter labextension install --no-build @wwtelescope/jupyterlab && \
-    jupyter lab build
+    pip install jupyterlab_widgets && \
+    pip install wwt_jupyterlab_extension
 
 USER root
 
