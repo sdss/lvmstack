@@ -1,5 +1,6 @@
 # lvm superproject v0.2.4
 
+**Deprecated:** this product was meant for developemnt and is generally deprecated. Use at your own risk.
 
 ![lvm package overview](docs/uml/overview/lvm_packages.png)
 
